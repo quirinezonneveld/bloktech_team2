@@ -16,33 +16,37 @@
             width: 200px;
             gap: 1em;
         }
+
+        span {
+            color: red;
+        }
     </style>
 </head>
 <body>
     <form action="/registreren" method="post">
-        <label for="fName">First Name</label>
+        <label for="fName">First Name <span>*</span></label>
         <input id="fName" type="text" name="fName" required>
 
         <label for="lName">Last Name</label>
-        <input id="lName" type="text" name="lName" required>
+        <input id="lName" type="text" name="lName" >
 
-        <label for="emailRegister">E-mail</label>
+        <label for="emailRegister">E-mail <span>*</span></label>
         <input id="emailRegister" type="email" name="emailRegister" required>
 
-        <label for="passwordRegister">Password</label>
+        <label for="passwordRegister">Password <span>*</span></label>
         <input id="passwordRegister" type="password" name="passwordRegister" required>
 
         <input type="submit">
     </form>
 
-    <form action="/inloggen">
+    <form action="/inloggen" method="post">
         <label for="emailSignin">E-mail</label>
         <input id="emailSignin" type="email" name="emailSignin" required>
 
         <label for="passwordSignin">Password</label>
         <input id="passwordSignin" type="password" name="passwordSignin" required>
 
-        <input type="submit">
+        <input type="submit" value="Login">
     </form>
 </body>
 </html>

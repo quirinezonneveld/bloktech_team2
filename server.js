@@ -67,6 +67,28 @@ app.post('/registreren', async (req, res) => {
   }
 });
 
+// Gegevens uit MongoDB vergelijken voor inloggen
+app.post('/inloggen', async (req, res) => {
+  const email = req.body.emailSignin;
+  const password = req.body.passwordSignin;
+
+  try {
+    const user = await db.collection('users').findOne({ email: email });
+
+    if (user && user.password === password) {
+      console.log('Login successful');
+      res.send(`Welcome ${user.name} ${user.surname}`);
+    } else {
+      console.log('Invalid email or password');
+      res.status(401).send('Invalid email or password');
+    }
+
+  } catch (error) {
+    console.error('Error fetching data from database', error);
+    res.status(500).send('Error fetching data from database');
+  }
+});
+
 // Middleware to handle not found errors - error 404
 app.use((req, res) => {
   // log error to console
