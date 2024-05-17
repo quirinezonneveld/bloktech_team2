@@ -4,19 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            gap: 5em;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            gap: 1em;
+        }
+    </style>
 </head>
 <body>
     <form action="/registreren" method="post">
-        <label for="naam">Gebruikersnaam</label>
-        <input id="naam" type="text" name="naam" required>
+        <label for="fName">First Name</label>
+        <input id="fName" type="text" name="fName" required>
 
-        <label for="wachtwoord">Wachtwoord</label>
-        <input id="wachtwoord" type="password" name="wachtwoord" required>
+        <label for="lName">Last Name</label>
+        <input id="lName" type="text" name="lName" required>
 
-        <label for="email">Email</label>
-        <input id="email" type="text" name="email" required>
+        <label for="emailRegister">E-mail</label>
+        <input id="emailRegister" type="email" name="emailRegister" required>
 
-        <input type="submit">Registreren
+        <label for="passwordRegister">Password</label>
+        <input id="passwordRegister" type="password" name="passwordRegister" required>
+
+        <input type="submit">
+    </form>
+
+    <form action="/inloggen">
+        <label for="emailSignin">E-mail</label>
+        <input id="emailSignin" type="email" name="emailSignin" required>
+
+        <label for="passwordSignin">Password</label>
+        <input id="passwordSignin" type="password" name="passwordSignin" required>
+
+        <input type="submit">
     </form>
 </body>
 </html>
