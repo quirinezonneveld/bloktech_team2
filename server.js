@@ -30,10 +30,12 @@ const client = new MongoClient(uri, {
     }
 })
 
-// Try to open a database connection
+let db;
+
 client.connect()
   .then(() => {
     console.log('Database connection established')
+    db = client.db(process.env.DB_NAME); // Connect to the specific database
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`)
@@ -47,14 +49,44 @@ app.get('/', (req, res) => {
 })
 
 // Receiving information out of form
-app.post('/registreren', (req, res) => {
-  const user = req.body.naam;
-  const password = req.body.wachtwoord;
-  const email = req.body.email;
+app.post('/registreren', async (req, res) => {
+  const firstName = req.body.fName;
+  const lastName = req.body.lName;
+  const password = req.body.passwordRegister;
+  const email = req.body.emailRegister;
 
-  console.log(`Ontvangen gegevens: Naam - ${user}, Wachtwoord - ${password}, Email - ${email}`);
-  res.render('response.ejs', { user: user, password: password });
+  console.log(`Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`);
+  //res.render('response.ejs', { name: firstName, surname: lastName, password: password, email: email });
 
+  try {
+    const result = await db.collection('users').insertOne({ name: firstName, surname: lastName, password: password, email: email });
+    console.log(`Gebruiker opgeslagen met id: ${result.insertedId}`);
+  } catch (error) {
+    console.error('Error inserting data into database', error);
+    res.status(500).send('Error inserting data into database');
+  }
+});
+
+// Gegevens uit MongoDB vergelijken voor inloggen
+app.post('/inloggen', async (req, res) => {
+  const email = req.body.emailSignin;
+  const password = req.body.passwordSignin;
+
+  try {
+    const user = await db.collection('users').findOne({ email: email });
+
+    if (user && user.password === password) {
+      console.log('Login successful');
+      res.send(`Welcome ${user.name} ${user.surname}`);
+    } else {
+      console.log('Invalid email or password');
+      res.status(401).send('Invalid email or password');
+    }
+
+  } catch (error) {
+    console.error('Error fetching data from database', error);
+    res.status(500).send('Error fetching data from database');
+  }
 });
 
 // Middleware to handle not found errors - error 404
@@ -77,5 +109,3 @@ app.use((err, req, res) => {
 app.listen(3000, () => {
   console.log(`I did not change this message and now my webserver is listening at port 3000`)
 })
-
-//Test
