@@ -10,22 +10,19 @@
 <body class="login-register-page">
     
     <div class="logo-header">
-        <img src="test-logo.png">
+        <img src="test-logo.png" alt="logo">
     </div>
 
 
-    <!-- SIGN UP FORM -->
-    <form action="/registry" method="post">
-        <label for="fName">First Name <span>*</span></label>
-        <input id="fName" type="text" name="fName" required>
-
-
+  
+    
     <div class="buttons">
         <button id="loginBtn">Inloggen</button>
         <button id="registerBtn">Registreren</button>
     </div>
    <hr>
-    <form id="registerForm" class="form-container" action="/registreren" method="post">
+     <!-- SIGN UP FORM -->
+    <form id="registerForm" class="form-container" action="/registry" method="post">
         <span>*</span>
         <input id="fName" type="text" name="fName" placeholder="First name" required>
 
@@ -44,7 +41,7 @@
 
     <!-- SIGN IN FORM -->
     <form id="loginForm" class="form-container" action="/signin" method="post">
-        <label for="emailSignin">E-mail</label>
+        
         <input id="emailSignin" type="email" name="emailSignin" placeholder="E-mail" required>
 
         <input id="passwordSignin" type="password" name="passwordSignin" placeholder="Password" required>
