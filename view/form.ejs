@@ -23,7 +23,9 @@
     </style>
 </head>
 <body>
-    <form action="/registreren" method="post">
+
+    <!-- SIGN UP FORM -->
+    <form action="/registry" method="post">
         <label for="fName">First Name <span>*</span></label>
         <input id="fName" type="text" name="fName" required>
 
@@ -39,7 +41,8 @@
         <input type="submit">
     </form>
 
-    <form action="/inloggen" method="post">
+    <!-- SIGN IN FORM -->
+    <form action="/signin" method="post">
         <label for="emailSignin">E-mail</label>
         <input id="emailSignin" type="email" name="emailSignin" required>
 
@@ -48,5 +51,6 @@
 
         <input type="submit" value="Login">
     </form>
+    
 </body>
 </html>
