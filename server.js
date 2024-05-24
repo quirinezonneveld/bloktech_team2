@@ -45,11 +45,11 @@ client.connect()
 
 // A sample route, replace this with your own routes
 app.get('/', (req, res) => {
-  res.render('form.ejs')
+  res.render('update.ejs')
 })
 
 // Receiving information out of form
-app.post('/registreren', async (req, res) => {
+app.post('/registry', async (req, res) => {
   const firstName = req.body.fName;
   const lastName = req.body.lName;
   const password = req.body.passwordRegister;
@@ -58,7 +58,17 @@ app.post('/registreren', async (req, res) => {
   console.log(`Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`);
   //res.render('response.ejs', { name: firstName, surname: lastName, password: password, email: email });
 
+
   try {
+    //Checking if the email adress is unique
+    const existingUser = await db.collection('users').findOne({ email: email });
+    if (existingUser) {
+      console.log('Email address already in use');
+      res.status(409).send('Email adress already in use');
+      return
+    }
+
+    //FIlling in the data of the user registry
     const result = await db.collection('users').insertOne({ name: firstName, surname: lastName, password: password, email: email });
     console.log(`Gebruiker opgeslagen met id: ${result.insertedId}`);
   } catch (error) {
@@ -68,7 +78,7 @@ app.post('/registreren', async (req, res) => {
 });
 
 // Gegevens uit MongoDB vergelijken voor inloggen
-app.post('/inloggen', async (req, res) => {
+app.post('/signin', async (req, res) => {
   const email = req.body.emailSignin;
   const password = req.body.passwordSignin;
 
@@ -87,6 +97,39 @@ app.post('/inloggen', async (req, res) => {
     console.error('Error fetching data from database', error);
     res.status(500).send('Error fetching data from database');
   }
+});
+
+//Updaten van de voor- en achternaam 
+app.post('/update', async (req, res) => {
+  const { emailUpdate: email, fNameUpdate: firstName, lNameUpdate: lastName } = req.body;
+
+  try {
+    const filter = {
+      email: email
+    }
+    const updateData = {
+      $set: {
+        name: firstName, surname: lastName
+      }
+    }
+    const options = { upsert: true };
+
+    const result = await db.collection('users').updateOne(filter, updateData, options);
+
+    if (result.matchedCount === 0) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    console.log(`User details updated for email: ${email}`);
+    res.send('User details updated successfully');
+
+
+  } catch (error) {
+    console.error('Error updating data in database', error);
+    res.status(500).send('Error updating data in database');
+  }
+  
 });
 
 // Middleware to handle not found errors - error 404
