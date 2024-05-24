@@ -1,7 +1,3 @@
-// dit is een boilerplate voor een node.js webserver met alle basis die je nodig hebt om je webserver aan de praat te krijgen
-// deze boilerplate is geen werkende webserver, maar een overzicht van de verschillende codefragmenten die je nodig hebt
-// kopieer deze dus niet integraal, maar zoek de stukjes die je nodig hebt en pas ze aan, zodat ze werken voor jouw project
-
 // Initialise Express webserver
 const express = require('express')
 const app = express()
@@ -9,12 +5,21 @@ const app = express()
 // Add info from .env file to process.env
 require('dotenv').config() 
 
+// Sessions
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+
+// Bcrypt hashing
+const bcrypt = require('bcrypt');
+
 
 app
   .use(express.urlencoded({extended: true})) // middleware to parse form data from incoming HTTP request and add form fields to req.body
   .use(express.static('static'))             // Allow server to serve static content such as images, stylesheets, fonts or frontend js from the directory named static
   .set('view engine', 'ejs')                 // Set EJS to be our templating engine
   .set('views', 'view')                      // And tell it the views can be found in the directory named view
+
+
 
 
 // Use MongoDB
@@ -30,6 +35,11 @@ const client = new MongoClient(uri, {
     }
 })
 
+/************/
+/* Database */
+/************/
+
+// Database connection
 let db;
 
 client.connect()
@@ -42,11 +52,43 @@ client.connect()
     console.log(`For uri - ${uri}`)
   })
 
+  app.use((req, res, next) => {
+    if (req.session) {
+      if (!req.session.isNew) {
+        console.log(`Sessie bestaand: Sessie ID: ${req.session.id}`);
+      } else {
+        console.log(`Nieuwe sessie aangemaakt: Sessie ID: ${req.session.id}`);
+      }
+    }
+    next();
+  });
+
+/************/
+/* Sessions */
+/************/
+
+  // Session manager
+app.use(session({
+  secret: process.env.SESSION_SECRET, 
+  resave: false,
+  saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
+  }),
+  cookie: { 
+    maxAge: 1000 * 60 * 60 * 24,  // Sessie geldig voor 1 dag
+    SameSite: true 
+  } 
+}));
 
 // A sample route, replace this with your own routes
 app.get('/', (req, res) => {
-  res.render('update.ejs')
+  res.render('form.ejs')
 })
+
+/************/
+/* Registry */
+/************/
 
 // Receiving information out of form
 app.post('/registry', async (req, res) => {
@@ -68,14 +110,25 @@ app.post('/registry', async (req, res) => {
       return
     }
 
-    //FIlling in the data of the user registry
-    const result = await db.collection('users').insertOne({ name: firstName, surname: lastName, password: password, email: email });
+    // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    console.log('Password hashed:', hashedPassword);
+
+
+    //Filling in the data of the user registry
+    const result = await db.collection('users').insertOne({ name: firstName, surname: lastName, password: hashedPassword, email: email });
     console.log(`Gebruiker opgeslagen met id: ${result.insertedId}`);
+
   } catch (error) {
     console.error('Error inserting data into database', error);
     res.status(500).send('Error inserting data into database');
   }
 });
+
+/***********/
+/* Sign in */
+/***********/
 
 // Gegevens uit MongoDB vergelijken voor inloggen
 app.post('/signin', async (req, res) => {
@@ -85,9 +138,10 @@ app.post('/signin', async (req, res) => {
   try {
     const user = await db.collection('users').findOne({ email: email });
 
-    if (user && user.password === password) {
-      console.log('Login successful');
-      res.send(`Welcome ${user.name} ${user.surname}`);
+    if (user && await bcrypt.compare(password, user.password)) {
+      req.session.userId = user._id;
+      console.log('Login succesvol: Sessie gestart voor gebruiker ID:', user._id);
+      res.render('profile.ejs');
     } else {
       console.log('Invalid email or password');
       res.status(401).send('Invalid email or password');
@@ -98,6 +152,27 @@ app.post('/signin', async (req, res) => {
     res.status(500).send('Error fetching data from database');
   }
 });
+
+
+/************/
+/* Sign out */
+/************/
+
+app.get('/signout', (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      return res.status(500).send('Error logging out');
+    }
+    res.clearCookie('connect.sid');
+    console.log('Uitloggen succesvol: Sessie beëindigd');
+    res.redirect('/'); // Redirect to homepage or login page after logout
+  });
+});
+
+
+/*****************/
+/* Updating data */
+/*****************/
 
 //Updaten van de voor- en achternaam 
 app.post('/update', async (req, res) => {
