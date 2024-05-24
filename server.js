@@ -45,7 +45,7 @@ client.connect()
 
 // A sample route, replace this with your own routes
 app.get('/', (req, res) => {
-  res.render('update.ejs')
+  res.render('form.ejs')
 })
 
 // Receiving information out of form
