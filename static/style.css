@@ -1,0 +1,91 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ 
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.logo-header{
+    display: flex; 
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.logo-header img{
+    width:130px;
+}
+
+hr{
+    width: 50%;
+    margin: 0;
+    border: .5px solid #D1D1D1;
+}
+
+.form-container {
+    display: none;
+    margin-top: 2em;
+}
+
+.form-container.active {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap: 1em;
+}
+
+.buttons {
+    display: flex;
+    gap: 1em;
+}
+
+span {
+    color: red;
+}
+
+.form-container {
+    background-color: #F9F9F9;
+    padding: 5%;
+}
+
+.buttons button{
+    border: none;
+    background-color: white;
+    padding: 10px;
+    display:flex;
+    justify-content: space-around;
+    font-size: 1.5em;
+}
+
+.buttons .active{
+    font-weight: bold;
+    color: #FF6000;
+    border-bottom: 3px #FF6000 solid;
+}
+
+form input{
+    padding: 5%;
+    border-radius: 5px;
+    border: 2px lightgrey solid;
+}
+
+input[type="submit"] {
+    background-color: #FF6000;
+    border: none;
+    margin-top: 1em;
+    color: white;
+    width: auto;
+
+}
+
+form span{
+    display: flex;
+    justify-content: end;
+    margin-bottom: -15px;
+    margin-top: -10px;
+}
+
+
+
+
