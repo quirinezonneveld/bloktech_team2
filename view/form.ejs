@@ -4,49 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        body {
-            display: flex;
-            gap: 5em;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            width: 200px;
-            gap: 1em;
-        }
-
-        span {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
-    <form action="/registreren" method="post">
-        <label for="fName">First Name <span>*</span></label>
-        <input id="fName" type="text" name="fName" required>
+<body class="login-register-page">
+    
+    <div class="logo-header">
+        <img src="test-logo.png">
+    </div>
 
-        <label for="lName">Last Name</label>
-        <input id="lName" type="text" name="lName" >
+    <div class="buttons">
+        <button id="loginBtn">Inloggen</button>
+        <button id="registerBtn">Registreren</button>
+    </div>
+   <hr>
+    <form id="registerForm" class="form-container" action="/registreren" method="post">
+        <span>*</span>
+        <input id="fName" type="text" name="fName" placeholder="First name" required>
 
-        <label for="emailRegister">E-mail <span>*</span></label>
-        <input id="emailRegister" type="email" name="emailRegister" required>
+        <span>*</span>
+        <input id="lName" type="text" name="lName" placeholder="Last name">
 
-        <label for="passwordRegister">Password <span>*</span></label>
-        <input id="passwordRegister" type="password" name="passwordRegister" required>
+        <span>*</span>
+        <input id="emailRegister" type="email" name="emailRegister" placeholder="E-mail" required>
+        
+        <span>*</span>
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Password" required>
 
-        <input type="submit">
+        <input type="submit" value="Registreren">
     </form>
 
-    <form action="/inloggen" method="post">
-        <label for="emailSignin">E-mail</label>
-        <input id="emailSignin" type="email" name="emailSignin" required>
+    <form id="loginForm" class="form-container" action="/inloggen" method="post">
+        <input id="emailSignin" type="email" name="emailSignin" placeholder="E-mail" required>
 
-        <label for="passwordSignin">Password</label>
-        <input id="passwordSignin" type="password" name="passwordSignin" required>
+        <input id="passwordSignin" type="password" name="passwordSignin" placeholder="Password" required>
 
-        <input type="submit" value="Login">
+        <input type="submit" value="Inloggen">
     </form>
+
+    <script>
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            document.getElementById('loginForm').classList.add('active');
+            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('loginBtn').classList.add('active');
+            document.getElementById('registerBtn').classList.remove('active');
+        });
+
+        document.getElementById('registerBtn').addEventListener('click', function() {
+            document.getElementById('registerForm').classList.add('active');
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('registerBtn').classList.add('active');
+            document.getElementById('loginBtn').classList.remove('active');
+        });
+
+        // By default, show the login form and set login button as active
+        document.getElementById('loginForm').classList.add('active');
+        document.getElementById('loginBtn').classList.add('active');
+    </script>
 </body>
 </html>
