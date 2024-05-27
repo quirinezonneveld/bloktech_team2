@@ -48,6 +48,11 @@ app.get('/', (req, res) => {
   res.render('update.ejs')
 })
 
+// Route homepage
+app.get('/home', (req, res) => {
+  res.render('home.ejs')
+})
+
 // Receiving information out of form
 app.post('/registry', async (req, res) => {
   const firstName = req.body.fName;
