@@ -85,9 +85,36 @@ app.use(session({
 app.get('/', (req, res) => {
   res.render('home.ejs')
 })
-app.get('form', (req, res) => {
+
+//Sign In / Register
+app.get('/form', (req, res) => {
   res.render('form')
 })
+
+//Events
+app.get('/all-events', (req, res) => {
+  res.render('all-events')
+})
+
+//About us
+app.get('/about-us', (req, res) => {
+  res.render('about-us')
+})
+
+/***********/
+/* Profile */
+/***********/
+
+app.get('/profile', (req, res) => {
+  if (!req.session.user) {
+    res.redirect('/form');
+    return;
+  }
+
+  const { name, surname, email } = req.session.user;
+  res.render('profile', { name, surname, email });
+})
+
 
 /************/
 /* Registry */
@@ -143,8 +170,9 @@ app.post('/signin', async (req, res) => {
 
     if (user && await bcrypt.compare(password, user.password)) {
       req.session.userId = user._id;
+      req.session.user = { name: user.name, surname: user.surname, email: user.email };
       console.log('Login succesvol: Sessie gestart voor gebruiker ID:', user._id);
-      res.render('profile.ejs');
+      res.redirect('/profile');
     } else {
       console.log('Invalid email or password');
       res.status(401).send('Invalid email or password');
