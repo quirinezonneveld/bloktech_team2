@@ -13,6 +13,7 @@ const MongoStore = require('connect-mongo');
 const bcrypt = require('bcrypt');
 
 
+
 app
   .use(express.urlencoded({extended: true})) // middleware to parse form data from incoming HTTP request and add form fields to req.body
   .use(express.static('static'))             // Allow server to serve static content such as images, stylesheets, fonts or frontend js from the directory named static
@@ -105,16 +106,15 @@ app.get('/about-us', (req, res) => {
 /* Profile */
 /***********/
 
-app.get('/profile', (req, res) => {
-  if (!req.session.user) {
+app.get('/profile', async (req, res) => {
+  if (!req.session.userId) {
     res.redirect('/form');
     return;
   }
 
-  const { name, surname, email } = req.session.user;
-  res.render('profile', { name, surname, email });
-})
-
+    const { name, surname, email } = req.session.user;
+    res.render('profile', { name, surname, email });
+});
 
 /************/
 /* Registry */
