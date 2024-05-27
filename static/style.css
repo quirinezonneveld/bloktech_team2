@@ -1,3 +1,105 @@
+
+/* Algemeen */
+*, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Verdana, Tahoma, sans-serif;
+    background-color: var(--background-color-one);
+    color: var(--font-color-one);
+}
+
+:root {
+    --background-color-one: #101010;
+    --background-color-two: #0D0C0C;
+
+    --detail-color-one: #FF6000;
+    --detail-color-one-hover: #C64B00;
+    --detail-color-two: #00A3FF;
+    --detail-color-two-hover: #00A3FF;
+
+    --font-color-one: #BFBFBF;
+    --font-color-two: #5D5D5D;
+
+    --button-color-text: #101010;
+    --button-radius: 4.69em;
+    --button-padding: 0.5em;
+
+    --card-radius: 2.06em;
+
+    --font-size-h1: 24px;
+    --font-size-h2: 24px;
+    --font-size-h3: 2.5em;
+    --font-size-h4: 24px;
+    --font-size-h5: 1.5em;
+
+    --font-size-body: 16px;
+    --font-size-body-small: ;
+
+    --desktop-margin: 8em; /* 128 px */
+    --mobile-margin: ;
+}
+@media(prefers-color-scheme:light) {
+	:root {
+		--background-color-one: #FFFFFF;
+        --background-color-two: #F5F5F5;
+
+        --font-color-one: #161616;
+        --font-color-two: #3E3D3D;
+	}
+}
+
+
+
+/* navigatie */
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: sticky;
+    z-index: 10;
+    border-bottom: 0.1em solid var(--font-color-two);
+    padding: 0 5%;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+
+nav li {
+    padding: 0.8em;
+}
+nav li a {
+    color: var(--font-color-one);
+    text-decoration: none;
+}
+nav li a:hover {
+    color: var(--detail-color-one-hover);
+}
+
+nav ul:last-of-type li:last-of-type a, nav ul:last-of-type li:nth-child(2) a {
+    background-color: var(--detail-color-one);
+    border-radius: var(--button-radius);
+    padding: var(--button-padding);
+}
+nav ul:last-of-type li:last-of-type a img {
+    border-radius: 100em;
+}
+
+/* class active in html op pagina zetten waarop je je bevind  */
+/* .active {
+    font-weight: 900;
+} */
+
+
+
+/* bronnen:
+    z-index: https://developer.mozilla.org/en-US/docs/Web/CSS/position 
+    https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
+    root: https://developer.mozilla.org/en-US/docs/Web/CSS/:root
+*/
+
 body {
     display: flex;
     flex-direction: column;
@@ -85,7 +187,3 @@ form span{
     margin-bottom: -15px;
     margin-top: -10px;
 }
-
-
-
-
