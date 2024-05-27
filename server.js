@@ -81,9 +81,12 @@ app.use(session({
   } 
 }));
 
-// A sample route, replace this with your own routes
+//Routes
 app.get('/', (req, res) => {
   res.render('home.ejs')
+})
+app.get('form', (req, res) => {
+  res.render('form')
 })
 
 /************/
