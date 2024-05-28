@@ -97,10 +97,12 @@ app.get('/all-events', (req, res) => {
   res.render('all-events')
 })
 
+
 //About us
 app.get('/about-us', (req, res) => {
   res.render('about-us')
 })
+
 
 /***********/
 /* Profile */
@@ -258,3 +260,4 @@ app.use((err, req, res) => {
 app.listen(3000, () => {
   console.log(`I did not change this message and now my webserver is listening at port 3000`)
 })
+
