@@ -1,0 +1,241 @@
+
+/* Algemeen */
+*, html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:Verdana, Tahoma, sans-serif;
+    background-color: var(--background-color-one);
+    color: var(--font-color-one);
+}
+
+:root {
+    --background-color-one: #101010;
+    --background-color-two: #0D0C0C;
+
+    --detail-color-one: #FF6000;
+    --detail-color-one-hover: #C64B00;
+    --detail-color-two: #00A3FF;
+    --detail-color-two-hover: #00A3FF;
+
+    --font-color-one: #BFBFBF;
+    --font-color-two: #5D5D5D;
+
+    --button-color-text: #101010;
+    --button-radius: 4.69em;
+    --button-padding: 0.5em;
+
+    --card-radius: 1.3rem;
+
+    --font-size-h1: 24px;
+    --font-size-h2: 24px;
+    --font-size-h3: 2.5em;
+    --font-size-h4: 24px;
+    --font-size-h5: 1.5em;
+
+    --font-size-body: 16px;
+    --font-size-body-small: ;
+
+    --desktop-margin: 8em; /* 128 px */
+    --mobile-margin: ;
+}
+@media(prefers-color-scheme:light) {
+	:root {
+		--background-color-one: #FFFFFF;
+        --background-color-two: #F5F5F5;
+
+        --font-color-one: #161616;
+        --font-color-two: #3E3D3D;
+	}
+}
+
+
+
+/* navigatie */
+nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: sticky;
+    z-index: 10;
+    border-bottom: 0.1em solid var(--font-color-two);
+    padding: 0 5%;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+
+nav li {
+    padding: 0.8em;
+}
+nav li a {
+    color: var(--font-color-one);
+    text-decoration: none;
+}
+nav li a:hover {
+    color: var(--detail-color-one-hover);
+}
+
+nav ul:last-of-type li:last-of-type a, nav ul:last-of-type li:nth-child(2) a {
+    background-color: var(--detail-color-one);
+    border-radius: var(--button-radius);
+    padding: var(--button-padding);
+}
+nav ul:last-of-type li:last-of-type a img {
+    border-radius: 100em;
+}
+
+/* class active in html op pagina zetten waarop je je bevind  */
+/* .active {
+    font-weight: 900;
+} */
+
+
+/* card */
+.card {
+    text-decoration: none;
+}
+.card article {
+    background-color: var(--background-color-two);
+    height: 20em;
+    width: 18em;
+    border-radius: var(--card-radius);
+
+    display: grid;
+	grid-template-columns: 1em 6em 1fr 2em 1em;
+    grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
+}
+.card article > * {
+    background-color: transparent;
+    
+}
+.card img {
+	grid-area: 1 / 1 / 4 / -1;
+	border: 2px solid blue;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+.card p:first-of-type {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    background-color: var(--detail-color-two);
+    border-radius: var(--button-radius);
+}
+.card button i {
+    grid-area: 2 / 4 / 3 / 5; /*row-start / column-start / row-end / column-end;*/
+}
+.card h5 {
+    grid-area: 5 / 2 / 6 / 4;
+}
+.card p:nth-of-type(2) {
+    grid-area: 7 / 2 / 8 / 4;
+}
+.card p:last-of-type {
+    grid-area: 9 / 2 / 10 / 3;
+}
+
+
+.login-register-page body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ 
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.logo-header{
+    display: flex; 
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.logo-header img{
+    width:130px;
+}
+
+.login-register-page hr{
+    width: 50%;
+    margin: 0;
+    border: .5px solid #D1D1D1;
+}
+
+.form-container {
+    display: none;
+    margin-top: 2em;
+}
+
+.form-container.active {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap: 1em;
+}
+
+.buttons {
+    display: flex;
+    gap: 1em;
+}
+
+.login-register-page span {
+    color: red;
+}
+
+.form-container {
+    background-color: #F9F9F9;
+    padding: 5%;
+}
+
+.buttons button{
+    border: none;
+    background-color: white;
+    padding: 10px;
+    display:flex;
+    justify-content: space-around;
+    font-size: 1.5em;
+}
+
+.buttons .active{
+    font-weight: bold;
+    color: #FF6000;
+    border-bottom: 3px #FF6000 solid;
+}
+
+.login-register-page form input{
+    padding: 5%;
+    border-radius: 5px;
+    border: 2px lightgrey solid;
+}
+
+.login-register-page input[type="submit"] {
+    background-color: #FF6000;
+    border: none;
+    margin-top: 1em;
+    color: white;
+    width: auto;
+
+}
+
+.login-register-page form span{
+    display: flex;
+    justify-content: end;
+    margin-bottom: -15px;
+    margin-top: -10px;
+}
+
+.filterDiv form{
+    background-color: grey;
+    padding: 2em;
+    border-radius: 1em;
+
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.testTile{
+    background-color: grey;
+}
+

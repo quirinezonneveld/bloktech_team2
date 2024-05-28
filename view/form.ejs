@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-register-page">
+    
+    <div class="logo-header">
+        <img src="test-logo.png" alt="logo">
+    </div>
+
+
+  
+    
+    <div class="buttons">
+        <button id="loginBtn">Inloggen</button>
+        <button id="registerBtn">Registreren</button>
+    </div>
+   <hr>
+     <!-- SIGN UP FORM -->
+    <form id="registerForm" class="form-container" action="/registry" method="post">
+        <span>*</span>
+        <input id="fName" type="text" name="fName" placeholder="First name" required>
+
+        <span>*</span>
+        <input id="lName" type="text" name="lName" placeholder="Last name">
+
+        <span>*</span>
+        <input id="emailRegister" type="email" name="emailRegister" placeholder="E-mail" required>
+        
+        <span>*</span>
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Password" required>
+
+        <input type="submit" value="Registreren">
+    </form>
+
+
+    <!-- SIGN IN FORM -->
+    <form id="loginForm" class="form-container" action="/signin" method="post">
+        
+        <input id="emailSignin" type="email" name="emailSignin" placeholder="E-mail" required>
+
+        <input id="passwordSignin" type="password" name="passwordSignin" placeholder="Password" required>
+
+        <input type="submit" value="Inloggen">
+    </form>
+
+
+    <script>
+        document.getElementById('loginBtn').addEventListener('click', function() {
+            document.getElementById('loginForm').classList.add('active');
+            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('loginBtn').classList.add('active');
+            document.getElementById('registerBtn').classList.remove('active');
+        });
+
+        document.getElementById('registerBtn').addEventListener('click', function() {
+            document.getElementById('registerForm').classList.add('active');
+            document.getElementById('loginForm').classList.remove('active');
+            document.getElementById('registerBtn').classList.add('active');
+            document.getElementById('loginBtn').classList.remove('active');
+        });
+
+        // By default, show the login form and set login button as active
+        document.getElementById('loginForm').classList.add('active');
+        document.getElementById('loginBtn').classList.add('active');
+    </script>
+
+    
+
+</body>
+</html>
