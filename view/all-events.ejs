@@ -10,18 +10,13 @@
     <nav>
         <ul>    
             <li>
-                <a class="active" href="home.ejs">
+                <a class="active" href="/home">
                     <img src="assets/logo.png" alt="Logo">
                     Naam
                 </a>
             </li>
             <li>
-                <button>
-                <img src="images/iconSearch2.png" alt="Search">
-                </button>
-                <input type="search" name="q" placeholder="Waar ben je naar op zoek?" maxlength="30" aria-label="Search through site content">
-
-                <input type="search" id="site-search" name="q">
+                <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
                 <button>Search</button>
             </li>
                 <li><a href="/all-events">All Events</a></li>
@@ -29,9 +24,7 @@
         </ul>
         <ul>
             <li><a href="/form">Sign In</a></li>
-            <li><a href="profile.ejs">
-                Profile
-            </a></li>
+            <li><a href="/profile">Profile</a></li>
         </ul>
     </nav>
     <h1>All events</h1>
@@ -39,7 +32,7 @@
     <div class="filterDiv">
         <form action="/submit" method="post">
             <!-- Datum invoerveld -->
-            <input type="date" id="datum" name="datum" placeholder="Datum">
+            <input type="date" id="datum" name="datum">
             <br><br>
     
             <!-- Genre dropdown -->
