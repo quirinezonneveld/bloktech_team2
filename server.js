@@ -87,6 +87,10 @@ app.get('/', (req, res) => {
   res.render('home.ejs')
 })
 
+app.get('/home', (req, res) => {
+  res.render('home.ejs')
+})
+
 //Sign In / Register
 app.get('/form', (req, res) => {
   res.render('form')
@@ -138,7 +142,7 @@ app.post('/registry', async (req, res) => {
     const existingUser = await db.collection('users').findOne({ email: email });
     if (existingUser) {
       console.log('Email address already in use');
-      res.status(409).send('Email adress already in use');
+      res.status(409).render('error', { errorCode: 409, errorMessage: 'Email adress already in use' });
       return
     }
 
@@ -154,7 +158,7 @@ app.post('/registry', async (req, res) => {
 
   } catch (error) {
     console.error('Error inserting data into database', error);
-    res.status(500).send('Error inserting data into database');
+    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error inserting data into database' });
   }
 });
 
@@ -177,12 +181,12 @@ app.post('/signin', async (req, res) => {
       res.redirect('/profile');
     } else {
       console.log('Invalid email or password');
-      res.status(401).send('Invalid email or password');
+      res.status(401).render('error', { errorCode: 401, errorMessage: 'Invalid email or password'})
     }
 
   } catch (error) {
     console.error('Error fetching data from database', error);
-    res.status(500).send('Error fetching data from database');
+    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error fetching data from database' });
   }
 });
 
@@ -194,7 +198,7 @@ app.post('/signin', async (req, res) => {
 app.get('/signout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res.status(500).send('Error logging out');
+      return res.status(500).render('error', { errorCode: 500, errorMessage: 'Error logging out' });
     }
     res.clearCookie('connect.sid');
     console.log('Uitloggen succesvol: Sessie beëindigd');
@@ -225,7 +229,7 @@ app.post('/update', async (req, res) => {
     const result = await db.collection('users').updateOne(filter, updateData, options);
 
     if (result.matchedCount === 0) {
-      res.status(404).send('User not found');
+      res.status(404).render('error', { errorCode: 404, errorMessage: 'User not found' });
       return;
     }
 
@@ -235,7 +239,7 @@ app.post('/update', async (req, res) => {
 
   } catch (error) {
     console.error('Error updating data in database', error);
-    res.status(500).send('Error updating data in database');
+    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error updating data in database' });
   }
   
 });
@@ -245,7 +249,7 @@ app.use((req, res) => {
   // log error to console
   console.error('404 error at URL: ' + req.url)
   // send back a HTTP response with status code 404
-  res.status(404).send('404 error at URL: ' + req.url)
+  res.status(404).render('error', { errorCode: 404, errorMessage: '404 error at URL: ' + req.url });
 })
 
 // Middleware to handle server errors - error 500
@@ -253,7 +257,7 @@ app.use((err, req, res) => {
   // log error to console
   console.error(err.stack)
   // send back a HTTP response with status code 500
-  res.status(500).send('500: server error')
+  res.status(500).render('error', { errorCode: 500, errorMessage: 'Server error' });
 })
 
 // Start the webserver and listen for HTTP requests at specified port
