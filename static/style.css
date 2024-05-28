@@ -25,7 +25,7 @@
     --button-radius: 4.69em;
     --button-padding: 0.5em;
 
-    --card-radius: 2.06em;
+    --card-radius: 1.3rem;
 
     --font-size-h1: 24px;
     --font-size-h2: 24px;
@@ -93,14 +93,51 @@ nav ul:last-of-type li:last-of-type a img {
 } */
 
 
+/* card */
+.card {
+    text-decoration: none;
+}
+.card article {
+    background-color: var(--background-color-two);
+    height: 20em;
+    width: 18em;
+    border-radius: var(--card-radius);
 
-/* bronnen:
-    z-index: https://developer.mozilla.org/en-US/docs/Web/CSS/position 
-    https://developer.mozilla.org/en-US/docs/Web/CSS/z-index
-    root: https://developer.mozilla.org/en-US/docs/Web/CSS/:root
-*/
+    display: grid;
+	grid-template-columns: 1em 6em 1fr 2em 1em;
+    grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
+}
+.card article > * {
+    background-color: transparent;
+    
+}
+.card img {
+	grid-area: 1 / 1 / 4 / -1;
+	border: 2px solid blue;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+}
+.card p:first-of-type {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    background-color: var(--detail-color-two);
+    border-radius: var(--button-radius);
+}
+.card button i {
+    grid-area: 2 / 4 / 3 / 5; /*row-start / column-start / row-end / column-end;*/
+}
+.card h5 {
+    grid-area: 5 / 2 / 6 / 4;
+}
+.card p:nth-of-type(2) {
+    grid-area: 7 / 2 / 8 / 4;
+}
+.card p:last-of-type {
+    grid-area: 9 / 2 / 10 / 3;
+}
 
-body {
+
+.login-register-page body {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -119,7 +156,7 @@ body {
     width:130px;
 }
 
-hr{
+.login-register-page hr{
     width: 50%;
     margin: 0;
     border: .5px solid #D1D1D1;
@@ -142,7 +179,7 @@ hr{
     gap: 1em;
 }
 
-span {
+.login-register-page span {
     color: red;
 }
 
@@ -166,13 +203,13 @@ span {
     border-bottom: 3px #FF6000 solid;
 }
 
-form input{
+.login-register-page form input{
     padding: 5%;
     border-radius: 5px;
     border: 2px lightgrey solid;
 }
 
-input[type="submit"] {
+.login-register-page input[type="submit"] {
     background-color: #FF6000;
     border: none;
     margin-top: 1em;
@@ -181,7 +218,7 @@ input[type="submit"] {
 
 }
 
-form span{
+.login-register-page form span{
     display: flex;
     justify-content: end;
     margin-bottom: -15px;

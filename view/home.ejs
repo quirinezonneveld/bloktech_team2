@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
 </head>
 <body>
     <header>
@@ -18,12 +20,7 @@
                     </a>
                 </li>
                 <li>
-                    <button>
-                    <img src="images/iconSearch2.png" alt="Search">
-                    </button>
-                    <input type="search" name="q" placeholder="Waar ben je naar op zoek?" maxlength="30" aria-label="Search through site content">
-
-                    <input type="search" id="site-search" name="q">
+                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
                     <button>Search</button>
                 </li>
                     <li><a href="all-events.ejs">All Events</a></li>
@@ -53,7 +50,7 @@
             <h2>Upcoming</h2>
             <a href="all-events.ejs">See all</a>
 
-            <ul>
+            <!-- <ul>
 				<li>
 					<a href="wiegemes.html">
 						<article>
@@ -72,19 +69,32 @@
 						</article>
 					</a>
 				</li>
-            </ul>
+            </ul> -->
 
 
-            <div>
+            <!-- <div>
                 <button>
                     <img src="images/iconArrow3.svg" alt="Left Arrow: Click to slide left">
                 </button>
                 <button>
                     <img src="images/iconArrow3.svg" alt="Right Arrow: Click to slide right">
                 </button>
-            </div>
+            </div> -->
         </section>
 
+        <a href="detail.ejs" class="card">
+            <article>
+                <img src="../assets/empathy-map.png" alt="test">
+
+                <p>Concert</p>
+                <button>
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+                <h5>Naam artiest</h5>
+                <p>Informatie over event en artiest...</p>
+                <p>date</p>
+            </article>
+          </a>
 
 
     </main>
