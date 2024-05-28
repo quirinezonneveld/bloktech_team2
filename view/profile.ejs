@@ -4,8 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="style.css" rel="stylesheet">
 </head>
 <body>
+    <header>
+    <nav>
+        <ul>    
+            <li>
+                <a class="active" href="home.ejs">
+                    <img src="assets/logo.png" alt="Logo">
+                    Naam
+                </a>
+            </li>
+            <li>
+                <button>
+                <img src="images/iconSearch2.png" alt="Search">
+                </button>
+                <input type="search" name="q" placeholder="Waar ben je naar op zoek?" maxlength="30" aria-label="Search through site content">
+
+                <input type="search" id="site-search" name="q">
+                <button>Search</button>
+            </li>
+                <li><a href="all-events.ejs">All Events</a></li>
+                <li><a href="about-us.ejs">About Us</a></li>
+        </ul>
+        <ul>
+            <li><a href="/form">Sign In</a></li>
+            <li><a href="/profile">Profile</a></li>
+        </ul>
+    </nav>
+</header>
+    
+    <div class="profile">
+        <div class="profile_userInfo">
+            <form action="/upload-profile-picture" method="POST">
+                <input type="file" name="profileImage">
+                <input type="submit" value="Upload Photo">
+            </form>
+            <p>Welcome <%= name %> <%= surname %></p>
+            <p>Email: <%= email %></p>
+        </div>
+    </div>
     <form action="/signout" method="GET">
         <input type="submit" value="Sign out">
     </form>
