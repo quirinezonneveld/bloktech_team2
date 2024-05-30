@@ -10,8 +10,12 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
 // Bcrypt hashing
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 
+// Profile pictures
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage });
 
 
 app
@@ -118,9 +122,22 @@ app.get('/profile', async (req, res) => {
     return;
   }
 
-    const { name, surname, email } = req.session.user;
-    res.render('profile', { name, surname, email });
+  try {
+    const userId = new ObjectId(req.session.userId);
+    const user = await db.collection('users').findOne({ _id: userId })
+    if(!user) {
+      res.redirect('/form')
+      return;
+    }
+
+    const { name, surname, email, profileImage } = user;
+    res.render('profile', { name, surname, email, profileImage });
+  } catch (error) {
+    console.error('Error fetching user from database', error);
+    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error fetching user from database' });
+  }
 });
+
 
 /************/
 /* Registry */
@@ -187,6 +204,49 @@ app.post('/signin', async (req, res) => {
   } catch (error) {
     console.error('Error fetching data from database', error);
     res.status(500).render('error', { errorCode: 500, errorMessage: 'Error fetching data from database' });
+  }
+});
+
+/********************/
+/* Profile Pictures */
+/********************/
+
+app.post('/upload-profile-picture', upload.single('profileImage'), async (req, res) => {
+  if (!req.session.userId) {
+      res.redirect('/form');
+      return;
+  }
+
+  try {
+    console.log('File received:', req.file); // Controleer of het bestand correct is ontvangen
+    if (!req.file) {
+        throw new Error('File not uploaded correctly');
+    }
+
+    const userId = new ObjectId(req.session.userId);
+    const profileImage = req.file.buffer;
+
+    console.log('Updating user with ID:', userId);
+    console.log('Profile image buffer length:', profileImage.length);
+
+        
+
+    // Update the user profile with the image buffer
+    const result = await db.collection('users').updateOne(
+      { _id: userId },
+      { $set: { profileImage: profileImage } }
+    );
+
+    console.log('Update result:', result);
+
+    if (result.matchedCount === 0) {
+      throw new Error('No user found with the given ID');
+    }
+
+    res.redirect('/profile');
+  } catch (error) {
+    console.error('Error updating profile image in database', error);
+    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error updating profile image in database' });
   }
 });
 
