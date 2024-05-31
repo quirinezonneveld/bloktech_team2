@@ -154,7 +154,7 @@ nav ul:last-of-type li:last-of-type a img {
 
 
 /* card */
-.card {
+.card-container {
 	display: flex;
 	overflow-x: auto;
 	gap: 5em;
@@ -162,14 +162,14 @@ nav ul:last-of-type li:last-of-type a img {
 	scroll-behavior: smooth;
 	scroll-snap-type: x mandatory;
 }
-.card li {
+.card-container li {
 	scroll-snap-align: center;
 }
-.card::-webkit-scrollbar {
+.card-container::-webkit-scrollbar {
 	display: none;
 }
 
-.card article {
+.card-container article {
     background-color: var(--card-background-color);
     height: 20em;
     width: 18em;
@@ -179,17 +179,17 @@ nav ul:last-of-type li:last-of-type a img {
 	grid-template-columns: 1em 6em 1fr 2em 1em;
     grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
 }
-.card article > *, .card a > * {
+.card-container article > *, .card a > * {
     background-color: transparent;
 }
 
-.card img {
+.card-container img {
 	grid-area: 1 / 1 / 4 / -1;
     border-radius: var(--card-radius) var(--card-radius) 0 0;
     width: 100%;
     object-fit: cover;
 }
-.card article > p:first-of-type {
+.card-container article > p:first-of-type {
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 2;
@@ -199,7 +199,7 @@ nav ul:last-of-type li:last-of-type a img {
     justify-self: flex-start;
     padding: 0.3em 0.8em;
 }
-.card button {
+.card-container button {
     grid-area: 2 / 4 / 3 / 5; /*row-start / column-start / row-end / column-end;*/
     /* scale: 1.5; */
     border: none;
@@ -207,23 +207,23 @@ nav ul:last-of-type li:last-of-type a img {
     background-color: var(--background-color-two);
     border-radius: var(--button-radius);
 }
-.card button i {
+.card-container button i {
     color: var(--card-background-color);
     background-color: transparent;
 }
 
-.card a {
+.card-container a {
     grid-area: 5 / 2 / 10 / 4; /* Zorg ervoor dat de link al deze cellen beslaat */
     text-decoration: none; /* Verwijdert de onderstreping van de link */
 }
-.card a h5 {
+.card-container a h5 {
     grid-area: 5 / 2 / 6 / 4;
 }
-.card a p:first-of-type {
+.card-container a p:first-of-type {
     grid-area: 7 / 2 / 8 / 4;
     color: var(--font-color-two);
 }
-.card a p:last-of-type {
+.card-container a p:last-of-type {
     grid-area: 9 / 2 / 10 / 3;
     color: var(--font-color-two);
     /* font-size: var(--font-size-body-small); */

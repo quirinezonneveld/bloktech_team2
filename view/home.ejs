@@ -16,7 +16,7 @@
             <ul>    
                 <li>
                     <a class="active" href="/home">
-                        <img src="assets/logo.png" alt="Logo">
+                        <img src="assets/test-logo.png" alt="Logo">
                         Naam
                     </a>
                 </li>
@@ -50,81 +50,28 @@
             <h2>Upcoming</h2>
 
             <a href="all-events.ejs">See all</a>
-        
+            <ul id="card-container" class="card-container">
+            <% for (const event of events) { %>
+                <li >
+                    <article class="event-template">
+                        <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                        <p>
+                            <%= event.name %>
+                        </p>
+                        <button class="like-button" data-event-id="<%= event.id %>">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                        <a href="<%= event.url %>">
+                            <h5 data-content="event-name">Naam artiest</h5>
+                            <p>Informatie over event en artiest...</p>
+                            <p><%= event.dates.start.dateTime %></p>
+                        </a>
+                    </article>
+                </li>
+            <% } %>
+            </ul>
             
             <!-- card -->
-            <ul class="card">
-                <li>
-                    <article>
-                        <img src="assets/card-default.jpg" alt="Event photo">
-                        <p>Concert</p>
-                        <button>
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
-                        <a href="detail.ejs">
-                            <h5>Naam artiest</h5>
-                            <p>Informatie over event en artiest...</p>
-                            <p>date</p>
-                        </a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <img src="assets/card-default.jpg" alt="Event photo">
-                        <p>Concert</p>
-                        <button>
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
-                        <a href="detail.ejs">
-                            <h5>Naam artiest</h5>
-                            <p>Informatie over event en artiest...</p>
-                            <p>date</p>
-                        </a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <img src="assets/card-default.jpg" alt="Event photo">
-                        <p>Concert</p>
-                        <button>
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
-                        <a href="detail.ejs">
-                            <h5>Naam artiest</h5>
-                            <p>Informatie over event en artiest...</p>
-                            <p>date</p>
-                        </a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <img src="assets/card-default.jpg" alt="Event photo">
-                        <p>Concert</p>
-                        <button>
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
-                        <a href="detail.ejs">
-                            <h5>Naam artiest</h5>
-                            <p>Informatie over event en artiest...</p>
-                            <p>date</p>
-                        </a>
-                    </article>
-                </li>
-                <li>
-                    <article>
-                        <img src="assets/card-default.jpg" alt="Event photo">
-                        <p>Concert</p>
-                        <button>
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
-                        <a href="detail.ejs">
-                            <h5>Naam artiest</h5>
-                            <p>Informatie over event en artiest...</p>
-                            <p>date</p>
-                        </a>
-                    </article>
-                </li>
-            </ul>
  
 
         <ul>
@@ -147,6 +94,9 @@
     </main>
 
     <footer></footer>
+
+
+    <script src="./client.js"></script>
     
 </body>
 </html>
