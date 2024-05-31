@@ -5,29 +5,35 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
-    background-color: var(--background-color-one);
-    color: var(--font-color-one);
     scroll-behavior: smooth;
+    color: var(--font-color-one);
 }
 body {
+    background-color: var(--background-color-one);
     overflow-x: hidden;
+    background-image: url('assets/blur.png');
+    background-position: -20em -20em; /* Je kunt elke positie specificeren, zoals top, bottom, left, right, etc. */
+    background-repeat: no-repeat; /* Hiermee voorkom je dat de afbeelding herhaald wordt */
+
 }
 
 :root {
     --background-color-one: #101010;
     --background-color-two: #0D0C0C;
 
-    --detail-color-one: #FF6000;
+    --detail-color-one: #ff6600;
     --detail-color-one-hover: #C64B00;
+    /* miss toch wel groen ;) even op het einde kijken */
+
     /* --detail-color-two: #00A3FF;
     --detail-color-two-hover: #00A3FF; */
 
-    --font-color-one: #BFBFBF;
-    --font-color-two: #5D5D5D;
+    --font-color-one: #eeebeb;
+    --font-color-two: #979797;
 
     --button-color-text: #101010;
     --button-radius: 4.69em;
-    --button-padding: 0.5em;
+    --button-padding: 0.5em 1em;
 
     --card-radius: 1.3rem;
     --card-background-color: #3E3D3D;
@@ -60,6 +66,7 @@ body {
 h1 {
     font-size: var(--font-size-h1);
     line-height: 1.1;
+    /* font-family:Georgia, 'Times New Roman', Times, serif; */
 }
 h2 {
     font-size: var(--font-size-h2);
@@ -94,10 +101,13 @@ nav {
     border-bottom: 0.1em solid var(--font-color-two);
     padding: 0 5%;
 }
-
 nav ul {
     list-style-type: none;
     display: flex;
+}
+
+nav ul:first-of-type li:first-of-type a img {
+    max-width: 2em;
 }
 
 nav li {
@@ -111,19 +121,48 @@ nav li a:hover {
     color: var(--detail-color-one-hover);
 }
 
-nav ul:last-of-type li:last-of-type a, nav ul:last-of-type li:nth-child(2) a {
+/* search */
+nav li:nth-of-type(2) input {
+    border-radius: var(--button-radius);
+    padding-left: 1em;
+    padding-right: 0.2em;
+}
+nav li:nth-of-type(2) input:focus {
+    border-color: var(--detail-color-one);
+    background-color: var(--background-color-two);
+    outline: none;
+}
+nav li:nth-of-type(2) button {
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+    border-radius: var(--button-radius);
+}
+nav li:nth-of-type(2) button i {
+    color: var(--font-color-one);
+}
+
+
+/* loging & profile */
+nav ul:last-of-type li:last-of-type a, nav ul:last-of-type li a {
     background-color: var(--detail-color-one);
     border-radius: var(--button-radius);
     padding: var(--button-padding);
 }
 nav ul:last-of-type li:last-of-type a img {
     border-radius: 100em;
+    width: 1.5em;
 }
 
 /* class active in html op pagina zetten waarop je je bevind  */
 /* .active {
     font-weight: 900;
 } */
+
+
+
+
+
 
 
 /* homepage */
@@ -150,26 +189,39 @@ nav ul:last-of-type li:last-of-type a img {
     padding-left: 8em;
     width: 100%;
 }
+.upcoming div {
+    display: flex;
+    align-items:baseline;
+    justify-content: space-between;
+    padding-right: 8em;
+}
+.upcoming a {
+    color: var(--detail-color-one);
+    float: right;
+}
+.upcoming a:hover {
+    color: var(--detail-color-one-hover);
+}
 
 
 
 /* card */
-.card {
+.card-container {
 	display: flex;
 	overflow-x: auto;
 	gap: 5em;
 	list-style-type: none;
 	scroll-behavior: smooth;
-	scroll-snap-type: x mandatory;
+	/* scroll-snap-type: x mandatory; */
 }
-.card li {
+.card-container li {
 	scroll-snap-align: center;
 }
-.card::-webkit-scrollbar {
+.card-container::-webkit-scrollbar {
 	display: none;
 }
 
-.card article {
+.card-container article {
     background-color: var(--card-background-color);
     height: 20em;
     width: 18em;
@@ -179,17 +231,17 @@ nav ul:last-of-type li:last-of-type a img {
 	grid-template-columns: 1em 6em 1fr 2em 1em;
     grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
 }
-.card article > *, .card a > * {
+.card-container article > *, .card a > * {
     background-color: transparent;
 }
 
-.card img {
+.card-container img {
 	grid-area: 1 / 1 / 4 / -1;
     border-radius: var(--card-radius) var(--card-radius) 0 0;
     width: 100%;
     object-fit: cover;
 }
-.card article > p:first-of-type {
+.card-container article > p:first-of-type {
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 2;
@@ -199,7 +251,7 @@ nav ul:last-of-type li:last-of-type a img {
     justify-self: flex-start;
     padding: 0.3em 0.8em;
 }
-.card button {
+.card-container button {
     grid-area: 2 / 4 / 3 / 5; /*row-start / column-start / row-end / column-end;*/
     /* scale: 1.5; */
     border: none;
@@ -207,23 +259,24 @@ nav ul:last-of-type li:last-of-type a img {
     background-color: var(--background-color-two);
     border-radius: var(--button-radius);
 }
-.card button i {
+.card-container button i {
     color: var(--card-background-color);
     background-color: transparent;
 }
 
-.card a {
+.card-container a {
     grid-area: 5 / 2 / 10 / 4; /* Zorg ervoor dat de link al deze cellen beslaat */
     text-decoration: none; /* Verwijdert de onderstreping van de link */
+    /* background-color: var(--card-background-color); */
 }
-.card a h5 {
+.card-container a h5 {
     grid-area: 5 / 2 / 6 / 4;
 }
-.card a p:first-of-type {
+.card-container a p:first-of-type {
     grid-area: 7 / 2 / 8 / 4;
     color: var(--font-color-two);
 }
-.card a p:last-of-type {
+.card-container a p:last-of-type {
     grid-area: 9 / 2 / 10 / 3;
     color: var(--font-color-two);
     /* font-size: var(--font-size-body-small); */
@@ -235,6 +288,7 @@ nav ul:last-of-type li:last-of-type a img {
 	width: 100%;
 	list-style-type: none;
 	padding-top: 1em;
+    padding-right: 8em;
 	justify-content: flex-end;
 	gap: 1em;
 }
@@ -242,18 +296,34 @@ nav ul:last-of-type li:last-of-type a img {
 	border: none;
 	background-color: transparent;
 }
-.card-buttons button img {
-	width: 3em;
+.card-buttons button {
+    grid-area: 2 / 4 / 3 / 5; /*row-start / column-start / row-end / column-end;*/
+    /* scale: 1.5; */
+    border: none;
+    cursor: pointer;
+    background-color: var(--detail-color-one);
+    border-radius: var(--button-radius);
+    width: 3em;
 	height: 3em;
 }
-.card-buttons li:first-of-type {
-	transform: scaleX(-1);
+.card-buttons button i {
+    /* color: var(--card-background-color); */
+    color: var(--background-color-one);
+    background-color: transparent;
+}
+.card-buttons button:hover {
+    background-color: var(--detail-color-one-hover);
 }
 
 
 
 
-/* login & register */
+
+
+
+
+
+/* login & register page */
 .login-register-page body {
     display: flex;
     flex-direction: column;
