@@ -32,19 +32,27 @@
     
     <div class="profile">
         <div class="profile_userInfo">
+            <% if (profileImage) { %>
+                <img src="data:image/jpeg;base64,<%= profileImage.toString('base64') %>" alt="Profile Image">
+              <% } else { %>
+                <img src="/assets/default-profile.png" alt="Default Profile Image">
+            <% } %>
             <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
                 <input type="file" name="profileImage">
                 <input type="submit" value="Upload Photo">
             </form>
+            <form action="/delete-profile-picture" method="POST" onsubmit="confirmDeletion(event)">
+                <input type="submit" value="Delete Photo">
+            </form>
             <p>Welcome <%= name %> <%= surname %></p>
             <p>Email: <%= email %></p>
         </div>
-        <% if (profileImage) { %>
-            <img src="data:image/jpeg;base64,<%= profileImage.toString('base64') %>" alt="Profile Image">
-          <% } else { %>
-            <img src="/assets/default-profile.png" alt="Default Profile Image">
-          <% } %>
+        
     </div>
+    <form action="/update" method="GET">
+        <input type="submit" value="Update Profile">
+    </form>
+
     <form action="/signout" method="GET">
         <input type="submit" value="Sign out">
     </form>
