@@ -9,10 +9,30 @@
 
 <body class="login-register-page">
     
-    <div class="logo-header">
-        <img src="assets/test-logo.png" alt="logo">
-    </div>
 
+    <header>
+        <nav>
+            <ul>    
+                <li>
+                    <a class="active" href="/home">
+                        <img src="assets/logo.png" alt="Logo">
+                        Naam
+                    </a>
+                </li>
+                <li>
+                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
+                    <button>Search</button>
+                </li>
+                    <li><a href="/all-events">All Events</a></li>
+                    <li><a href="/about-us">About Us</a></li>
+            </ul>
+            <ul>
+                <li><a href="/form">Sign In</a></li>
+                <li><a href="/profile">Profile</a></li>
+            </ul>
+        </nav>
+
+    </header>
 
   
     
@@ -35,7 +55,11 @@
         <span>*</span>
         <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Password" required>
 
+        <p><span>*</span> fields are required</p>
+
         <input type="submit" value="Registreren">
+
+        
     </form>
 
 

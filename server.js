@@ -10,8 +10,12 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo');
 
 // Bcrypt hashing
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 
+// Profile pictures
+const multer = require('multer')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage });
 
 
 app
@@ -77,7 +81,7 @@ app.use(session({
     mongoUrl: `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}/${process.env.DB_NAME}?retryWrites=true&w=majority`
   }),
   cookie: { 
-    maxAge: 1000 * 60 * 60 * 24,  // Sessie geldig voor 1 dag
+    maxAge: 1000 * 60 * 60 ,  // Sessie geldig voor 1 uur
     SameSite: true 
   } 
 }));
@@ -118,9 +122,22 @@ app.get('/profile', async (req, res) => {
     return;
   }
 
-    const { name, surname, email } = req.session.user;
-    res.render('profile', { name, surname, email });
+  try {
+    const userId = new ObjectId(req.session.userId);
+    const user = await db.collection('users').findOne({ _id: userId })
+    if(!user) {
+      res.redirect('/form')
+      return;
+    }
+
+    const { name, surname, email, profileImage } = user;
+    res.render('profile', { name, surname, email, profileImage });
+  } catch (error) {
+    console.error('Error fetching user from database', error);
+    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error fetching user from database' });
+  }
 });
+
 
 /************/
 /* Registry */
@@ -134,7 +151,6 @@ app.post('/registry', async (req, res) => {
   const email = req.body.emailRegister;
 
   console.log(`Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`);
-  //res.render('response.ejs', { name: firstName, surname: lastName, password: password, email: email });
 
 
   try {
@@ -190,6 +206,71 @@ app.post('/signin', async (req, res) => {
   }
 });
 
+/********************/
+/* Profile Pictures */
+/********************/
+
+app.post('/upload-profile-picture', upload.single('profileImage'), async (req, res) => {
+  if (!req.session.userId) {
+      res.redirect('/form');
+      return;
+  }
+
+  try {
+    console.log('File received:', req.file); // Controleer of het bestand correct is ontvangen
+    if (!req.file) {
+        throw new Error('File not uploaded correctly');
+    }
+
+    const userId = new ObjectId(req.session.userId);
+    const profileImage = req.file.buffer;
+
+    console.log('Updating user with ID:', userId);
+    console.log('Profile image buffer length:', profileImage.length);
+
+        
+
+    // Update the user profile with the image buffer
+    const result = await db.collection('users').updateOne(
+      { _id: userId },
+      { $set: { profileImage: profileImage } }
+    );
+
+    console.log('Update result:', result);
+
+    if (result.matchedCount === 0) {
+      throw new Error('No user found with the given ID');
+    }
+
+    res.redirect('/profile');
+  } catch (error) {
+    console.error('Error updating profile image in database', error);
+    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error updating profile image in database' });
+  }
+});
+
+app.post('/delete-profile-picture', async (req, res) => {
+  if (!req.session.userId) {
+      res.redirect('/form');
+      return;
+  }
+
+  try {
+      const userId = new ObjectId(req.session.userId);
+
+      // Deleting out of database 
+      await db.collection('users').updateOne(
+          { _id: userId },
+          { $unset: { profileImage: "" } }
+      );
+
+      res.redirect('/profile');
+  } catch (error) {
+      console.error('Error deleting profile image from database', error);
+      res.status(500).render('error', { errorCode: 500, errorMessage: 'Error deleting profile image from database' });
+  }
+});
+
 
 /************/
 /* Sign out */
@@ -211,37 +292,74 @@ app.get('/signout', (req, res) => {
 /* Updating data */
 /*****************/
 
-//Updaten van de voor- en achternaam 
-app.post('/update', async (req, res) => {
+app.get('/update', (req, res) => {
+  if (!req.session.userId) {
+      res.redirect('/form');
+      return;
+  }
+  res.render('update');
+});
+
+// Route for updating the name
+app.post('/update-name', async (req, res) => {
   const { emailUpdate: email, fNameUpdate: firstName, lNameUpdate: lastName } = req.body;
 
   try {
-    const filter = {
-      email: email
-    }
-    const updateData = {
-      $set: {
-        name: firstName, surname: lastName
+      const filter = { email: email };
+      const updateData = {
+          $set: {
+              name: firstName, 
+              surname: lastName
+          }
+      };
+      const options = { upsert: false };
+
+      const result = await db.collection('users').updateOne(filter, updateData, options);
+
+      if (result.matchedCount === 0) {
+          res.status(404).render('error', { errorCode: 404, errorMessage: 'User not found' });
+          return;
       }
-    }
-    const options = { upsert: true };
 
-    const result = await db.collection('users').updateOne(filter, updateData, options);
-
-    if (result.matchedCount === 0) {
-      res.status(404).render('error', { errorCode: 404, errorMessage: 'User not found' });
-      return;
-    }
-
-    console.log(`User details updated for email: ${email}`);
-    res.send('User details updated successfully');
-
-
+      console.log(`User details updated for email: ${email}`);
+      res.redirect('/profile')
   } catch (error) {
-    console.error('Error updating data in database', error);
-    res.status(500).render('error', { errorCode: 500, errorMessage: 'Error updating data in database' });
+      console.error('Error updating data in database', error);
+      res.status(500).render('error', { errorCode: 500, errorMessage: 'Error updating data in database' });
   }
-  
+});
+
+// Route for updating password
+app.post('/update-password', async (req, res) => {
+  const { emailUpdate: email, oldPassword, newPassword, confirmNewPassword } = req.body;
+
+  if (newPassword !== confirmNewPassword) {
+      res.status(400).render('error', { errorCode: 400, errorMessage: 'New passwords do not match' });
+      return;
+  }
+
+  try {
+      const user = await db.collection('users').findOne({ email: email });
+
+      if (!user || !(await bcrypt.compare(oldPassword, user.password))) {
+          res.status(401).render('error', { errorCode: 401, errorMessage: 'Invalid email or password' });
+          return;
+      }
+
+      const saltRounds = 10;
+      const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
+
+      await db.collection('users').updateOne(
+          { email: email },
+          { $set: { password: hashedNewPassword } }
+      );
+
+      console.log(`Password updated for email: ${email}`);
+      res.redirect('/profile')
+  } catch (error) {
+      console.error('Error updating password in database', error);
+      res.status(500).render('error', { errorCode: 500, errorMessage: 'Error updating password in database' });
+  }
 });
 
 // Middleware to handle not found errors - error 404
