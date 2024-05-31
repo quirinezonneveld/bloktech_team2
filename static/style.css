@@ -341,3 +341,18 @@ nav ul:last-of-type li:last-of-type a img {
     margin-bottom: -15px;
     margin-top: -10px;
 }
+
+.filterDiv form{
+    background-color: grey;
+    padding: 2em;
+    border-radius: 1em;
+
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.testTile{
+    background-color: grey;
+}
+

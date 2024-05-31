@@ -15,7 +15,7 @@
         <nav>
             <ul>    
                 <li>
-                    <a class="active" href="home.ejs">
+                    <a class="active" href="/home">
                         <img src="assets/logo.png" alt="Logo">
                         Naam
                     </a>
@@ -24,14 +24,12 @@
                     <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
                     <button>Search</button>
                 </li>
-                    <li><a href="all-events.ejs">All Events</a></li>
-                    <li><a href="about-us.ejs">About Us</a></li>
+                    <li><a href="/all-events">All Events</a></li>
+                    <li><a href="/about-us">About Us</a></li>
             </ul>
             <ul>
                 <li><a href="/form">Sign In</a></li>
-                <li><a href="profile.ejs">
-                    Profile
-                </a></li>
+                <li><a href="/profile">Profile</a></li>
             </ul>
         </nav>
 
@@ -50,6 +48,7 @@
     <main>
         <section class="upcoming">
             <h2>Upcoming</h2>
+
             <a href="all-events.ejs">See all</a>
         
             
@@ -126,8 +125,9 @@
                     </article>
                 </li>
             </ul>
-            
-            <ul class="card-buttons">
+ 
+
+        <ul>
 				<li>
 					<button>
 						<img src="assets/card-arrow.gif" alt="Left Arrow: Click to slide left">
@@ -143,7 +143,6 @@
         
         </section>
 
-    
 
     </main>
 

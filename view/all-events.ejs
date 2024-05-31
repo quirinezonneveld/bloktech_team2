@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav>
+        <ul>    
+            <li>
+                <a class="active" href="/home">
+                    <img src="assets/logo.png" alt="Logo">
+                    Naam
+                </a>
+            </li>
+            <li>
+                <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
+                <button>Search</button>
+            </li>
+                <li><a href="/all-events">All Events</a></li>
+                <li><a href="/about-us">About Us</a></li>
+        </ul>
+        <ul>
+            <li><a href="/form">Sign In</a></li>
+            <li><a href="/profile">Profile</a></li>
+        </ul>
+    </nav>
+    <h1>All events</h1>
+
+    <div class="filterDiv">
+        <form action="/submit" method="post">
+            <!-- Datum invoerveld -->
+            <input type="date" id="datum" name="datum">
+            <br><br>
+    
+            <!-- Genre dropdown -->
+            <select id="genre" name="genre">
+                <option value="" disabled selected>Genre</option>
+                <option value="action">Actie</option>
+                <option value="comedy">Komedie</option>
+                <option value="drama">Drama</option>
+                <option value="horror">Horror</option>
+                <option value="sci-fi">Science Fiction</option>
+            </select>
+            <br><br>
+    
+            <!-- Regio dropdown -->
+            <select id="regio" name="regio">
+                <option value="" disabled selected>Regio</option>
+                <option value="north">Noord</option>
+                <option value="south">Zuid</option>
+                <option value="east">Oost</option>
+                <option value="west">West</option>
+            </select>
+            <br><br>
+    
+            <!-- Submit knop -->
+            <button type="submit">Verzenden</button>
+        </form>
+    </div>
+
+    <div class="details">
+        <div class="testTile">test</div>
+    </div>
+    
+</body>
+
+</html>
