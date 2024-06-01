@@ -11,10 +11,9 @@
 body {
     background-color: var(--background-color-one);
     overflow-x: hidden;
-    background-image: url('assets/blur.png');
-    background-position: -20em -20em; /* Je kunt elke positie specificeren, zoals top, bottom, left, right, etc. */
-    background-repeat: no-repeat; /* Hiermee voorkom je dat de afbeelding herhaald wordt */
-
+    background-image: url('assets/blur.png'), url('assets/blur.png');
+    background-position: -20em -20em, 20em 50em;
+    background-repeat: no-repeat;
 }
 
 :root {
@@ -22,7 +21,7 @@ body {
     --background-color-two: #0D0C0C;
 
     --detail-color-one: #ff6600;
-    --detail-color-one-hover: #C64B00;
+    --detail-color-one-hover: #e75800;
     /* miss toch wel groen ;) even op het einde kijken */
 
     /* --detail-color-two: #00A3FF;
@@ -98,7 +97,7 @@ nav {
     width: 100%;
     position: sticky;
     z-index: 10;
-    border-bottom: 0.1em solid var(--font-color-two);
+    /* border-bottom: 0.1em solid var(--font-color-two); */
     padding: 0 5%;
 }
 nav ul {
@@ -112,6 +111,7 @@ nav ul:first-of-type li:first-of-type a img {
 
 nav li {
     padding: 0.8em;
+    align-self: center;
 }
 nav li a {
     color: var(--font-color-one);
@@ -153,7 +153,17 @@ nav ul:last-of-type li:last-of-type a img {
     border-radius: 100em;
     width: 1.5em;
 }
+nav ul:last-of-type li:last-of-type a:hover, nav ul:last-of-type li a:hover {
+    color: var(--font-color-one);
+    background-color: var(--detail-color-one-hover);
+}
 
+
+nav ul:last-of-type li a {
+    display: flex;
+    gap: 0.6em;
+    align-items: center;
+}
 /* class active in html op pagina zetten waarop je je bevind  */
 /* .active {
     font-weight: 900;
@@ -314,6 +324,44 @@ nav ul:last-of-type li:last-of-type a img {
 .card-buttons button:hover {
     background-color: var(--detail-color-one-hover);
 }
+
+
+
+
+/* slider */
+@keyframes slideAnimatie {
+    5% { transform: translateX(0) }
+    20% { transform: translateX(-100vw) }
+    30% { transform: translateX(-100vw) }
+    45% { transform: translateX(-200vw) } 
+    55% { transform: translateX(-200vw) }
+    70% { transform: translateX(-300vw) } 
+    80% { transform: translateX(-300vw) }
+    95% { transform: translateX(-400vw) } 
+    100% { transform: translateX(-400vw) }
+}
+
+.slider {
+    scale: 0.8;
+    overflow: hidden;
+}
+.slider img {
+    width: 100vw;
+}
+.slider ul {
+    width: 500vw;
+    animation:  25s slideAnimatie infinite;
+    display: flex;
+    gap: 3%;
+    list-style-type: none;
+}
+.slider li {
+    float: left;
+}
+
+
+
+
 
 
 
