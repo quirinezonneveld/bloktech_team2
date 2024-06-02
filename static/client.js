@@ -1,12 +1,13 @@
-document.addEventListener("DOMContentLoaded", async () => {
-  const likeButtons = document.querySelectorAll(".like-button");
+document.addEventListener('DOMContentLoaded', async () => {
+  const likeButtons = document.querySelectorAll('.like-button');
   likeButtons.forEach((button) => {
-    button.addEventListener("click", (event) => {
+    button.addEventListener('click', (event) => {
       const buttonElement = event.currentTarget;
-      const eventId = buttonElement.getAttribute("data-event-id");
-      console.log("eventId ----->", eventId);
+      const eventId = buttonElement.getAttribute('data-event-id');
+      console.log('eventId ----->', eventId);
     });
   });
+
   //   try {
   //     console.log("I work------>");
   //     const response = await fetch("/api-data");

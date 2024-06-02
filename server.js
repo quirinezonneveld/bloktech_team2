@@ -53,7 +53,7 @@ client
   .connect()
   .then(() => {
     console.log('Database connection established');
-    db = client.db(process.env.DB_NAME); // Connect to the specific database
+    db = client.db(process.env.DB_NAME); // Connect to the specific database ->
   })
   .catch((err) => {
     console.log(`Database connection error - ${err}`);
@@ -136,13 +136,8 @@ app.get('/api-data', async (req, res) => {
     const data = response.data;
     res.json(data);
   } catch (error) {
-    console.error(
-      'Er is een fout opgetreden bij het ophalen van de API-gegevens:',
-      error
-    );
-    res
-      .status(500)
-      .send('Er is een fout opgetreden bij het ophalen van de API-gegevens');
+    console.error('Error loading data', error);
+    res.status(500).send('Error loading data');
   }
 });
 
