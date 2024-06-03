@@ -1,4 +1,17 @@
+async function getEvents() {
+  try {
+    const response = await fetch(URL);
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('error loading data', error);
+  }
+}
+
+getEvents();
+
 document.addEventListener('DOMContentLoaded', async () => {
+  console.log('2 ------>');
   const likeButtons = document.querySelectorAll('.like-button');
   likeButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
@@ -7,6 +20,13 @@ document.addEventListener('DOMContentLoaded', async () => {
       console.log('eventId ----->', eventId);
     });
   });
+
+  setTimeout(() => {
+    const splineContainer = document.getElementById('spline');
+    console.log('splineContainer ------>', splineContainer);
+  }, 3000);
+
+  const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=jxIe8vLUvEyo3k3lzYUPdyVeqYbdfYiv`;
 
   //   try {
   //     console.log("I work------>");

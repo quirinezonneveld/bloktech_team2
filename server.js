@@ -92,8 +92,10 @@ app.use(
 );
 
 //Routes
-app.get('/', (req, res) => {
-  res.render('home.ejs');
+app.get('/', async (req, res) => {
+  const events = await getEvents();
+  console.log('events ------->', events);
+  res.render('home.ejs', { events });
 });
 
 app.get('/home', async (req, res) => {
