@@ -26,8 +26,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     console.log('splineContainer ------>', splineContainer);
   }, 3000);
 
-  const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=jxIe8vLUvEyo3k3lzYUPdyVeqYbdfYiv`;
-
+ const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
   //   try {
   //     console.log("I work------>");
   //     const response = await fetch("/api-data");
