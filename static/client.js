@@ -27,4 +27,3 @@ document.addEventListener('DOMContentLoaded', async () => {
  const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
 
 })
-  
