@@ -1,4 +1,4 @@
-//javascript voor card
+//card
 
 document.addEventListener('DOMContentLoaded', () => {
     // Haal alle card-containers op
@@ -38,3 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
     
     console.log('test hello world');
 });
+
+// like button
+const likeButton = document.querySelector('.card-container button i');
+
+likeButton.addEventListener('click', () => {
+    likeButton.classList.toggle('liked');
+    console.log('like werkt')
+});
+

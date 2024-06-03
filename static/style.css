@@ -257,6 +257,26 @@ footer section div:first-of-type i {
     background-color: var(--detail-color-one-hover);
 }
 
+footer section > div:last-of-type {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5em;
+}
+footer section div:last-of-type address ul {
+    display: flex;
+    list-style-type: none;
+    gap: 2em;
+}
+footer section div:last-of-type address ul li i {
+    scale: 1.2;
+}
+footer section div:last-of-type address ul li i:hover {
+    color: var(--detail-color-one);
+    scale: 1.5;
+}
+
+
+
 @media (max-width: 850px) {
     footer section {
         flex-direction: column;
@@ -276,19 +296,6 @@ footer span {
 	padding-top: 1em;
 	background-color: var(--background-color-two);
     color: var(--font-color-two);
-}
-footer span ul {
-    display: flex;
-    list-style-type: none;
-    gap: 2em;
-}
-footer span ul li i {
-    scale: 1.5;
-    color: var(--font-color-two);
-}
-footer span ul li i:hover {
-    color: var(--detail-color-one);
-    scale: 1.7;
 }
 
 
@@ -399,8 +406,9 @@ footer span ul li i:hover {
     color: var(--card-background-color);
     background-color: transparent;
 }
-.card-container button i.active {
-    color: var(--detail-color-one); /* Aangepaste kleur */
+.liked {
+    color: var(--detail-color-one);
+    border: solid red 10px;
 }
 
 
