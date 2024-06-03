@@ -1,4 +1,7 @@
+/************/
 /* general */
+/************/
+
 *, html {
     margin: 0;
     padding: 0;
@@ -10,7 +13,7 @@
 body {
     background-color: var(--background-color-one);
     overflow-x: hidden;
-    background-image: url('assets/blur.png'), url('assets/blur.png');
+    background-image: url('assets/blur2.png'), url('assets/blur2.png');
     background-position: -20em -20em, 20em 50em;
     background-repeat: no-repeat;
 }
@@ -20,8 +23,7 @@ body {
     --background-color-two: #0D0C0C;
 
     --detail-color-one: #ff6600;
-    --detail-color-one-hover: #e75800;
-    /* miss toch wel groen ;) even op het einde kijken */
+    --detail-color-one-hover: #ff4800;
 
     /* --detail-color-two: #00A3FF;
     --detail-color-two-hover: #00A3FF; */
@@ -46,7 +48,7 @@ body {
     --font-size-body: 1em;
     --font-size-body-small: 0.8em;
 
-    /* --desktop-margin: 8em; 128 px */
+    --desktop-margin: 8em;  /* 128 px */
     /* --mobile-margin: ; */
 }
 @media(prefers-color-scheme:light) {
@@ -87,9 +89,37 @@ p {
 }
 
 
+header > a {
+	background-color: var(--detail-color-one);
+	color: var(--button-color-text);
+	position: absolute;
+	padding: var(--button-padding);
+    border-radius: var(--button-radius);
+
+	transform: translateY(-120%);
+	transition: transform 325ms ease-in;
+	z-index: 2;
+}
+header > a:focus {
+	transform: translateY(1em);
+	position: relative;
+}
+
+@media (max-width: 850px) {
+    header section {
+        flex-direction: column;
+    }
+}
+
+/* skip to main content: 
+https://www.youtube.com/watch?v=287mLmuamoM https://www.youtube.com/watch?v=jDDaOFr9nqQ */
 
 
+
+/************/
 /* navigatie */
+/************/
+
 nav {
     display: flex;
     justify-content: space-between;
@@ -105,7 +135,9 @@ nav ul {
 }
 
 nav ul:first-of-type li:first-of-type a img {
-    max-width: 2em;
+    max-width: 4em;
+    justify-self: center;
+    align-self: center;
 }
 
 nav li {
@@ -163,10 +195,101 @@ nav ul:last-of-type li a {
     gap: 0.6em;
     align-items: center;
 }
+
 /* class active in html op pagina zetten waarop je je bevind  */
-/* .active {
+.active {
     font-weight: 900;
-} */
+}
+
+
+
+
+
+
+/************/
+/* footer */
+/************/
+
+footer section {
+    padding: var(--desktop-margin);
+    background-image: url('assets/footer-background.gif');
+    /* background-repeat: no-repeat; */
+    background-size: cover;
+    display: flex;
+    justify-content: space-between;
+}
+
+footer section * {
+    color: white;
+    text-decoration: none;
+}
+footer section ul a:hover, footer section div:last-of-type a:hover {
+    color: var(--detail-color-one-hover);
+}
+
+footer section ul {
+    list-style-type: none;
+}
+
+footer section div:first-of-type {
+    max-width: 15em;
+}
+
+
+footer section div:first-of-type h2 {
+    margin-bottom: 0.6em;
+    line-height: 120%;
+}
+footer section div:first-of-type i {
+    color: var(--button-color-text);
+    margin-right: 0.5em;
+}
+
+.cta-button {
+    background-color: var(--detail-color-one);
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    color: var(--button-color-text);
+}
+
+.cta-button:hover {
+    background-color: var(--detail-color-one-hover);
+}
+
+@media (max-width: 850px) {
+    footer section {
+        flex-direction: column;
+        gap: 2em;
+    }
+}
+
+
+
+
+/* credits */
+footer span {
+	display: flex;
+	font-size: 0.7em;
+	justify-content: space-evenly;
+	padding-bottom: 1em;
+	padding-top: 1em;
+	background-color: var(--background-color-two);
+    color: var(--font-color-two);
+}
+footer span ul {
+    display: flex;
+    list-style-type: none;
+    gap: 2em;
+}
+footer span ul li i {
+    scale: 1.5;
+    color: var(--font-color-two);
+}
+footer span ul li i:hover {
+    color: var(--detail-color-one);
+    scale: 1.7;
+}
 
 
 
@@ -174,7 +297,11 @@ nav ul:last-of-type li a {
 
 
 
+
+/************/
 /* homepage */
+/************/
+
 .header-homepage {
     display: flex;
     padding: 5em;
@@ -272,6 +399,10 @@ nav ul:last-of-type li a {
     color: var(--card-background-color);
     background-color: transparent;
 }
+.card-container button i.active {
+    color: var(--detail-color-one); /* Aangepaste kleur */
+}
+
 
 .card-container a {
     grid-area: 5 / 2 / 10 / 4; /* Zorg ervoor dat de link al deze cellen beslaat */
@@ -375,8 +506,10 @@ nav ul:last-of-type li a {
 
 
 
-
+/*************************/
 /* login & register page */
+/*************************/
+
 .login-register-page body {
     display: flex;
     flex-direction: column;
