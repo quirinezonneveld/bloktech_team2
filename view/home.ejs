@@ -59,9 +59,12 @@
                         <p>
                             <%= event.classifications[0].genre.name %>
                         </p>
-                        <button class="like-button" data-event-id="<%= event.id %>">
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
+                        <form action="/add_favorite" method="POST" class="favorite-form">
+                            <input type="hidden" name="eventId" value="<%= event.id %>">
+                            <button type="submit" class="like-button">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </form>
                         <a href="<%= event.url %>">
                             <h5><%= event.name %></h5>
                             <p><%= event.info %></p>

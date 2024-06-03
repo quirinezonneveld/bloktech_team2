@@ -53,8 +53,33 @@
         <input type="submit" value="Update Profile">
     </form>
 
+    <div class="favorite-events">
+        <% if (favoriteEvents && favoriteEvents.length > 0) { %>
+            <h2>Favorite Events</h2>
+            <ul>
+                <% favoriteEvents.forEach(event => { %>
+                    <li>
+                        <article class="event">
+                            <img src="<%= event.images[0].url %>" alt="Event photo">
+                            <h3><%= event.name %></h3>
+                            <p><%= event.info %></p>
+                            <p><%= event.dates.start.dateTime %></p>
+                            <!-- Render other event details as needed -->
+                        </article>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No favorite events found.</p>
+        <% } %>
+    </div>
+
+
+
     <form action="/signout" method="GET">
         <input type="submit" value="Sign out">
     </form>
+
+    <script src="client.js"></script>
 </body>
 </html>

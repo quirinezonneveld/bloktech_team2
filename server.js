@@ -94,16 +94,41 @@ app.use(
 //Routes
 app.get('/', async (req, res) => {
   const events = await getEvents();
-  console.log('events ------->', events);
-  res.render('home.ejs', { events });
+  const isLoggedIn = !!req.session.userId;
+  //console.log('events ------->', events);
+  res.render('home.ejs', { events, isLoggedIn });
 });
 
 app.get('/home', async (req, res) => {
   // requets for events
   const events = await getEvents();
-  console.log('events ------->', events);
+  const isLoggedIn = !!req.session.userId;
+ // console.log('events ------->', events);
 
-  res.render('home.ejs', { events });
+  res.render('home.ejs', { events, isLoggedIn });
+});
+
+// Route to add favorite event
+app.post('/add_favorite', async (req, res) => {
+  if (!req.session.userId) {
+    res.redirect('/form');
+    return;
+  }
+
+  const { eventId } = req.body;
+
+  try {
+    const userId = new ObjectId(req.session.userId);
+    await db.collection('users').updateOne(
+      { _id: userId },
+      { $addToSet: { favorites: eventId } } // $addToSet ensures no duplicates
+    );
+
+    console.log(`Added favorite event for user ${userId}`);
+  } catch (error) {
+    console.error('Error adding favorite event to database', error);
+    res.status(500).json({ message: 'Error adding favorite event to database' });
+  }
 });
 
 //Sign In / Register
@@ -113,12 +138,12 @@ app.get('/form', (req, res) => {
 
 //Events
 app.get('/all-events', (req, res) => {
-  console.log('all-events --------->');
+  //console.log('all-events --------->');
   res.render('all-events');
 });
 
 app.get('/all-events/:eventId', (req, res) => {
-  console.log('all-events 1 --------->', req.params.eventId);
+  //console.log('all-events 1 --------->', req.params.eventId);
   res.render('all-events');
 });
 
@@ -147,6 +172,14 @@ app.get('/api-data', async (req, res) => {
 /* Profile */
 /***********/
 
+
+const { RateLimiter } = require('limiter');
+const NodeCache = require('node-cache');
+
+const cache = new NodeCache({ stdTTL: 3600 }); // Cache voor 1 uur
+const limiter = new RateLimiter({ tokensPerInterval: 5, interval: 'second' });
+
+
 app.get('/profile', async (req, res) => {
   if (!req.session.userId) {
     res.redirect('/form');
@@ -155,68 +188,48 @@ app.get('/profile', async (req, res) => {
 
   try {
     const userId = new ObjectId(req.session.userId);
+    console.log('Fetching user with ID:', userId);
     const user = await db.collection('users').findOne({ _id: userId });
     if (!user) {
+      console.log('User not found');
       res.redirect('/form');
       return;
     }
 
+    let favoriteEvents = [];
+    if (user.favorites && user.favorites.length > 0) {
+     // console.log('User favorites:', user.favorites);
+      const promises = user.favorites.map(async (eventId) => {
+        const cachedEvent = cache.get(eventId);
+        if (cachedEvent) {
+          return cachedEvent;
+        } else {
+          await limiter.removeTokens(1); // Wachten tot er een verzoek toegestaan is
+          try {
+            const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.KEY}`);
+            const event = response.data;
+            cache.set(eventId, event); // Cache het evenement
+            return event;
+          } catch (error) {
+            console.error(`Error fetching event with ID ${eventId}:`, error);
+            return null;
+          }
+        }
+      });
+
+      favoriteEvents = await Promise.all(promises);
+      favoriteEvents = favoriteEvents.filter(event => event !== null);
+    } else {
+      console.log('No favorite events for user');
+    }
+
     const { name, surname, email, profileImage } = user;
-    res.render('profile', { name, surname, email, profileImage });
+    res.render('profile', { name, surname, email, profileImage, favoriteEvents });
   } catch (error) {
     console.error('Error fetching user from database', error);
     res.status(500).render('error', {
       errorCode: 500,
       errorMessage: 'Error fetching user from database',
-    });
-  }
-});
-
-/************/
-/* Registry */
-/************/
-
-// Receiving information out of form
-app.post('/registry', async (req, res) => {
-  const firstName = req.body.fName;
-  const lastName = req.body.lName;
-  const password = req.body.passwordRegister;
-  const email = req.body.emailRegister;
-
-  console.log(
-    `Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`
-  );
-
-  try {
-    //Checking if the email adress is unique
-    const existingUser = await db.collection('users').findOne({ email: email });
-    if (existingUser) {
-      console.log('Email address already in use');
-      res.status(409).render('error', {
-        errorCode: 409,
-        errorMessage: 'Email adress already in use',
-      });
-      return;
-    }
-
-    // Hash the password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log('Password hashed:', hashedPassword);
-
-    //Filling in the data of the user registry
-    const result = await db.collection('users').insertOne({
-      name: firstName,
-      surname: lastName,
-      password: hashedPassword,
-      email: email,
-    });
-    console.log(`Gebruiker opgeslagen met id: ${result.insertedId}`);
-  } catch (error) {
-    console.error('Error inserting data into database', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error inserting data into database',
     });
   }
 });
@@ -240,10 +253,7 @@ app.post('/signin', async (req, res) => {
         surname: user.surname,
         email: user.email,
       };
-      console.log(
-        'Login succesvol: Sessie gestart voor gebruiker ID:',
-        user._id
-      );
+      console.log( 'Login succesvol: Sessie gestart voor gebruiker ID:', user._id );
       res.redirect('/profile');
     } else {
       console.log('Invalid email or password');
@@ -265,10 +275,7 @@ app.post('/signin', async (req, res) => {
 /* Profile Pictures */
 /********************/
 
-app.post(
-  '/upload-profile-picture',
-  upload.single('profileImage'),
-  async (req, res) => {
+app.post('/upload-profile-picture', upload.single('profileImage'), async (req, res) => {
     if (!req.session.userId) {
       res.redirect('/form');
       return;
