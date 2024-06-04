@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile</title>
     <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <header>
@@ -64,7 +66,11 @@
                             <h3><%= event.name %></h3>
                             <p><%= event.info %></p>
                             <p><%= event.dates.start.dateTime %></p>
-                            <!-- Render other event details as needed -->
+
+                            <form action="/unlike" method="POST" class="unlike-form">
+                                <input type="hidden" name="eventId" value="<%= event.id %>">
+                                <button type="submit" class="remove-favorite-button">Remove from favorites</button>
+                            </form>
                         </article>
                     </li>
                 <% }); %>

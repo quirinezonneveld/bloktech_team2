@@ -131,6 +131,37 @@ app.post('/add_favorite', async (req, res) => {
   }
 });
 
+app.post('/unlike', async (req, res) => {
+
+  const { eventId } = req.body;
+  
+  console.log('Event ID to remove:', eventId); // Log eventId
+
+  try {
+      const userId = new ObjectId(req.session.userId);
+
+      // Remove the eventId from the user's favorites
+      const updateResult = await db.collection('users').updateOne(
+          { _id: userId },
+          { $pull: { favorites: eventId } }
+      )
+
+      if (updateResult.modifiedCount === 1) {
+        res.redirect('profile')
+      } else {
+          res.status(500).render('error', { 
+            errorCode: 500, 
+            errorMessage: 'Failed to remove the event from favorites' 
+          })
+      } 
+  } catch (error) {
+      res.status(500).render('error', { 
+        errorCode: 500, 
+        errorMessage: 'Server error' 
+      })
+  }
+})
+
 //Sign In / Register
 app.get('/form', (req, res) => {
   res.render('form');
@@ -164,7 +195,10 @@ app.get('/api-data', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error loading data', error);
-    res.status(500).send('Error loading data');
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Error loading data',
+  })
   }
 });
 
@@ -172,13 +206,9 @@ app.get('/api-data', async (req, res) => {
 /* Profile */
 /***********/
 
-
-const { RateLimiter } = require('limiter');
-const NodeCache = require('node-cache');
-
-const cache = new NodeCache({ stdTTL: 3600 }); // Cache voor 1 uur
-const limiter = new RateLimiter({ tokensPerInterval: 5, interval: 'second' });
-
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 app.get('/profile', async (req, res) => {
   if (!req.session.userId) {
@@ -188,49 +218,29 @@ app.get('/profile', async (req, res) => {
 
   try {
     const userId = new ObjectId(req.session.userId);
-    console.log('Fetching user with ID:', userId);
     const user = await db.collection('users').findOne({ _id: userId });
-    if (!user) {
-      console.log('User not found');
-      res.redirect('/form');
-      return;
-    }
+    const favoriteEventIds = user.favorites;
 
     let favoriteEvents = [];
-    if (user.favorites && user.favorites.length > 0) {
-     // console.log('User favorites:', user.favorites);
-      const promises = user.favorites.map(async (eventId) => {
-        const cachedEvent = cache.get(eventId);
-        if (cachedEvent) {
-          return cachedEvent;
-        } else {
-          await limiter.removeTokens(1); // Wachten tot er een verzoek toegestaan is
-          try {
-            const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.KEY}`);
-            const event = response.data;
-            cache.set(eventId, event); // Cache het evenement
-            return event;
-          } catch (error) {
-            console.error(`Error fetching event with ID ${eventId}:`, error);
-            return null;
-          }
-        }
-      });
-
-      favoriteEvents = await Promise.all(promises);
-      favoriteEvents = favoriteEvents.filter(event => event !== null);
-    } else {
-      console.log('No favorite events for user');
+    for (const eventId of favoriteEventIds) {
+      try {
+        const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.KEY}`);
+        favoriteEvents.push(response.data);
+        await sleep(200);
+      } catch (error) {          
+        console.error(`Error fetching event with ID ${eventId}:`, error);
+      }
     }
 
     const { name, surname, email, profileImage } = user;
     res.render('profile', { name, surname, email, profileImage, favoriteEvents });
+   
   } catch (error) {
-    console.error('Error fetching user from database', error);
+    console.error('Error fetching profile:', error);
     res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error fetching user from database',
-    });
+        errorCode: 500,
+        errorMessage: 'Server error',
+    })
   }
 });
 
@@ -459,9 +469,11 @@ app.use((req, res) => {
   // log error to console
   console.error('404 error at URL: ' + req.url);
   // send back a HTTP response with status code 404
-  res.status(404).render('error', {
-    errorCode: 404,
-    errorMessage: '404 error at URL: ' + req.url,
+  res
+    .status(404)
+    .render('error', {
+      errorCode: 404,
+      errorMessage: '404 error at URL: ' + req.url,
   });
 });
 
@@ -472,12 +484,12 @@ app.use((err, req, res) => {
   // send back a HTTP response with status code 500
   res
     .status(500)
-    .render('error', { errorCode: 500, errorMessage: 'Server error' });
+    .render('error', { 
+      errorCode: 500, 
+      errorMessage: 'Server error' });
 });
 
 // Start the webserver and listen for HTTP requests at specified port
 app.listen(3000, () => {
-  console.log(
-    `I did not change this message and now my webserver is listening at port 3000`
-  );
+  console.log(`I did not change this message and now my webserver is listening at port 3000`);
 });
