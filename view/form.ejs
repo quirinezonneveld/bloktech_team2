@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,11 @@
 </head>
 
 <body class="login-register-page">
-    
+
 
     <header>
         <nav>
-            <ul>    
+            <ul>
                 <li>
                     <a class="active" href="/home">
                         <img src="assets/logo.png" alt="Logo">
@@ -20,11 +21,12 @@
                     </a>
                 </li>
                 <li>
-                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
+                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30"
+                        aria-label="Search through site content">
                     <button>Search</button>
                 </li>
-                    <li><a href="/all-events">All Events</a></li>
-                    <li><a href="/about-us">About Us</a></li>
+                <li><a href="/all-events">All Events</a></li>
+                <li><a href="/about-us">About Us</a></li>
             </ul>
             <ul>
                 <li><a href="/form">Sign In</a></li>
@@ -34,14 +36,14 @@
 
     </header>
 
-  
-    
+
+<div class="logInRegister">
     <div class="buttons">
         <button id="loginBtn">Inloggen</button>
         <button id="registerBtn">Registreren</button>
     </div>
-   <hr>
-     <!-- SIGN UP FORM -->
+    <hr>
+    <!-- SIGN UP FORM -->
     <form id="registerForm" class="form-container" action="/registry" method="post">
         <span>*</span>
         <input id="fName" type="text" name="fName" placeholder="First name" required>
@@ -51,38 +53,37 @@
 
         <span>*</span>
         <input id="emailRegister" type="email" name="emailRegister" placeholder="E-mail" required>
-        
+
         <span>*</span>
         <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Password" required>
 
-        <p><span>*</span> fields are required</p>
+        <p>* Fields are required</p>
 
         <input type="submit" value="Registreren">
 
-        
+
     </form>
 
 
     <!-- SIGN IN FORM -->
     <form id="loginForm" class="form-container" action="/signin" method="post">
-        
+
         <input id="emailSignin" type="email" name="emailSignin" placeholder="E-mail" required>
 
         <input id="passwordSignin" type="password" name="passwordSignin" placeholder="Password" required>
 
         <input type="submit" value="Inloggen">
     </form>
-
-
+</div>
     <script>
-        document.getElementById('loginBtn').addEventListener('click', function() {
+        document.getElementById('loginBtn').addEventListener('click', function () {
             document.getElementById('loginForm').classList.add('active');
             document.getElementById('registerForm').classList.remove('active');
             document.getElementById('loginBtn').classList.add('active');
             document.getElementById('registerBtn').classList.remove('active');
         });
 
-        document.getElementById('registerBtn').addEventListener('click', function() {
+        document.getElementById('registerBtn').addEventListener('click', function () {
             document.getElementById('registerForm').classList.add('active');
             document.getElementById('loginForm').classList.remove('active');
             document.getElementById('registerBtn').classList.add('active');
@@ -94,7 +95,8 @@
         document.getElementById('loginBtn').classList.add('active');
     </script>
 
-    
+
 
 </body>
+
 </html>
