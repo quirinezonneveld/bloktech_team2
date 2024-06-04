@@ -206,6 +206,9 @@ nav ul:last-of-type li a {
 
 
 
+
+
+
 /************/
 /* footer */
 /************/
@@ -618,4 +621,11 @@ footer span {
 
 .testTile{
     background-color: grey;
+}
+
+
+
+/* hidden */
+.hiddenVisibility {
+	visibility: hidden;
 }
