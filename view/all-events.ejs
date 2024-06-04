@@ -6,7 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="allEvents">
     <nav>
         <ul>    
             <li>
@@ -27,13 +27,21 @@
             <li><a href="/profile">Profile</a></li>
         </ul>
     </nav>
+    <section>
     <h1>All events</h1>
 
     <div class="filterDiv">
         <form action="/submit" method="post">
             <!-- Datum invoerveld -->
             <input type="date" id="datum" name="datum">
-            <br><br>
+    
+            <!-- Segment dropdown -->
+            <select id="segment" name="segment">
+                <option value="" disabled selected>Segment</option>
+                <option value="segment1">Segment 1</option>
+                <option value="segment2">Segment 2</option>
+                <option value="segment3">Segment 3</option>
+            </select>
     
             <!-- Genre dropdown -->
             <select id="genre" name="genre">
@@ -44,7 +52,6 @@
                 <option value="horror">Horror</option>
                 <option value="sci-fi">Science Fiction</option>
             </select>
-            <br><br>
     
             <!-- Regio dropdown -->
             <select id="regio" name="regio">
@@ -54,16 +61,37 @@
                 <option value="east">Oost</option>
                 <option value="west">West</option>
             </select>
-            <br><br>
     
-            <!-- Submit knop -->
+            <!-- Prijs dropdown -->
+            <select id="price" name="price">
+                <option value="" disabled selected>Price</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+    
             <button type="submit">Verzenden</button>
         </form>
     </div>
 
-    <div class="details">
-        <div class="testTile">test</div>
-    </div>
+    <ul class="card">
+        <li>
+            <article>
+                <img src="assets/card-default.jpg" alt="Event photo">
+                <p>Concert</p>
+                <button>
+                    <i class="fa-solid fa-heart"></i>
+                </button>
+                <a href="detail.ejs">
+                    <h5>Naam artiest</h5>
+                    <p>Informatie over event en artiest...</p>
+                    <p>date</p>
+                </a>
+            </article>
+        </li>
+        </ul>
+
+</section>
     
 </body>
 
