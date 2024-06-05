@@ -377,6 +377,11 @@ nav ul:last-of-type li a {
     margin: var(--desktop-margin);
 }
 
+.detail-info div img {
+    width: 30em;
+    object-fit: cover;
+}
+
 .detail-info article {
     display: flex;
     flex-direction: column;
@@ -384,6 +389,21 @@ nav ul:last-of-type li a {
 }
 .detail-info article h1 {
     font-size: 3em;
+}
+.detail-info article ul li:last-of-type {
+    list-style-type: none;
+    padding: var(--button-padding);
+    background-color: var(--detail-color-one);
+    color: var(--button-color-text);
+    border-radius: var(--button-radius);
+    max-width: 8em;
+    margin-top: 1em;
+}
+.detail-info article ul li:last-of-type a {
+    text-decoration: none;
+}
+.detail-info article ul li:last-of-type:hover {
+    background-color: var(--detail-color-one-hover);
 }
 
 
