@@ -12,11 +12,50 @@
 </head>
 <body>
     <header>
-        <h1><%= event_details.name %></h1>
-        <p>voor quirine: wil je type????? ->  <%= event_details.type %></p>
+
+        <section class="detail-info">
+            <div>
+                <% if (event_details.images && event_details.images[0]) { %>
+                    <img src="<%= event_details.images[0].url %>">
+                <% } else { %>
+                    <p>No image available</p>
+                <% } %>
+            </div>
+        
+            <article>
+                <h1><%= event_details.name || 'No name available' %></h1>
+                <p><%= event_details.dates && event_details.dates.start ? event_details.dates.start.localDate : 'No date available' %></p>
+                <p><%= event_details.info || 'No information available' %></p>
+        
+                <ul>
+                    <li>
+                        <p>Status: <%= event_details.dates && event_details.dates.status ? event_details.dates.status.code : 'No status available' %></p>
+                    </li>
+                    <li>
+                        <p>Segment: <%= event_details.type || 'No segment available' %></p>
+                    </li>
+                    <li>
+                        <p>Price: 
+                            <% if (event_details.priceRanges && event_details.priceRanges[0]) { %>
+                                <%= event_details.priceRanges[0].min %> - <%= event_details.priceRanges[0].max %> <%= event_details.priceRanges[0].currency %>
+                            <% } else { %>
+                                No price information available
+                            <% } %>
+                        </p>
+                    </li>
+                    <li>
+                        <% if (event_details.url) { %>
+                            <a href="<%= event_details.url %>">Get tickets</a>
+                        <% } else { %>
+                            <p>No ticket link available</p>
+                        <% } %>
+                    </li>
+                </ul>
+            </article>
+        </section>
+        
 
 
-        <img src="<%= event_details.images[0].url %>">
 
 
     </header>

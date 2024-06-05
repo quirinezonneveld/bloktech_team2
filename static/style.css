@@ -46,7 +46,7 @@ body {
     --font-size-body: 1em;
     --font-size-body-small: 0.8em;
 
-    /* --desktop-margin: 8em; 128 px */
+    --desktop-margin: 8em; /*128 px */
     /* --mobile-margin: ; */
 }
 @media(prefers-color-scheme:light) {
@@ -366,6 +366,25 @@ nav ul:last-of-type li a {
 
 
 
+
+/***************/
+/* detail page */
+/***************/
+
+.detail-info {
+    display: flex;
+    gap: 5%;
+    margin: var(--desktop-margin);
+}
+
+.detail-info article {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.detail-info article h1 {
+    font-size: 3em;
+}
 
 
 
