@@ -16,7 +16,7 @@
         <section class="detail-info">
             <div>
                 <% if (event_details.images && event_details.images[0]) { %>
-                    <img src="<%= event_details.images[0].url %>">
+                    <img src="<%= event_details.images[1].url %>">
                 <% } else { %>
                     <p>No image available</p>
                 <% } %>
@@ -53,14 +53,27 @@
                 </ul>
             </article>
         </section>
-        
-
-
-
-
     </header>
     <main>
+        <section class="join-event">
+            <h2>Decide to join the event</h2>
+            <p>Lorem ipsum dolor sit amet consectetur. Diam elit fermentum lorem leo dolor pellentesque faucibus aliquet.</p>
 
+            <div>
+                <% if (event_details.images && event_details.images[0]) { %>
+                    <img src="<%= event_details.images[3].url %>">
+                <% } else { %>
+                    <p>No image available</p>
+                <% } %>
+
+                <% if (event_details.url) { %>
+                    <a href="<%= event_details.url %>">Get tickets</a>
+                <% } else { %>
+                    <p>No ticket link available</p>
+                <% } %>
+            </div>
+
+        </section>
     </main>
 
     <footer></footer>

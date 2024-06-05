@@ -390,7 +390,7 @@ nav ul:last-of-type li a {
 .detail-info article h1 {
     font-size: 3em;
 }
-.detail-info article ul li:last-of-type {
+.detail-info article ul li:last-of-type, .join-event div a {
     list-style-type: none;
     padding: var(--button-padding);
     background-color: var(--detail-color-one);
@@ -399,15 +399,28 @@ nav ul:last-of-type li a {
     max-width: 8em;
     margin-top: 1em;
 }
-.detail-info article ul li:last-of-type a {
+.detail-info article ul li:last-of-type a, .join-event div a {
     text-decoration: none;
 }
 .detail-info article ul li:last-of-type:hover {
     background-color: var(--detail-color-one-hover);
 }
 
-
-
+.join-event {
+    padding: var(--desktop-margin);
+    background-color: var(--background-color-two);
+}
+.join-event > p {
+    margin-bottom: 2em;
+}
+.join-event div img {
+    width: 100%;
+    max-height: 25em;
+    object-fit: cover;
+}
+.join-event h2 {
+    margin: 0;
+}
 
 
 
