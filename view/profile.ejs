@@ -27,7 +27,14 @@
             </ul>
             <ul>
                 <li><a href="/form">Sign In</a></li>
-                <li><a href="/profile">Profile</a></li>
+                <li class="nav-profile"><a href="profile">Profile
+                    <script>console.log('Profile Image in template:', '<%= profileImage %>');</script>
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
             </ul>
         </nav>
     </header>
@@ -36,9 +43,9 @@
         <div class="profile">
             <div class="profile_userInfo">
                 <% if (profileImage) { %>
-                    <img src="data:image/jpeg;base64,<%= profileImage.toString('base64') %>" alt="Profile Image">
+                    <img src="<%= profileImage %>" alt="Profile Image">
                 <% } else { %>
-                    <img src="/assets/default-profile.png" alt="Default Profile Image">
+                    <img src="/assets/profile-default.jpg" alt="Default Profile Image">
                 <% } %>
                 <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
                     <input type="file" name="profileImage">
