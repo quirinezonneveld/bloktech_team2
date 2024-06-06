@@ -608,56 +608,58 @@ footer span {
 /*************************/
 
 .login-register-page body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  background-color: white;
-  font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+ 
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
 }
-
-.logo-header {
-  display: flex;
-  justify-content: flex-start;
-  width: 100%;
+ 
+.logo-header{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
 }
-
-.logo-header img {
-  width: 130px;
+ 
+.logo-header img{
+    width:130px;
 }
-
-.login-register-page hr {
-  width: 50%;
-  margin: 0;
-  border: 0.5px solid #d1d1d1;
+ 
+.login-register-page hr{
+    width: 50%;
+    margin: 0;
+    border: .5px solid #D1D1D1;
 }
-
+ 
 .form-container {
-
-  display: none;
-  margin-top: 2em;
+    display: none;
+    margin-top: 2em;
+    min-width: 30%;
 }
-
+ 
 .form-container.active {
-  display: flex;
-  flex-direction: column;
-  width: 200px;
-  gap: 1em;
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    gap: 1em;
 }
-
+ 
 .buttons {
-  display: flex;
-  gap: 1em;
+    display: flex;
+    gap: 11em;
+ 
 }
-
+ 
 .login-register-page span {
-  color: red;
-
-
+    color: red;
+    background-color: #ccc;
+}
+ 
 .login-register-page p{
     background-color: #ccc;
 }
-
+ 
 .logInRegister{
     display:flex;
     justify-content: center;
@@ -665,46 +667,48 @@ footer span {
     flex-direction: column;
     margin-top:3em;
 }
-
+ 
 .form-container {
-  background-color: #f9f9f9;
-  padding: 5%;
+    background-color: #F9F9F9;
+    padding: 5%;
 }
-
-.buttons button {
-  border: none;
-  background-color: white;
-  padding: 10px;
-  display: flex;
-  justify-content: space-around;
-  font-size: 1.5em;
+ 
+.buttons button{
+    border: none;
+    background-color: white;
+    padding: 10px;
+    display:flex;
+    justify-content: space-around;
+    font-size: 1.5em;
 }
-
-.buttons .active {
-  font-weight: bold;
-  color: #ff6000;
-  border-bottom: 3px #ff6000 solid;
+ 
+.buttons .active{
+    font-weight: bold;
+    color: #FF6000;
+    border-bottom: 3px #FF6000 solid;
 }
-
-.login-register-page form input {
-  padding: 5%;
-  border-radius: 5px;
-  border: 2px lightgrey solid;
-  }
-
-.login-register-page input[type='submit'] {
-  background-color: #ff6000;
-  border: none;
-  margin-top: 1em;
-  color: white;
-  width: auto;
+ 
+.login-register-page form input{
+    padding: 1em;
+    border-radius: 5px;
+    border: 2px lightgrey solid;
+    font-size: 1em;
 }
-
-.login-register-page form span {
-  display: flex;
-  justify-content: end;
-  margin-bottom: -15px;
-  margin-top: -10px;
+ 
+.login-register-page input[type="submit"] {
+    background-color: #FF6000;
+    border: none;
+    margin-top: 1em;
+    color: white;
+    width: auto;
+ 
+}
+ 
+.login-register-page form span{
+    display: flex;
+    justify-content: end;
+    margin-bottom: -15px;
+    margin-top: -10px;
 }
 
 .filterDiv form {
@@ -765,7 +769,8 @@ footer span {
   top: 0;
   max-width: min-content;
   background-color: var(--background-color-two);
-=======
+}
+
 .allEvents section {
     margin: var(--desktop-margin);
 }
@@ -892,7 +897,7 @@ h2 {
 }
 
 .accordion {
-    background-color: none;
+    background-color: transparent;
     color: #444;
     cursor: pointer;
     padding: 18px;
@@ -917,7 +922,7 @@ h2 {
   
   .panel {
     padding:18px;
-    background-color: none;
+    background-color: transparent;
     display: none;
     overflow: hidden;
     border-bottom: 1px lightgrey solid;
