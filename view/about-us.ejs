@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="About-us">
+
+
+    <header>
+        <nav>
+            <ul>
+                <li>
+                    <a class="active" href="/home">
+                        <img src="assets/logo.png" alt="Logo">
+                        Naam
+                    </a>
+                </li>
+                <li>
+                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30"
+                        aria-label="Search through site content">
+                    <button>Search</button>
+                </li>
+                <li><a href="/all-events">All Events</a></li>
+                <li><a href="/about-us">About Us</a></li>
+            </ul>
+            <ul>
+                <li><a href="/form">Sign In</a></li>
+                <li><a href="/profile">Profile</a></li>
+            </ul>
+        </nav>
+        <section>
+            <h1>About Us</h1>
+            <div class="AboutUsBlok">
+                <p>Welkom bij Ticket+! Ontdek eenvoudig de leukste evenementen bij jou in de buurt, van festivals en
+                    concerten tot sportwedstrijden en theatervoorstellingen. Voeg je favoriete evenementen toe aan je
+                    favorieten lijst en krijg persoonlijke aanbevelingen op basis van jouw voorkeuren. Bij Ticket+ ben
+                    je
+                    altijd op de hoogte van wat er speelt en geniet je van betrouwbare, up-to-date informatie. Sluit je
+                    aan
+                    bij onze community en mis nooit meer een onvergetelijke ervaring.</p>
+                <img src="/assets/Logo-ticket+.png" alt="Logo Ticket+">
+            </div>
+
+            <h2>FAQ</h2>
+            <div class="accordeonPlaatsing">
+                <div class="accordeon">
+                    <button class="accordion">Zijn mijn favoriete evenementen privé?</button>
+                    <div class="panel">
+                        <p>Ja, jouw favorietenlijst is privé en alleen jij hebt toegang tot deze informatie. We delen
+                            jouw favoriete evenementen niet met anderen.</p>
+                    </div>
+
+                    <button class="accordion">Hoe kan ik een evenement aan mijn favorieten toevoegen?</button>
+                    <div class="panel">
+                        <p>Het is heel eenvoudig! Wanneer je een evenement bekijkt, zoek dan naar de "Toevoegen aan
+                            Favorieten" knop naast de eventinformatie. Klik erop en het evenement wordt aan jouw
+                            favorietenlijst toegevoegd.</p>
+                    </div>
+
+                    <button class="accordion">Hoe vaak wordt de evenementenkalender bijgewerkt?</button>
+                    <div class="panel">
+                        <p>We begrijpen hoe belangrijk het is om altijd up-to-date te blijven! Daarom streven we ernaar
+                            onze evenementenkalender zo snel mogelijk bij te werken zodra nieuwe informatie beschikbaar
+                            is. Ons team zet zich in om ervoor te zorgen dat je altijd de meest nauwkeurige en actuele
+                            informatie hebt over alle evenementen op Ticket+.</p>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Contact</h2>
+            <div class="contact-card">
+                <div class="contact-card-image">
+                    <img src="/assets/card-default.jpg" alt="Afbeelding">
+                </div>
+                <div class="contact-card-form">
+                    <form>
+                        <input type="text" placeholder="Naam">
+                        <input type="email" placeholder="E-mailadres">
+                        <textarea placeholder="Bericht"></textarea>
+                        <button type="submit">Verzenden</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+        <script>
+            var acc = document.getElementsByClassName("accordion");
+            var i;
+
+            for (i = 0; i < acc.length; i++) {
+                acc[i].addEventListener("click", function () {
+                    this.classList.toggle("active");
+                    var panel = this.nextElementSibling;
+                    if (panel.style.display === "block") {
+                        panel.style.display = "none";
+                    } else {
+                        panel.style.display = "block";
+                    }
+                });
+            }
+        </script>
+    </header>
+
+</body>

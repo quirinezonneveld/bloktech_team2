@@ -15,21 +15,30 @@
         <nav>
             <ul>    
                 <li>
-                    <a class="active" href="/home">
-                        <img src="assets/test-logo.png" alt="Logo">
-                        Naam
+                    <a class="active" href="home.ejs">
+                        <img src="assets/card-default.jpg" alt="Logo">
                     </a>
                 </li>
                 <li>
-                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
-                    <button>Search</button>
+                    <form action="your-action-url" method="get">
+                    <!-- de action moet worden aangepast -->
+
+                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>                    
                 </li>
-                    <li><a href="/all-events">All Events</a></li>
-                    <li><a href="/about-us">About Us</a></li>
+                <li><a href="all-events.ejs">All Events</a></li>
+                <li><a href="about-us.ejs">About Us</a></li>
             </ul>
             <ul>
-                <li><a href="/form">Sign In</a></li>
-                <li><a href="/profile">Profile</a></li>
+                <li><a href="form.ejs">Sign In
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a></li>
+                <li><a href="profile.ejs">Profile
+                    <img src="assets/profile-default.jpg" alt="Profile picture">
+                </a></li>
             </ul>
         </nav>
 
@@ -40,7 +49,7 @@
             </div>
             <div >
                 <script type="module" src="https://unpkg.com/@splinetool/viewer@1.3.10/build/spline-viewer.js"></script>
-    <spline-viewer url="https://prod.spline.design/Wo9y26Ief5BUnSyn/scene.splinecode"></spline-viewer>
+                <spline-viewer url="https://prod.spline.design/Wo9y26Ief5BUnSyn/scene.splinecode"></spline-viewer>
             </div>
         </section>
 
@@ -48,9 +57,11 @@
 
     <main>
         <section class="upcoming">
-            <h2>Upcoming</h2>
+            <div>
+                <h2>Upcoming</h2>
+                <a href="/all-events">See all</a>
+            </div>
 
-            <a href="/all-events">See all</a>
             <ul id="card-container" class="card-container">
             <% for (const event of events) { %>
                 <li >
@@ -75,8 +86,7 @@
             <% } %>
             </ul>
             
-            <!-- card -->
-            <ul>
+            <ul class="card-buttons">
 				<li>
 					<button>
 						<i class="fa-solid fa-arrow-left"></i>
@@ -88,7 +98,6 @@
 					</button>
 				</li>
 			</ul>
-        
         </section>
 
         <section>
@@ -103,24 +112,28 @@
                 <h2>Populair</h2>
                 <a href="/all-events">See all</a>
             </div>
-        
-            <ul class="card-container">
-                <li>
-                    <article>
-                        <img src="assets/card-default.jpg" alt="Event photo">
-                        <p>Concert</p>
-                        <button>
+
+            <ul id="card-container" class="card-container">
+            <% for (const event of events) { %>
+                <li >
+                    <article class="event-template">
+                        <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                        <p>
+                            <%= event.classifications[0].genre.name %>
+                        </p>
+                        <button class="like-button" data-event-id="<%= event.id %>">
                             <i class="fa-solid fa-heart"></i>
                         </button>
-                        <a href="detail.ejs">
-                            <h5>Naam artiest</h5>
-                            <p>Informatie over event en artiest...</p>
-                            <p>date</p>
+                        <a href="<%= event.url %>">
+                            <h5><%= event.name %></h5>
+                            <p><%= event.info %></p>
+                            <p><%= event.dates.start.dateTime %></p>
                         </a>
                     </article>
                 </li>
+            <% } %>
             </ul>
-
+            
             <ul class="card-buttons">
 				<li>
 					<button>
@@ -134,6 +147,9 @@
 				</li>
 			</ul>
         </section>
+
+
+
         <section class="slider">
             <ul>
                 <li><img src="assets/slider-default.png" alt="Ticket"></li>
@@ -151,7 +167,8 @@
     <footer></footer>
 
 
-    <script src="./client.js"></script>
+    <!-- <script src="./client.js"></script> -->
+    <script defer src="card.js"></script>
     
 </body>
 </html>
