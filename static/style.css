@@ -46,7 +46,7 @@ body {
     --font-size-body: 1em;
     --font-size-body-small: 0.8em;
 
-    /* --desktop-margin: 8em; 128 px */
+    --desktop-margin: 8em; 
     /* --mobile-margin: ; */
 }
 @media(prefers-color-scheme:light) {
@@ -711,7 +711,49 @@ h2 {
       box-sizing: border-box;
     }
   }
-  
-  
 
 
+  /* Loading state */
+
+  #loaderDiv {
+    background-image: url("https://s1.ticketm.net/dam/a/e8c/5265b9d2-a06c-4dc8-a432-a8dd9d042e8c_SOURCE");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 1em;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0;
+    transition: .15s;
+    animation: rotate .6s linear infinite;
+    /* Voeg hier de breedte, hoogte en positie toe */
+    /* Voorbeeld: */
+    width: 8em;
+    height: 8em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    10%{
+        transform: rotate(0deg);
+    }
+
+    90%{
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#loaderDiv.loading {
+    opacity: 1;
+}

@@ -5,7 +5,7 @@ async function getEvents() {
   try {
     const response = await fetch(URL);
     const data = await response.json();
-    console.log(data);
+    //console.log(data);
   } catch (error) {
     console.error('error loading data', error);
   }
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     button.addEventListener('click', (event) => {
       const buttonElement = event.currentTarget;
       const eventId = buttonElement.getAttribute('data-event-id');
-      console.log('eventId ----->', eventId);
+      //console.log('eventId ----->', eventId);
     });
   });
 
