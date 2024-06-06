@@ -15,7 +15,7 @@
         <nav>
             <ul>    
                 <li>
-                    <a class="active" href="home.ejs">
+                    <a class="active" href="/home">
                         <img src="assets/card-default.jpg" alt="Logo">
                     </a>
                 </li>
@@ -29,14 +29,14 @@
                         </button>
                     </form>                    
                 </li>
-                <li><a href="all-events.ejs">All Events</a></li>
-                <li><a href="about-us.ejs">About Us</a></li>
+                <li><a href="/all-events">All Events</a></li>
+                <li><a href="/about-us">About Us</a></li>
             </ul>
             <ul>
-                <li><a href="form.ejs">Sign In
+                <li><a href="/form">Sign In
                     <i class="fa-solid fa-arrow-right"></i>
                 </a></li>
-                <li><a href="profile.ejs">Profile
+                <li><a href="/profile">Profile
                     <img src="assets/profile-default.jpg" alt="Profile picture">
                 </a></li>
             </ul>
@@ -70,10 +70,15 @@
                         <p>
                             <%= event.classifications[0].genre.name %>
                         </p>
-                        <button class="like-button" data-event-id="<%= event.id %>">
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
+
+                        <form action="/add_favorite" method="POST" class="favorite-form">
+                            <input type="hidden" name="eventId" value="<%= event.id %>">
+                            <button type="submit" class="like-button">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </form>
                         <a href="/detail?event_id=<%= event.id %>">
+
                             <h5><%= event.name %></h5>
                             <p><%= event.info %></p>
                             <p><%= event.dates.start.dateTime %></p>
