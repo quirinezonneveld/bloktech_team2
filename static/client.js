@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const eventId = buttonElement.getAttribute('data-event-id');
       //console.log('eventId ----->', eventId);
 
+
       try {
         const response = await fetch('/add_favorite', {
           method: 'POST',
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       } catch (error) {
         console.error('Error adding favorite:', error);
       }
+
     });
   });
 
