@@ -94,17 +94,73 @@ app.use(
 //Routes
 app.get('/', async (req, res) => {
   const events = await getEvents();
-  console.log('events ------->', events);
-  res.render('home.ejs', { events });
+  const isLoggedIn = !!req.session.userId;
+  //console.log('events ------->', events);
+  res.render('home.ejs', { events, isLoggedIn });
 });
 
 app.get('/home', async (req, res) => {
   // requets for events
   const events = await getEvents();
-  console.log('events ------->', events);
+  const isLoggedIn = !!req.session.userId;
+ // console.log('events ------->', events);
 
-  res.render('home.ejs', { events });
+  res.render('home.ejs', { events, isLoggedIn });
 });
+
+// Route to add favorite event
+app.post('/add_favorite', async (req, res) => {
+  if (!req.session.userId) {
+    res.redirect('/form');
+    return;
+  }
+
+  const { eventId } = req.body;
+
+  try {
+    const userId = new ObjectId(req.session.userId);
+    await db.collection('users').updateOne(
+      { _id: userId },
+      { $addToSet: { favorites: eventId } } // $addToSet ensures no duplicates
+    );
+
+    console.log(`Added favorite event for user ${userId}`);
+  } catch (error) {
+    console.error('Error adding favorite event to database', error);
+    res.status(500).json({ message: 'Error adding favorite event to database' });
+  }
+});
+
+app.post('/unlike', async (req, res) => {
+
+  const { eventId } = req.body;
+  
+  console.log('Event ID to remove:', eventId); // Log eventId
+
+  try {
+      const userId = new ObjectId(req.session.userId);
+
+      // Remove the eventId from the user's favorites
+      const updateResult = await db.collection('users').updateOne(
+          { _id: userId },
+          { $pull: { favorites: eventId } }
+      )
+
+      if (updateResult.modifiedCount === 1) {
+        res.redirect('profile')
+      } else {
+          res.status(500).render('error', { 
+            errorCode: 500, 
+            errorMessage: 'Failed to remove the event from favorites' 
+          })
+      } 
+  } catch (error) {
+      res.status(500).render('error', { 
+        errorCode: 500, 
+        errorMessage: 'Server error' 
+      })
+  }
+})
 
 //Sign In / Register
 app.get('/form', (req, res) => {
@@ -113,12 +169,12 @@ app.get('/form', (req, res) => {
 
 //Events
 app.get('/all-events', (req, res) => {
-  console.log('all-events --------->');
+  //console.log('all-events --------->');
   res.render('all-events');
 });
 
 app.get('/all-events/:eventId', (req, res) => {
-  console.log('all-events 1 --------->', req.params.eventId);
+  //console.log('all-events 1 --------->', req.params.eventId);
   res.render('all-events');
 });
 
@@ -139,13 +195,20 @@ app.get('/api-data', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error loading data', error);
-    res.status(500).send('Error loading data');
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Error loading data',
+  })
   }
 });
 
 /***********/
 /* Profile */
 /***********/
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 app.get('/profile', async (req, res) => {
   if (!req.session.userId) {
@@ -156,68 +219,28 @@ app.get('/profile', async (req, res) => {
   try {
     const userId = new ObjectId(req.session.userId);
     const user = await db.collection('users').findOne({ _id: userId });
-    if (!user) {
-      res.redirect('/form');
-      return;
+    const favoriteEventIds = user.favorites;
+
+    let favoriteEvents = [];
+    for (const eventId of favoriteEventIds) {
+      try {
+        const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.KEY}`);
+        favoriteEvents.push(response.data);
+        await sleep(200);
+      } catch (error) {          
+        console.error(`Error fetching event with ID ${eventId}:`, error);
+      }
     }
 
     const { name, surname, email, profileImage } = user;
-    res.render('profile', { name, surname, email, profileImage });
+    res.render('profile', { name, surname, email, profileImage, favoriteEvents });
+   
   } catch (error) {
-    console.error('Error fetching user from database', error);
+    console.error('Error fetching profile:', error);
     res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error fetching user from database',
-    });
-  }
-});
-
-/************/
-/* Registry */
-/************/
-
-// Receiving information out of form
-app.post('/registry', async (req, res) => {
-  const firstName = req.body.fName;
-  const lastName = req.body.lName;
-  const password = req.body.passwordRegister;
-  const email = req.body.emailRegister;
-
-  console.log(
-    `Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`
-  );
-
-  try {
-    //Checking if the email adress is unique
-    const existingUser = await db.collection('users').findOne({ email: email });
-    if (existingUser) {
-      console.log('Email address already in use');
-      res.status(409).render('error', {
-        errorCode: 409,
-        errorMessage: 'Email adress already in use',
-      });
-      return;
-    }
-
-    // Hash the password
-    const saltRounds = 10;
-    const hashedPassword = await bcrypt.hash(password, saltRounds);
-    console.log('Password hashed:', hashedPassword);
-
-    //Filling in the data of the user registry
-    const result = await db.collection('users').insertOne({
-      name: firstName,
-      surname: lastName,
-      password: hashedPassword,
-      email: email,
-    });
-    console.log(`Gebruiker opgeslagen met id: ${result.insertedId}`);
-  } catch (error) {
-    console.error('Error inserting data into database', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error inserting data into database',
-    });
+        errorCode: 500,
+        errorMessage: 'Server error',
+    })
   }
 });
 
@@ -240,10 +263,7 @@ app.post('/signin', async (req, res) => {
         surname: user.surname,
         email: user.email,
       };
-      console.log(
-        'Login succesvol: Sessie gestart voor gebruiker ID:',
-        user._id
-      );
+      console.log( 'Login succesvol: Sessie gestart voor gebruiker ID:', user._id );
       res.redirect('/profile');
     } else {
       console.log('Invalid email or password');
@@ -265,10 +285,7 @@ app.post('/signin', async (req, res) => {
 /* Profile Pictures */
 /********************/
 
-app.post(
-  '/upload-profile-picture',
-  upload.single('profileImage'),
-  async (req, res) => {
+app.post('/upload-profile-picture', upload.single('profileImage'), async (req, res) => {
     if (!req.session.userId) {
       res.redirect('/form');
       return;
@@ -494,9 +511,11 @@ app.use((req, res) => {
   // log error to console
   console.error('404 error at URL: ' + req.url);
   // send back a HTTP response with status code 404
-  res.status(404).render('error', {
-    errorCode: 404,
-    errorMessage: '404 error at URL: ' + req.url,
+  res
+    .status(404)
+    .render('error', {
+      errorCode: 404,
+      errorMessage: '404 error at URL: ' + req.url,
   });
 });
 
@@ -507,12 +526,12 @@ app.use((err, req, res) => {
   // send back a HTTP response with status code 500
   res
     .status(500)
-    .render('error', { errorCode: 500, errorMessage: 'Server error' });
+    .render('error', { 
+      errorCode: 500, 
+      errorMessage: 'Server error' });
 });
 
 // Start the webserver and listen for HTTP requests at specified port
 app.listen(3000, () => {
-  console.log(
-    `I did not change this message and now my webserver is listening at port 3000`
-  );
+  console.log(`I did not change this message and now my webserver is listening at port 3000`);
 });
