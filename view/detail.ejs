@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+
+        <section class="detail-info">
+            <div>
+                <% if (event_details.images && event_details.images[0]) { %>
+                    <img src="<%= event_details.images[1].url %>">
+                <% } else { %>
+                    <p>No image available</p>
+                <% } %>
+            </div>
+        
+            <article>
+                <h1><%= event_details.name || 'No name available' %></h1>
+                <p><%= event_details.dates && event_details.dates.start ? event_details.dates.start.localDate : 'No date available' %></p>
+                <p><%= event_details.info || 'No information available' %></p>
+        
+                <ul>
+                    <li>
+                        <p>Status: <%= event_details.dates && event_details.dates.status ? event_details.dates.status.code : 'No status available' %></p>
+                    </li>
+                    <li>
+                        <p>Segment: <%= event_details.type || 'No segment available' %></p>
+                    </li>
+                    <li>
+                        <p>Price: 
+                            <% if (event_details.priceRanges && event_details.priceRanges[0]) { %>
+                                <%= event_details.priceRanges[0].min %> - <%= event_details.priceRanges[0].max %> <%= event_details.priceRanges[0].currency %>
+                            <% } else { %>
+                                No price information available
+                            <% } %>
+                        </p>
+                    </li>
+                    <li>
+                        <% if (event_details.url) { %>
+                            <a href="<%= event_details.url %>">Get tickets</a>
+                        <% } else { %>
+                            <p>No ticket link available</p>
+                        <% } %>
+                    </li>
+                </ul>
+            </article>
+        </section>
+    </header>
+    <main>
+        <section class="join-event">
+            <h2>Decide to join the event</h2>
+            <p>Lorem ipsum dolor sit amet consectetur. Diam elit fermentum lorem leo dolor pellentesque faucibus aliquet.</p>
+
+            <div>
+                <% if (event_details.images && event_details.images[0]) { %>
+                    <img src="<%= event_details.images[3].url %>">
+                <% } else { %>
+                    <p>No image available</p>
+                <% } %>
+
+                <% if (event_details.url) { %>
+                    <a href="<%= event_details.url %>">Get tickets</a>
+                <% } else { %>
+                    <p>No ticket link available</p>
+                <% } %>
+            </div>
+
+        </section>
+    </main>
+
+    <footer></footer>
+</body>
+</html>

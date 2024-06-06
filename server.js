@@ -23,6 +23,17 @@ const getEvents = async () => {
   return data._embedded.events;
 };
 
+
+
+
+
+const getEvent = async (event_id) => {
+  get_event_url = `https://app.ticketmaster.com/discovery/v2/events/${event_id}.json?apikey=${process.env.KEY}`;
+  const response = await axios.get(get_event_url);
+  const data = response.data;
+  return data;
+};
+
 app
   .use(express.urlencoded({ extended: true })) // middleware to parse form data from incoming HTTP request and add form fields to req.body
   .use(express.static('static')) // Allow server to serve static content such as images, stylesheets, fonts or frontend js from the directory named static
@@ -178,6 +189,17 @@ app.get('/all-events/:eventId', (req, res) => {
   res.render('all-events');
 });
 
+// Events detail
+app.get('/detail', async (req, res) => {
+  // retrieving the specific event from event_id url paramter
+  const eventId = req.query.event_id;
+  const event_details = await getEvent(eventId)
+  console.log('detail --------->');
+  console.log('----')
+  console.log(event_details)
+  res.render('detail.ejs', { event_details });
+});
+
 //About us
 app.get('/about-us', (req, res) => {
   res.render('about-us');
@@ -186,6 +208,8 @@ app.get('/about-us', (req, res) => {
 //API
 const axios = require('axios');
 const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
+
+
 
 app.get('/api-data', async (req, res) => {
   try {
