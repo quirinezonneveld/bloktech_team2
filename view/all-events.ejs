@@ -96,11 +96,52 @@
 
 </section>
     
-<script>
+    
+
+    <footer>
+        <section>
+            <div>
+                <h2>Find your event</h2>
+                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+            </div>
+
+            <ul>
+                <li><h6>Navigation</h6></li>
+                <li><a href="home">Home</a></li>
+                <li><a href="all-events">All Events</a></li>
+                <li><a href="about-us">About Us</a></li>
+                <li><a href="profile">Profile</a></li>
+            </ul>
+
+            <div>
+                <div>
+                    <h6>Contact</h6>
+                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                </div>
+
+                <div>
+                    <h6>Based in</h6>
+                    <p>Amsterdam, <br> The Netherlands</p>
+                </div>
+
+                <address>
+                    <ul>
+                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                    </ul>
+                </address>
+            </div>
+        </section>
+        
+        <span>©2024 by Ticket+</span>
+    </footer>
+    
+    <script>
 
 function handleSubmit(event) {
     event.preventDefault(); // Voorkom standaard form submit gedrag
-    
+
     const submitButton = document.getElementById('submitButton');
     const loaderDiv = document.getElementById('loaderDiv');
     
@@ -124,7 +165,10 @@ function handleSubmit(event) {
         // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
     }, 2000); // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
 }
+
+
 </script>
+
 </body>
 
 </html>
