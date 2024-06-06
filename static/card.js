@@ -37,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     console.log('test hello world');
+
 });
 
 // like button
@@ -46,4 +47,3 @@ likeButton.addEventListener('click', () => {
     likeButton.classList.toggle('liked');
     console.log('like werkt')
 });
-

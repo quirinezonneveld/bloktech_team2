@@ -44,8 +44,7 @@ html {
   color: var(--font-color-one);
 }
 
-ul,
-li {
+ul,li {
   text-decoration: none;
   list-style: none;
 }
@@ -540,7 +539,71 @@ footer span {
   float: left;
 }
 
-/*************************/
+
+
+
+/***************/
+/* detail page */
+/***************/
+
+.detail-info {
+    display: flex;
+    gap: 5%;
+    margin: var(--desktop-margin);
+}
+
+.detail-info div img {
+    width: 30em;
+    object-fit: cover;
+}
+
+.detail-info article {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+.detail-info article h1 {
+    font-size: 3em;
+}
+.detail-info article ul li:last-of-type, .join-event div a {
+    list-style-type: none;
+    padding: var(--button-padding);
+    background-color: var(--detail-color-one);
+    color: var(--button-color-text);
+    border-radius: var(--button-radius);
+    max-width: 8em;
+    margin-top: 1em;
+}
+.detail-info article ul li:last-of-type a, .join-event div a {
+    text-decoration: none;
+}
+.detail-info article ul li:last-of-type:hover {
+    background-color: var(--detail-color-one-hover);
+}
+
+.join-event {
+    padding: var(--desktop-margin);
+    background-color: var(--background-color-two);
+}
+.join-event > p {
+    margin-bottom: 2em;
+}
+.join-event div img {
+    width: 100%;
+    max-height: 25em;
+    object-fit: cover;
+}
+.join-event h2 {
+    margin: 0;
+}
+
+
+
+
+
+
+
+
 /* login & register page */
 /*************************/
 
@@ -570,6 +633,7 @@ footer span {
 }
 
 .form-container {
+
   display: none;
   margin-top: 2em;
 }
@@ -588,6 +652,18 @@ footer span {
 
 .login-register-page span {
   color: red;
+
+
+.login-register-page p{
+    background-color: #ccc;
+}
+
+.logInRegister{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top:3em;
 }
 
 .form-container {
@@ -614,7 +690,7 @@ footer span {
   padding: 5%;
   border-radius: 5px;
   border: 2px lightgrey solid;
-}
+  }
 
 .login-register-page input[type='submit'] {
   background-color: #ff6000;
@@ -649,6 +725,7 @@ footer span {
   visibility: hidden;
 }
 
+  
 @media (min-width: 1440px) {
   .container {
     padding: 0 11%;
@@ -688,4 +765,280 @@ footer span {
   top: 0;
   max-width: min-content;
   background-color: var(--background-color-two);
+=======
+.allEvents section {
+    margin: var(--desktop-margin);
+}
+
+.filterDiv {
+    display: flex;
+    justify-content: center;
+    padding: 1em;
+    gap: 1em; /* Ruimte tussen form en button */
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.filterDiv form {
+    background-color: lightgrey;
+    padding: 1em;
+    border-radius: 1em;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+    justify-content: space-around;
+    width: 80%; /* Maak de form smaller */
+    max-width: 800px; /* Pas de maximale breedte aan */
+    box-sizing: border-box;
+}
+
+.filterDiv input,
+.filterDiv select {
+    padding: 1em;
+    border-radius: 5px;
+    border: 2px lightgrey solid;
+    font-size: 1em;
+    flex: 1 1 200px; /* Flex-grow, flex-shrink, flex-basis */
+    box-sizing: border-box;
+}
+
+.filterDiv button {
+    background-color: #FF6000;
+    border: none;
+    color: white;
+    padding: 1.1em;
+    font-size: 1em;
+    border-radius: 5px;
+    align-self: flex-start; /* Align button to the top */
+    flex: 0 0 auto; /* Prevent button from growing */
+}
+
+@media (max-width: 768px) {
+    .filterDiv {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .filterDiv form {
+        width: 100%; /* Full width on small screens */
+    }
+    
+    .filterDiv button {
+        align-self: stretch; /* Full width button on small screens */
+    }
+}
+
+
+.testTile{
+    background-color: grey;
+
+}
+
+
+/*about us pagina*/
+.About-us section{
+    margin: var(--desktop-margin);
+}
+
+.AboutUsBlok {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 5em;
+}
+
+.AboutUsBlok img{
+    width: 40%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.AboutUsBlok p{
+    max-width: 40%;
+}
+
+@media (max-width: 825px) {
+    .AboutUsBlok {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .AboutUsBlok img,
+    .AboutUsBlok p {
+        width: 100%;
+        max-width: 100%;
+        margin-top: 2em;
+    }
+}
+
+h2 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+}
+
+
+
+/*accordeon functie*/
+.accordeonPlaatsing {
+    display:flex;
+    justify-content: center;
+}
+
+.accordeon {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+.accordion {
+    background-color: none;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+    border-bottom: 1px lightgrey solid;
+    font-weight: bold;
+  }
+  
+  .accordion:first-of-type {
+    border-top: 1px lightgrey solid;
+}
+
+  
+  .accordion.active, .accordion:hover {
+    background-color: var(--detail-color-one);
+    color: white;
+  }
+  
+  .panel {
+    padding:18px;
+    background-color: none;
+    display: none;
+    overflow: hidden;
+    border-bottom: 1px lightgrey solid;
+
+  }
+
+.panel p{
+    color: var(--font-color-two)
+}
+
+.contact-card {
+    display: flex;
+    border-radius: 20px;
+    background-color: #f2f2f2;
+    overflow: hidden;
+
+  }
+  
+  .contact-card-image,
+  .contact-card-form {
+    flex: 1;
+  }
+  
+  .contact-card-image img {
+    width: 100%;
+    display: block;
+  }
+  
+  .contact-card-form {
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #ebebeb;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .contact-card-form form{
+    background-color: #ebebeb;
+  }
+  
+  .contact-card-form input,
+  .contact-card-form textarea,
+  .contact-card-form button {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .contact-card-form button {
+    background-color: var(--detail-color-one);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .contact-card-form button:hover {
+    background-color: var(--detail-color-one-hover);
+  }
+  
+  @media (max-width: 1040px) {
+    .contact-card {
+      flex-direction: column;
+    }
+  
+    .contact-card-image,
+    .contact-card-form {
+      flex: none;
+      width: 100%;
+    }
+  
+    .contact-card-form {
+      padding: 20px;
+      box-sizing: border-box;
+    }
+  }
+
+
+  /* Loading state */
+
+  #loaderDiv {
+    background-image: url("https://s1.ticketm.net/dam/a/e8c/5265b9d2-a06c-4dc8-a432-a8dd9d042e8c_SOURCE");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 1em;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0;
+    transition: .15s;
+    animation: rotate .6s linear infinite;
+    /* Voeg hier de breedte, hoogte en positie toe */
+    /* Voorbeeld: */
+    width: 8em;
+    height: 8em;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    10%{
+        transform: rotate(0deg);
+    }
+
+    90%{
+        transform: rotate(360deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#loaderDiv.loading {
+    opacity: 1;
 }
