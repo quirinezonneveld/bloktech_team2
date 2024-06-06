@@ -8,6 +8,7 @@
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="https://www.gravatar.com/avatar/12e9d2d49139d67db639598c808cce50?s=64&d=identicon&r=PG&f=y&so-version=2">
 
 </head>
 <body>
@@ -15,14 +16,14 @@
     <!-- skip to main content button -->
     <a href="#main-content">Skip to main content</a>
 
-        <nav>
+        <nav class="container">
             <ul>    
-                <li>
+                <li class="nav-home">
                     <a class="active" href="home">
                         <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
-                <li>
+                <li class="nav-search-bar">
                     <form action="your-action-url" method="get">
                     <!-- de action moet worden aangepast -->
 
@@ -32,20 +33,29 @@
                         </button>
                     </form>                    
                 </li>
-                <li><a href="all-events">All Events</a></li>
-                <li><a href="about-us">About Us</a></li>
+            </ul>
+            <section class="nav-block">
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li><a href="form">Sign In
+                <li class="nav-sign-in"><a href="form">Sign In
                     <i class="fa-solid fa-arrow-right"></i>
                 </a></li>
-                <li><a href="profile">Profile
+                <li class="nav-profile"><a href="profile">Profile
                     <img src="assets/profile-default.jpg" alt="Profile picture">
                 </a></li>
             </ul>
+            </section><button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </nav>
 
-        <section class="header-homepage" id="main-content">
+        
+    
+
+        <section class="header-homepage container" id="main-content">
             <div>
                 <h1>Find your event</h1>
                 <p>Lorem ipsum dolor sit amet consectetur. Diam elit fermentum lorem leo dolor pellentesque faucibus aliquet.</p>
@@ -60,7 +70,7 @@
     </header>
 
     <main>
-        <section class="upcoming">
+        <section class="assymetrical-container">
             <div>
                 <h2>Upcoming</h2>
                 <a href="/all-events">See all</a>
@@ -102,13 +112,13 @@
         </section>
 
         <section>
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/w_DUDTnG76U" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/w_DUDTnG76U" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
             <p>"passievol quotje"</p>
         </section>
 
 
-        <section class="upcoming">
+        <section class="assymetrical-container">
             <div>
                 <h2>Populair</h2>
                 <a href="/all-events">See all</a>
@@ -206,7 +216,8 @@
     </footer>
 
 
-    <!-- <script src="./client.js"></script> -->
+    <script src="client.js"></script>
+    <script src="hamburger.js"></script>
     <script defer src="card.js"></script>
     
 </body>
