@@ -40,11 +40,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// like button
-const likeButton = document.querySelector('.favorite-form');
-const likeHeart = document.querySelector('.favorite-form i');
+// like buttons
+const likeButtons = document.querySelectorAll('.favorite-form');
 
-likeButton.addEventListener('click', () => {
+likeButtons.forEach(likeButton => {
+  const likeHeart = likeButton.querySelector('i');
+
+  likeButton.addEventListener('click', () => {
     likeButton.classList.toggle('liked');
     likeHeart.classList.toggle('liked-heart');
+  });
 });
+
