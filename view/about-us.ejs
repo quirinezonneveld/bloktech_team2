@@ -19,7 +19,7 @@
             <ul>
 
                 <li class="nav-home">
-                    <a class="active" href="home">
+                    <a class="button" href="home" data-type="nav home">
                         <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
@@ -37,25 +37,27 @@
 
             </ul>
             <section class="nav-block">
-                <ul>
-                    <li class="nav-all-events"><a href="all-events">All Events</a></li>
-                    <li class="nav-about-us"><a href="about-us">About Us</a></li>
-                </ul>
-                <ul>
-                    <% if (!isLoggedIn) { %>
-                        <li class="nav-sign-in"><a href="form">Sign In
-                                <i class="fa-solid fa-arrow-right"></i>
-                            </a></li>
-                        <% } %>
 
-                            <li class="nav-profile"><a href="profile">Profile
-                                    <% if (profileImage.startsWith('data:image')) { %>
-                                        <img src="<%= profileImage %>" alt="Profile picture">
-                                        <% } else { %>
-                                            <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                                            <% } %>
-                                </a></li>
-                </ul>
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
+            </ul>
+            <ul>
+                <% if (!isLoggedIn) { %>
+                    <li><a href="form" class="button" data-type="nav">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
+                <li><a href="profile" class="button" data-type="nav">Profile
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
+            </ul>
+
             </section>
             <button class="hamburger" id="hamburger">
                 <i class="fa-solid fa-arrow-right"></i>
