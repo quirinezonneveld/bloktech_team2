@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // like button
-const likeButton = document.querySelector('.card-container button i');
+const likeButton = document.querySelector('.card-container .favorite-form i');
 
 likeButton.addEventListener('click', () => {
     likeButton.classList.toggle('liked');

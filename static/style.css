@@ -70,8 +70,8 @@ a {
 body {
   background-color: var(--background-color-one);
   overflow-x: hidden;
-  background-image: url('assets/blur2.png'), url('assets/blur2.png');
-  background-position: -20em -20em, 20em 50em;
+  background-image: url('assets/blur2.png'), url('assets/blur2.png'), url('assets/blur2.png');
+  background-position: -20em -20em, 20em 41em, -20em 80em;
   background-repeat: no-repeat;
 }
 
@@ -361,6 +361,7 @@ footer span {
 .assymetrical-container {
   padding-left: 8em;
   width: 100%;
+  padding-bottom: 8em;
 }
 .assymetrical-container div {
   display: flex;
@@ -424,7 +425,7 @@ footer span {
   justify-self: flex-start;
   padding: 0.3em 0.8em;
 }
-.card-container button {
+.card-container .favorite-form {
   grid-area: 2 / 4 / 3 / 5; /*row-start / column-start / row-end / column-end;*/
   /* scale: 1.5; */
   border: none;
@@ -432,13 +433,23 @@ footer span {
   background-color: var(--background-color-two);
   border-radius: var(--button-radius);
 }
-.card-container button i {
-  color: var(--card-background-color);
+.card-container .favorite-form button {
+  border: none;
   background-color: transparent;
 }
+.card-container .favorite-form:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+.card-container .favorite-form i {
+  color: var(--card-background-color);
+  /* background-color: transparent; */
+  color: red;
+  padding: 0.68em 0.68em;
+}
 .liked {
-  color: var(--detail-color-one);
-  border: solid red 10px;
+  background-color: red;
+  color: blue;
 }
 
 .card-container a {
