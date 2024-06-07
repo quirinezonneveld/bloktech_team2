@@ -22,9 +22,9 @@
       --detail-color-two-hover: #00A3FF; */
 
   --font-color-one: #eeebeb;
-  --font-color-two: #979797;
+  --font-color-two: #dcdcdc;
 
-  --button-color-text: #101010;
+  --button-color-text: #fff;
   --button-radius: 4.69em;
   --button-padding: 0.5em 1em;
 
@@ -42,6 +42,8 @@
   --font-size-body: 1em;
   --font-size-body-small: 0.8em;
 
+  --content-box-background: #141414;
+
   --desktop-margin: 8em; /* 128 px */
   /* --mobile-margin: ; */
 }
@@ -55,6 +57,8 @@
     --font-color-two: #3e3d3d;
 
     --card-background-color: #bfbfbf;
+
+    --content-box-background: #ebebeb;
   }
 }
 
@@ -74,6 +78,7 @@ body {
   background-position: -20em -20em, 20em 41em, -20em 80em;
   background-repeat: no-repeat;
 }
+
 
 h1 {
   font-size: var(--font-size-h1);
@@ -208,28 +213,6 @@ nav li:nth-of-type(2) button i {
   color: var(--font-color-one);
 }
 
-/* loging & profile */
-nav ul:last-of-type li:last-of-type a,
-nav ul:last-of-type li a {
-  background-color: var(--detail-color-one);
-  border-radius: var(--button-radius);
-  padding: var(--button-padding);
-}
-nav ul:last-of-type li:last-of-type a img {
-  border-radius: 100em;
-  width: 1.5em;
-}
-nav ul:last-of-type li:last-of-type a:hover,
-nav ul:last-of-type li a:hover {
-  color: var(--font-color-one);
-  background-color: var(--detail-color-one-hover);
-}
-
-nav ul:last-of-type li a {
-  display: flex;
-  gap: 0.6em;
-  align-items: center;
-}
 /* hamburger menu*/
 .hamburger {
   display: none;
@@ -278,18 +261,6 @@ footer section div:first-of-type h2 {
 footer section div:first-of-type i {
   color: var(--button-color-text);
   margin-right: 0.5em;
-}
-
-.cta-button {
-  background-color: var(--detail-color-one);
-  padding: var(--button-padding);
-  border-radius: var(--button-radius);
-  text-decoration: none;
-  color: var(--button-color-text);
-}
-
-.cta-button:hover {
-  background-color: var(--detail-color-one-hover);
 }
 
 footer section > div:last-of-type {
@@ -544,6 +515,7 @@ footer span {
   justify-content: flex-end;
   gap: 1em;
 }
+
 .card-buttons button {
   border: none;
   background-color: transparent;
@@ -555,15 +527,7 @@ footer span {
   border-radius: var(--button-radius);
   width: 3em;
   height: 3em;
-}
-.card-buttons button i {
-  /* color: var(--card-background-color); */
-  color: var(--background-color-one);
-  background-color: transparent;
-}
-.card-buttons button:hover {
-  background-color: var(--detail-color-one-hover);
-}
+} 
 
 
 /* quote */
@@ -704,16 +668,10 @@ footer span {
     display: flex;
     flex-direction: column;
     align-items: center;
- 
-    background-color: white;
+    background-color: var(--background-color-one);
     font-family: Arial, Helvetica, sans-serif;
 }
- 
-.logo-header{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
+
  
 .logo-header img{
     width:130px;
@@ -729,6 +687,8 @@ footer span {
     display: none;
     margin-top: 2em;
     min-width: 30%;
+    background-color: var(--content-box-background);
+    padding: 5%;
 }
  
 .form-container.active {
@@ -746,11 +706,15 @@ footer span {
  
 .login-register-page span {
     color: red;
-    background-color: #ccc;
+    background-color: var(--content-box-background);
 }
  
 .login-register-page p{
-    background-color: #ccc;
+    background-color: var(--content-box-background);
+}
+
+.login-register-page footer {
+  margin-top: 2em;
 }
  
 .logInRegister{
@@ -760,15 +724,11 @@ footer span {
     flex-direction: column;
     margin-top:3em;
 }
- 
-.form-container {
-    background-color: #F9F9F9;
-    padding: 5%;
-}
+
  
 .buttons button{
     border: none;
-    background-color: white;
+    background-color: transparent;
     padding: 10px;
     display:flex;
     justify-content: space-around;
@@ -777,8 +737,8 @@ footer span {
  
 .buttons .active{
     font-weight: bold;
-    color: #FF6000;
-    border-bottom: 3px #FF6000 solid;
+    color: var(--detail-color-one);
+    border-bottom: 3px var(--detail-color-one) solid;
 }
  
 .login-register-page form input{
@@ -789,11 +749,12 @@ footer span {
 }
  
 .login-register-page input[type="submit"] {
-    background-color: #FF6000;
+    background-color: var(--detail-color-one);
     border: none;
     margin-top: 1em;
-    color: white;
+    color: var(--button-color-text);
     width: auto;
+    border-radius: var(--button-radius);
  
 }
  
@@ -934,8 +895,8 @@ footer span {
 
 
 /*about us pagina*/
-.About-us section{
-    margin: var(--desktop-margin);
+.About-us main{
+    margin-bottom: 3em;
 }
 
 .AboutUsBlok {
@@ -991,7 +952,7 @@ h2 {
 
 .accordion {
     background-color: transparent;
-    color: #444;
+    color: var(--font-color-one);
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -1019,6 +980,7 @@ h2 {
     display: none;
     overflow: hidden;
     border-bottom: 1px lightgrey solid;
+    color: var(--font-color-two)
 
   }
 
@@ -1029,7 +991,7 @@ h2 {
 .contact-card {
     display: flex;
     border-radius: 20px;
-    background-color: #f2f2f2;
+    background-color: var(--content-box-background);
     overflow: hidden;
 
   }
@@ -1047,14 +1009,14 @@ h2 {
   .contact-card-form {
     padding: 20px;
     box-sizing: border-box;
-    background-color: #ebebeb;
+    background-color: var(--content-box-background);
     display:flex;
     justify-content: center;
     align-items: center;
   }
 
   .contact-card-form form{
-    background-color: #ebebeb;
+    background-color: var(--content-box-background);
   }
   
   .contact-card-form input,
@@ -1072,6 +1034,9 @@ h2 {
     color: #fff;
     border: none;
     cursor: pointer;
+    border-radius: var(--button-radius);
+    padding: var(--button-padding);
+    font-size: var(--font-size-body);
   }
   
   .contact-card-form button:hover {
@@ -1139,4 +1104,325 @@ h2 {
 
 #loaderDiv.loading {
     opacity: 1;
+}
+
+
+/*********/
+/* Error */
+/*********/
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  gap: 1rem;
+}
+
+.error i {
+  font-size: 8rem;
+  margin: 1rem;
+  color: var(--detail-color-one);
+}
+
+.error h1 {
+  font-size: 5rem;
+}
+
+.error button {
+  background-color: var(--detail-color-one);
+  padding: var(--button-padding);
+  border-radius: var(--button-radius);
+  border: none;
+  text-decoration: none;
+  color: var(--button-color-text);
+
+}
+
+.profile {
+  margin-top: 3em;
+}
+
+.welcomeProfile{
+    display:flex;
+}
+
+.welcomeProfile img {
+  border-radius: 1em;
+  width: 15em;
+  height: 100%;
+}
+
+
+.welcome-imageChange{
+    margin:2em;
+}
+
+.welcome-imageChange button{
+    background-color: var(--detail-color-one);
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    color: var(--button-color-text);
+    border: none;
+}
+
+
+
+.profile_userInfo {
+    background-color: #ccc;
+    padding: 1em;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.profile_userInfo form{
+    display:flex;
+    justify-content: center;
+    margin: 2em;
+}
+
+.infoDisplay{
+    display:flex;
+    justify-content: space-between;
+    font-size: 1.5em;
+    padding: 1em;
+    border-bottom: 1px solid #D1D1D1;
+}
+
+
+
+
+.profile h2 {
+    margin: 20px 0;
+}
+
+.profile_userInfo {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.profile-navigation {
+    display: flex;
+    justify-content: space-around;
+
+    margin: 20px 0;
+}
+
+.profile-navigation button {
+    border: none;
+    background-color: transparent;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.profile-navigation button.active {
+    font-weight: bold;
+    color: #FF6000;
+    border-bottom: 3px #FF6000 solid;
+}
+
+.favorite-events {
+    display: none;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.no-favourites{
+  display:flex;
+  justify-content: center;
+  color: var(--font-color-one);
+  padding: 5em;
+  font-weight: bold;
+}
+
+.signOut [type="submit"]{
+    background-color: var(--detail-color-one);
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    color: var(--button-color-text);
+    border: none;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    
+}
+
+
+.profilePageMain .card-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 5em;
+    list-style-type: none;
+    scroll-behavior: smooth;
+    /* scroll-snap-type: x mandatory; */
+}
+  .profilePageMain .card-container li {
+    scroll-snap-align: center;
+  }
+  .profilePageMain .card-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .profilePageMain .card-container article {
+    background-color: var(--card-background-color);
+    height: 20em;
+    width: 18em;
+    border-radius: var(--card-radius);
+    display: grid;
+    grid-template-columns: 1em 6em 1fr 2em 1em;
+    grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
+  }
+  .profilePageMain .card-container article > *,
+  .profilePageMain .card-container article a > * {
+    background-color: transparent;
+  }
+  
+  .profilePageMain .card-container img {
+    grid-area: 1 / 1 / 4 / -1;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .profilePageMain .card-container a {
+    grid-area: 5 / 2 / 10 / 4;
+    text-decoration: none;
+  }
+  .profilePageMain .card-container a h5 {
+    grid-area: 5 / 2 / 6 / 4;
+  }
+  .profilePageMain .card-container a p:first-of-type {
+    grid-area: 7 / 2 / 8 / 4;
+    color: var(--font-color-two);
+  }
+  .profilePageMain .card-container a p:last-of-type {
+    grid-area: 9 / 2 / 10 / 3;
+    color: var(--font-color-two);
+  }
+  
+  .profilePageMain .card-container a * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .profilePageMain .card-buttons {
+    display: flex;
+    width: 100%;
+    list-style-type: none;
+    padding-top: 1em;
+    padding-right: 8em;
+    justify-content: flex-end;
+    gap: 1em;
+  }
+  .profilePageMain .card-buttons button {
+    border: none;
+    background-color: transparent;
+  }
+  .profilePageMain .card-buttons button {
+    grid-area: 2 / 4 / 3 / 5;
+    border: none;
+    cursor: pointer;
+    background-color: var(--detail-color-one);
+    border-radius: var(--button-radius);
+    width: 3em;
+    height: 3em;
+  }
+  .profilePageMain .card-buttons button i {
+    color: var(--background-color-one);
+    background-color: transparent;
+  }
+  .profilePageMain .card-buttons button:hover {
+    background-color: var(--detail-color-one-hover);
+  }
+  
+
+  .unlike-form{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .unlike-form button{
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    margin: 1em;
+    background-color: var(--detail-color-one);
+    color: white;
+  }
+
+
+  .update {
+    display:flex;
+    justify-content: space-around;
+    margin-bottom: 3em;
+  }
+
+  .update div form{
+    display: flex;
+    flex-direction: column;
+  }
+
+.update div form input{
+    padding: 1em;
+    border-radius: 5px;
+    border: 2px lightgrey solid;
+    font-size: 1em;
+    margin: .5em;
+}
+
+.update div form [type="submit"]{
+    background-color: #FF6000;
+    border: none;
+    margin-top: 1em;
+    color: white;
+    width: auto;
+}
+
+.updatePage {
+    margin: var(--desktop-margin)
+}
+
+/***********/
+/* Buttons */
+/***********/
+.button {
+  background-color: var(--detail-color-one);
+  padding: var(--button-padding);
+  border-radius: var(--button-radius);
+  border: none;
+  text-decoration: none;
+  color: var(--button-color-text);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.button[data-type~="nav"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  height: 100%;
+}
+
+.button i {
+  color: var(--button-color-text);
+}
+
+.button[data-type="nav"]:not([data-type~="home"]) img {
+  border-radius: 100em;
+  width: 1.5em;
+}
+
+.button:hover {
+  background-color: var(--detail-color-one-hover);
+  color: var(--button-color-text);
 }

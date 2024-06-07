@@ -9,13 +9,16 @@
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <header>
+
         <a href="#main-content">Skip to main content</a>
 
         <nav class="container">
             <ul>    
+
 
                 <li class="nav-home">
                     <a class="active" href="home">
@@ -40,18 +43,25 @@
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li class="nav-sign-in"><a href="form">Sign In
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a></li>
-                <li class="nav-profile"><a href="profile">Profile
-                    <img src="assets/profile-default.jpg" alt="Profile picture">
-                </a></li>
+                <% if (!isLoggedIn) { %>
+                    <li><a href="form" class="button" data-type="nav">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
+                <li><a href="profile" class="button" data-type="nav">Profile
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
             </ul>
-            </section><button class="hamburger" id="hamburger">
+            </section>
+            <button class="hamburger" id="hamburger">
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
-        </nav>
-
+        </nav> 
         <section class="detail-info">
             <div>
                 <% if (event_details.images && event_details.images[0]) { %>
