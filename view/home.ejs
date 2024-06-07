@@ -42,11 +42,13 @@
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li class="nav-sign-in"><a href="form">Sign In
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a></li>
+                <% if (!isLoggedIn) { %>
+                    <li class="nav-sign-in"><a href="form">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
                 <li class="nav-profile"><a href="profile">Profile
-                    <script>console.log('Profile Image in template:', '<%= profileImage %>');</script>
                     <% if (profileImage.startsWith('data:image')) { %>
                       <img src="<%= profileImage %>" alt="Profile picture">
                     <% } else { %>
@@ -58,12 +60,7 @@
             <button class="hamburger" id="hamburger">
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
-        </nav>
-        <script>
-            console.log("Profile image URL in template: <%= profileImage %>");
-          </script>
-
-        
+        </nav>   
     
 
         <section class="header-homepage container" id="main-content">

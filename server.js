@@ -324,6 +324,7 @@ app.get('/profile', async (req, res) => {
   }
 
   try {
+    const isLoggedIn = !!req.session.userId;
     const userId = new ObjectId(req.session.userId);
     const user = await db.collection('users').findOne({ _id: userId });
     const favoriteEventIds = user.favorites;
@@ -342,7 +343,7 @@ app.get('/profile', async (req, res) => {
     const { name, surname, email } = user;
     const profileImage = await getProfileImage(userId);
 
-    res.render('profile', { name, surname, email, profileImage, favoriteEvents });
+    res.render('profile', { name, surname, email, profileImage, favoriteEvents, isLoggedIn});
    
   } catch (error) {
     console.error('Error fetching profile:', error);
@@ -485,9 +486,10 @@ app.get('/update', async (req, res) => {
       res.redirect('/form');
       return;
     }
+    const isLoggedIn = !!req.session.userId;
     const userId = new ObjectId(req.session.userId);
     const profileImage = await getProfileImage(userId, true);
-    res.render('update', { profileImage });
+    res.render('update', { profileImage, isLoggedIn });
   } catch (error) {
     console.error('Error fetching user data:', error);
     res.status(500).render('error', {

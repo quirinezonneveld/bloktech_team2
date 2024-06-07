@@ -139,7 +139,6 @@ nav {
   /* display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px; */
-  width: 100%;
   /* position: sticky; */
   z-index: 10;
   border-bottom: 0.1em solid var(--font-color-two);
@@ -1046,4 +1045,35 @@ h2 {
 
 #loaderDiv.loading {
     opacity: 1;
+}
+
+/*********/
+/* Error */
+/*********/
+.error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  gap: 1rem;
+}
+
+.error i {
+  font-size: 8rem;
+  margin: 1rem;
+  color: var(--detail-color-one);
+}
+
+.error h1 {
+  font-size: 5rem;
+}
+
+.error button {
+  background-color: var(--detail-color-one);
+  padding: var(--button-padding);
+  border-radius: var(--button-radius);
+  border: none;
+  text-decoration: none;
+  color: var(--button-color-text);
 }

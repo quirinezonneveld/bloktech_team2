@@ -5,28 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>  
     <link href="style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
-        <nav>
+        <nav class="container">
             <ul>    
-                <li>
-                    <a class="active" href="/home">
-                        <img src="assets/logo.png" alt="Logo">
-                        Naam
+
+                <li class="nav-home">
+                    <a class="active" href="home">
+                        <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
-                <li>
-                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
-                    <button>Search</button>
+                <li class="nav-search-bar">
+                    <form action="your-action-url" method="get">
+                    <!-- de action moet worden aangepast -->
+
+                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>                    
                 </li>
-                    <li><a href="/all-events">All Events</a></li>
-                    <li><a href="/about-us">About Us</a></li>
+
+            </ul>
+            <section class="nav-block">
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li><a href="/form">Sign In</a></li>
+                <% if (!isLoggedIn) { %>
+                    <li class="nav-sign-in"><a href="form">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
                 <li class="nav-profile"><a href="profile">Profile
-                    <script>console.log('Profile Image in template:', '<%= profileImage %>');</script>
                     <% if (profileImage.startsWith('data:image')) { %>
                       <img src="<%= profileImage %>" alt="Profile picture">
                     <% } else { %>
@@ -34,7 +50,11 @@
                     <% } %>
                   </a></li>
             </ul>
-        </nav>
+            </section>
+            <button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </nav> 
 
     </header>
     <main>
