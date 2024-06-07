@@ -12,6 +12,45 @@
 </head>
 <body>
     <header>
+        <a href="#main-content">Skip to main content</a>
+
+        <nav class="container">
+            <ul>    
+
+                <li class="nav-home">
+                    <a class="active" href="home">
+                        <img src="assets/logo-ticket+2.png" alt="Logo">
+                    </a>
+                </li>
+                <li class="nav-search-bar">
+                    <form action="your-action-url" method="get">
+                    <!-- de action moet worden aangepast -->
+
+                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>                    
+                </li>
+
+            </ul>
+            <section class="nav-block">
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
+            </ul>
+            <ul>
+                <li class="nav-sign-in"><a href="form">Sign In
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a></li>
+                <li class="nav-profile"><a href="profile">Profile
+                    <img src="assets/profile-default.jpg" alt="Profile picture">
+                </a></li>
+            </ul>
+            </section><button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </nav>
 
         <section class="detail-info">
             <div>
@@ -74,8 +113,78 @@
             </div>
 
         </section>
+
+        <section class="detail-faq">
+        <h2>FAQ</h2>
+            <div class="accordeonPlaatsing"> 
+                <div class="accordeon">
+                    <button class="accordion">Zijn mijn favoriete evenementen privé?</button>
+                    <div class="panel">
+                        <p>Ja, jouw favorietenlijst is privé en alleen jij hebt toegang tot deze informatie. We delen
+                            jouw favoriete evenementen niet met anderen.</p>
+                    </div>
+
+                    <button class="accordion">Hoe kan ik een evenement aan mijn favorieten toevoegen?</button>
+                    <div class="panel">
+                        <p>Het is heel eenvoudig! Wanneer je een evenement bekijkt, zoek dan naar de "Toevoegen aan
+                            Favorieten" knop naast de eventinformatie. Klik erop en het evenement wordt aan jouw
+                            favorietenlijst toegevoegd.</p>
+                    </div>
+
+                    <button class="accordion">Hoe vaak wordt de evenementenkalender bijgewerkt?</button>
+                    <div class="panel">
+                        <p>We begrijpen hoe belangrijk het is om altijd up-to-date te blijven! Daarom streven we ernaar
+                            onze evenementenkalender zo snel mogelijk bij te werken zodra nieuwe informatie beschikbaar
+                            is. Ons team zet zich in om ervoor te zorgen dat je altijd de meest nauwkeurige en actuele
+                            informatie hebt over alle evenementen op Ticket+.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer></footer>
+    <footer>
+        <section>
+            <div>
+                <h2>Find your event</h2>
+                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+            </div>
+
+            <ul>
+                <li><h6>Navigation</h6></li>
+                <li><a href="home">Home</a></li>
+                <li><a href="all-events">All Events</a></li>
+                <li><a href="about-us">About Us</a></li>
+                <li><a href="profile">Profile</a></li>
+            </ul>
+
+            <div>
+                <div>
+                    <h6>Contact</h6>
+                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                </div>
+
+                <div>
+                    <h6>Based in</h6>
+                    <p>Amsterdam, <br> The Netherlands</p>
+                </div>
+
+                <address>
+                    <ul>
+                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                    </ul>
+                </address>
+            </div>
+        </section>
+        
+        <span>©2024 by Ticket+</span>
+    </footer>
+
+
+    <script src="client.js"></script>
+    <script src="hamburger.js"></script>
+    <script defer src="card.js"></script>
 </body>
 </html>

@@ -1,6 +1,16 @@
 /************/
 /* general */
 /************/
+
+*, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+  color: var(--font-color-one);
+}
+
 :root {
   --background-color-one: #101010;
   --background-color-two: #0d0c0c;
@@ -27,6 +37,7 @@
   --font-size-h4: 2em;
   --font-size-h5: 1.5em;
   --font-size-h6: 1.5em;
+  --font-size-quote: 1.5em;
 
   --font-size-body: 1em;
   --font-size-body-small: 0.8em;
@@ -34,14 +45,17 @@
   --desktop-margin: 8em; /* 128 px */
   /* --mobile-margin: ; */
 }
-*,
-html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-  scroll-behavior: smooth;
-  color: var(--font-color-one);
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --background-color-one: #ffffff;
+    --background-color-two: #f5f5f5;
+
+    --font-color-one: #161616;
+    --font-color-two: #3e3d3d;
+
+    --card-background-color: #bfbfbf;
+  }
 }
 
 ul,li {
@@ -59,18 +73,6 @@ body {
   background-image: url('assets/blur2.png'), url('assets/blur2.png');
   background-position: -20em -20em, 20em 50em;
   background-repeat: no-repeat;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --background-color-one: #ffffff;
-    --background-color-two: #f5f5f5;
-
-    --font-color-one: #161616;
-    --font-color-two: #3e3d3d;
-
-    --card-background-color: #bfbfbf;
-  }
 }
 
 h1 {
@@ -96,6 +98,12 @@ h6 {
 p {
   font-size: var(--font-size-body);
   color: var(--font-color-one);
+}
+
+@media (max-width: 800px) {
+  h1 {
+    font-size: 4em;
+  }
 }
 
 header > a {
@@ -140,9 +148,9 @@ nav {
   grid-template-columns: repeat(4, 1fr);
   gap: 10px; */
   width: 100%;
-  /* position: sticky; */
+  /* position: fixed; */
   z-index: 10;
-  border-bottom: 0.1em solid var(--font-color-two);
+  /* border-bottom: 0.1em solid var(--font-color-two); */
 }
 nav ul {
   display: flex;
@@ -490,6 +498,22 @@ footer span {
   background-color: var(--detail-color-one-hover);
 }
 
+
+/* quote */
+.quote {
+  background-color: var(--background-color-two);
+  display: flex;
+  flex-direction: column;
+}
+.quote p {
+  padding: 3em;
+
+  align-self: center;
+  font-size: var(--font-size-quote);
+  font-style: italic;
+}
+
+
 /* slider */
 @keyframes slideAnimatie {
   5% {
@@ -532,7 +556,6 @@ footer span {
   width: 500vw;
   animation: 25s slideAnimatie infinite;
   display: flex;
-  gap: 3%;
   list-style-type: none;
 }
 .slider li {
@@ -597,6 +620,9 @@ footer span {
     margin: 0;
 }
 
+.detail-faq {
+  margin: var(--desktop-margin);
+}
 
 
 
