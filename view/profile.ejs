@@ -68,9 +68,10 @@
             <div class="welcomeProfile">
                 <% if (profileImage) { %>
 
-                    <img src="data:image/jpeg;base64,<%= profileImage.toString('base64') %>" alt="Profile Image">
+                    <img src="<%= profileImage %>" alt="Profile Image">
+
                     <% } else { %>
-                        <img src="/assets/default-profile.jpg" alt="Default Profile Image">
+                        <img src="/assets/profile-default.jpg" alt="Default Profile Image">
                         <% } %>
                             <div class="welcome-imageChange">
                                 <h2>Welcome <%= name %>!
@@ -83,8 +84,7 @@
                                             <input type="file" name="profileImage">
                                             <input type="submit" value="Upload Photo">
                                         </form>
-                                        <form action="/delete-profile-picture" method="POST"
-                                            onsubmit="confirmDeletion(event)">
+                                        <form action="/delete-profile-picture" method="POST" onsubmit="confirmDeletion(event)">
                                             <input type="submit" value="Delete Photo">
                                         </form>
                                         <button class="cancel" onclick="toggleImageChanger()">X</button>

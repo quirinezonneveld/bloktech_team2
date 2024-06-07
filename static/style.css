@@ -1078,6 +1078,7 @@ h2 {
   text-decoration: none;
   color: var(--button-color-text);
 
+}
 
 .profilePage main{
     margin: var(--desktop-margin)
@@ -1200,7 +1201,7 @@ h2 {
     list-style-type: none;
     scroll-behavior: smooth;
     /* scroll-snap-type: x mandatory; */
-  }
+}
   .profilePageMain .card-container li {
     scroll-snap-align: center;
   }
@@ -1324,6 +1325,6 @@ h2 {
     width: auto;
 }
 
-.updatePage{
+.updatePage {
     margin: var(--desktop-margin)
 }
