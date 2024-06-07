@@ -1295,6 +1295,9 @@ h2 {
     margin: var(--desktop-margin)
 }
 
+/***********/
+/* Buttons */
+/***********/
 .button {
   background-color: var(--detail-color-one);
   padding: var(--button-padding);
@@ -1310,7 +1313,7 @@ h2 {
   gap: 0.5em;
 }
 
-.button[data-type="nav"] img{
+.button[data-type="nav"]:not(:first-of-type) img {
   border-radius: 100em;
   width: 1.5em;
 }
