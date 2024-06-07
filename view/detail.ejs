@@ -9,10 +9,55 @@
     <link href="style.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
 </head>
 <body>
     <header>
+        <nav class="container">
+            <ul>    
 
+                <li class="nav-home">
+                    <a class="active" href="home">
+                        <img src="assets/logo-ticket+2.png" alt="Logo">
+                    </a>
+                </li>
+                <li class="nav-search-bar">
+                    <form action="your-action-url" method="get">
+                    <!-- de action moet worden aangepast -->
+
+                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>                    
+                </li>
+
+            </ul>
+            <section class="nav-block">
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
+            </ul>
+            <ul>
+                <% if (!isLoggedIn) { %>
+                    <li class="nav-sign-in"><a href="form">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
+                <li class="nav-profile"><a href="profile">Profile
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
+            </ul>
+            </section>
+            <button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </nav> 
         <section class="detail-info">
             <div>
                 <% if (event_details.images && event_details.images[0]) { %>

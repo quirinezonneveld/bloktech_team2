@@ -42,19 +42,25 @@
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li class="nav-sign-in"><a href="form">Sign In
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a></li>
+                <% if (!isLoggedIn) { %>
+                    <li class="nav-sign-in"><a href="form">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
                 <li class="nav-profile"><a href="profile">Profile
-                    <img src="assets/profile-default.jpg" alt="Profile picture">
-                </a></li>
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
             </ul>
-            </section><button class="hamburger" id="hamburger">
+            </section>
+            <button class="hamburger" id="hamburger">
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
-        </nav>
-
-        
+        </nav>   
     
 
         <section class="header-homepage container" id="main-content">
