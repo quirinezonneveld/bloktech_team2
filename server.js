@@ -168,15 +168,27 @@ app.post('/add_favorite', async (req, res) => {
   }
 
   const { eventId } = req.body;
+  console.log('Received eventId:', eventId);
+
+  if (!eventId) {
+    console.error('Event ID is missing');
+    res.status(400).json({ message: 'Event ID is missing' });
+    return;
+  }
 
   try {
     const userId = new ObjectId(req.session.userId);
-    await db.collection('users').updateOne(
+    const updateResult = await db.collection('users').updateOne(
       { _id: userId },
-      { $addToSet: { favorites: eventId } } // $addToSet ensures no duplicates
+      { $addToSet: { favorites: eventId } }
     );
 
-    console.log(`Added favorite event for user ${userId}`);
+    if (updateResult.modifiedCount === 1) {
+      console.log(`Added favorite event for user ${userId}`);
+    } else {
+      console.error('Failed to add favorite event');
+      res.status(500).json({ message: 'Failed to add favorite event' });
+    }
   } catch (error) {
     console.error('Error adding favorite event to database', error);
     res.status(500).json({ message: 'Error adding favorite event to database' });
@@ -199,7 +211,7 @@ app.post('/unlike', async (req, res) => {
       )
 
       if (updateResult.modifiedCount === 1) {
-        res.redirect('profile')
+        res.redirect('/profile');
       } else {
           res.status(500).render('error', { 
             errorCode: 500, 
@@ -327,15 +339,21 @@ app.get('/profile', async (req, res) => {
     const isLoggedIn = !!req.session.userId;
     const userId = new ObjectId(req.session.userId);
     const user = await db.collection('users').findOne({ _id: userId });
-    const favoriteEventIds = user.favorites;
 
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    const favoriteEventIds = Array.isArray(user.favorites) ? user.favorites : [];
     let favoriteEvents = [];
+
     for (const eventId of favoriteEventIds) {
       try {
         const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.KEY}`);
         favoriteEvents.push(response.data);
         await sleep(200);
-      } catch (error) {          
+      } catch (error) {
         console.error(`Error fetching event with ID ${eventId}:`, error);
       }
     }
@@ -343,14 +361,57 @@ app.get('/profile', async (req, res) => {
     const { name, surname, email } = user;
     const profileImage = await getProfileImage(userId);
 
-    res.render('profile', { name, surname, email, profileImage, favoriteEvents, isLoggedIn});
-   
+    res.render('profile', { name, surname, email, profileImage, favoriteEvents, isLoggedIn });
   } catch (error) {
     console.error('Error fetching profile:', error);
     res.status(500).render('error', {
-        errorCode: 500,
-        errorMessage: 'Server error',
-    })
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
+  }
+});
+
+/************/
+/* Registry */
+/************/
+
+
+app.post('/registry', async (req, res) => {
+  const firstName = req.body.fName;
+  const lastName = req.body.lName;
+  const email = req.body.emailRegister;
+  const password = req.body.passwordRegister;
+ 
+  console.log(`Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`); 
+ 
+  try {
+    //Checking if the email adress is unique
+    const existingUser = await db.collection('users').findOne({ email: email });
+    if (existingUser) {
+      console.log('Email address already in use');
+      res.status(409).send('Email adress already in use');
+      return
+    }
+ 
+    // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    console.log('Password hashed:', hashedPassword);
+ 
+ 
+    //Filling in the data of the user registry
+    const result = await db.collection('users').insertOne({ name: firstName, surname: lastName, password: hashedPassword, email: email });
+    console.log(`Gebruiker opgeslagen met id: ${result.insertedId}`);
+    
+    // Update session with userId
+    req.session.userId = result.insertedId;
+
+    // Redirect to profile page
+    res.redirect('/profile');
+ 
+  } catch (error) {
+    console.error('Error inserting data into database', error);
+    res.status(500).send('Error inserting data into database');
   }
 });
 
