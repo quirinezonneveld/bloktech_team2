@@ -6,90 +6,232 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link href="style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="https://www.gravatar.com/avatar/12e9d2d49139d67db639598c808cce50?s=64&d=identicon&r=PG&f=y&so-version=2">
+
 </head>
 <body>
     <header>
-        <nav>
+    <!-- skip to main content button -->
+    <a href="#main-content">Skip to main content</a>
+
+        <nav class="container">
             <ul>    
-                <li>
-                    <a class="active" href="home.ejs">
-                        <img src="assets/logo.png" alt="Logo">
-                        Naam
+
+                <li class="nav-home">
+                    <a class="active" href="home">
+                        <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
-                <li>
-                    <button>
-                    <img src="images/iconSearch2.png" alt="Search">
-                    </button>
-                    <input type="search" name="q" placeholder="Waar ben je naar op zoek?" maxlength="30" aria-label="Search through site content">
+                <li class="nav-search-bar">
+                    <form action="your-action-url" method="get">
+                    <!-- de action moet worden aangepast -->
 
-                    <input type="search" id="site-search" name="q">
-                    <button>Search</button>
+                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>                    
                 </li>
-                    <li><a href="all-events.ejs">All Events</a></li>
-                    <li><a href="about-us.ejs">About Us</a></li>
+
+            </ul>
+            <section class="nav-block">
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li><a href="/form">Sign In</a></li>
-                <li><a href="profile.ejs">
-                    Profile
-                </a></li>
+                <% if (!isLoggedIn) { %>
+                    <li class="nav-sign-in"><a href="form">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
+                <li class="nav-profile"><a href="profile">Profile
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
             </ul>
-        </nav>
+            </section>
+            <button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+        </nav>   
+    
 
-        <section>
-            <h1>Find your event</h1>
-            <p>stukje tekst hoe en wat</p>
-
-            <div></div>
-
-            <img src="assets/tickets-animation.png" alt="Tickets animation">
+        <section class="header-homepage container" id="main-content">
+            <div>
+                <h1>Find your event</h1>
+                <p>Lorem ipsum dolor sit amet consectetur. Diam elit fermentum lorem leo dolor pellentesque faucibus aliquet.</p>
+                <a href="all-events" class="cta-button">Search Event</a>
+            </div>
+            <div>
+                <script type="module" src="https://unpkg.com/@splinetool/viewer@1.3.10/build/spline-viewer.js"></script>
+                <spline-viewer url="https://prod.spline.design/Wo9y26Ief5BUnSyn/scene.splinecode"></spline-viewer>
+            </div>
         </section>
 
     </header>
 
     <main>
-        <section class="upcoming">
-            <h2>Upcoming</h2>
-            <a href="all-events.ejs">See all</a>
-
-            <ul>
-				<li>
-					<a href="wiegemes.html">
-						<article>
-							<img src="images/wiegemes.jpg" alt="Wiegemes, rubberhout, RVS">
-							<h3>Wiegemes, rubberhout, RVS</h3>
-							<p>7,95</p>
-						</article>
-					</a>
-				</li>
-				<li>
-					<a href="italiaanseKruiden.html">
-						<article>
-							<img src="images/italiaanseKruiden.jpg" alt="Italiaanse Kruiden, biologisch, blikje, 30g">
-							<h3>Italiaanse Kruiden, biologisch, blikje, 30g</h3>
-							<p>4,95</p>
-						</article>
-					</a>
-				</li>
-            </ul>
-
-
+        <section class="assymetrical-container">
             <div>
-                <button>
-                    <img src="images/iconArrow3.svg" alt="Left Arrow: Click to slide left">
-                </button>
-                <button>
-                    <img src="images/iconArrow3.svg" alt="Right Arrow: Click to slide right">
-                </button>
+                <h2>Upcoming</h2>
+                <a href="/all-events">See all</a>
             </div>
+
+            <ul id="card-container" class="card-container">
+            <% for (const event of events) { %>
+                <li >
+                    <article class="event-template">
+                        <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                        <p>
+                            <%= event.classifications[0].genre.name %>
+                        </p>
+
+                        <form action="/add_favorite" method="POST" class="favorite-form">
+                            <input type="hidden" name="eventId" value="<%= event.id %>">
+                            <button type="submit" class="like-button">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </form>
+                        <a href="/detail?event_id=<%= event.id %>">
+
+                            <h5><%= event.name %></h5>
+                            <p><%= event.info %></p>
+                            <p><%= event.dates.start.dateTime %></p>
+                        </a>
+                    </article>
+                </li>
+            <% } %>
+            </ul>
+            
+            <ul class="card-buttons">
+				<li>
+					<button>
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+				</li>
+				<li>
+					<button>
+						<i class="fa-solid fa-arrow-right"></i>
+					</button>
+				</li>
+			</ul>
+        </section>
+
+        <section>
+            <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/w_DUDTnG76U" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+            <p>"passievol quotje"</p>
+        </section>
+
+
+        <section class="assymetrical-container">
+            <div>
+                <h2>Populair</h2>
+                <a href="/all-events">See all</a>
+            </div>
+
+            <ul id="card-container" class="card-container">
+            <% for (const event of events) { %>
+                <li >
+                    <article class="event-template">
+                        <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                        <p>
+                            <%= event.classifications[0].genre.name %>
+                        </p>
+                        <button class="like-button" data-event-id="<%= event.id %>">
+                            <i class="fa-solid fa-heart"></i>
+                        </button>
+                        <a href="<%= event.url %>">
+                            <h5><%= event.name %></h5>
+                            <p><%= event.info %></p>
+                            <p><%= event.dates.start.dateTime %></p>
+                        </a>
+                    </article>
+                </li>
+            <% } %>
+            </ul>
+            
+            <ul class="card-buttons">
+				<li>
+					<button>
+						<i class="fa-solid fa-arrow-left"></i>
+					</button>
+				</li>
+				<li>
+					<button>
+						<i class="fa-solid fa-arrow-right"></i>
+					</button>
+				</li>
+			</ul>
         </section>
 
 
 
+        <section class="slider">
+            <h2>Slider</h2>
+            <ul>
+                <li><img src="assets/slider-default.png" alt="Ticket"></li>
+                <li><img src="assets/slider-default.png" alt="Ticket"></li>
+                <li><img src="assets/slider-default.png" alt="Ticket"></li>
+                <li><img src="assets/slider-default.png" alt="Ticket"></li>
+                <li><img src="assets/slider-default.png" alt="Ticket"></li>
+            </ul>
+        <section>
+
+        </section>
+
     </main>
 
-    <footer></footer>
+    <footer>
+        <section>
+            <div>
+                <h2>Find your event</h2>
+                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+            </div>
+
+            <ul>
+                <li><h6>Navigation</h6></li>
+                <li><a href="home">Home</a></li>
+                <li><a href="all-events">All Events</a></li>
+                <li><a href="about-us">About Us</a></li>
+                <li><a href="profile">Profile</a></li>
+            </ul>
+
+            <div>
+                <div>
+                    <h6>Contact</h6>
+                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                </div>
+
+                <div>
+                    <h6>Based in</h6>
+                    <p>Amsterdam, <br> The Netherlands</p>
+                </div>
+
+                <address>
+                    <ul>
+                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                    </ul>
+                </address>
+            </div>
+        </section>
+        
+        <span>©2024 by Ticket+</span>
+    </footer>
+
+
+    <script src="client.js"></script>
+    <script src="hamburger.js"></script>
+    <script defer src="card.js"></script>
     
 </body>
 </html>
