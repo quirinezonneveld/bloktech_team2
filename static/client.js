@@ -3,9 +3,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   likeButtons.forEach((button) => {
     button.addEventListener('click', async (event) => {
       event.preventDefault();
-      const buttonElement = event.currentTarget;
-      const eventId = buttonElement.getAttribute('data-event-id');
-
+      const form = event.currentTarget.closest('form'); // Haal het formulier element
+      const eventId = form.querySelector('input[name="eventId"]').value; // Haal eventId uit het verborgen invoerveld
 
       try {
         const response = await fetch('/add_favorite', {
