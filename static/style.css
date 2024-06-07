@@ -12,7 +12,7 @@
       --detail-color-two-hover: #00A3FF; */
 
   --font-color-one: #eeebeb;
-  --font-color-two: #979797;
+  --font-color-two: #dcdcdc;
 
   --button-color-text: #fff;
   --button-radius: 4.69em;
@@ -30,6 +30,8 @@
 
   --font-size-body: 1em;
   --font-size-body-small: 0.8em;
+
+  --content-box-background: #141414;
 
   --desktop-margin: 8em; /* 128 px */
   /* --mobile-margin: ; */
@@ -70,6 +72,8 @@ body {
     --font-color-two: #3e3d3d;
 
     --card-background-color: #bfbfbf;
+
+    --content-box-background: #ebebeb;
   }
 }
 
@@ -559,16 +563,10 @@ footer span {
     display: flex;
     flex-direction: column;
     align-items: center;
- 
-    background-color: white;
+    background-color: var(--background-color-one);
     font-family: Arial, Helvetica, sans-serif;
 }
- 
-.logo-header{
-    display: flex;
-    justify-content: flex-start;
-    width: 100%;
-}
+
  
 .logo-header img{
     width:130px;
@@ -584,6 +582,8 @@ footer span {
     display: none;
     margin-top: 2em;
     min-width: 30%;
+    background-color: var(--content-box-background);
+    padding: 5%;
 }
  
 .form-container.active {
@@ -601,11 +601,15 @@ footer span {
  
 .login-register-page span {
     color: red;
-    background-color: #ccc;
+    background-color: var(--content-box-background);
 }
  
 .login-register-page p{
-    background-color: #ccc;
+    background-color: var(--content-box-background);
+}
+
+.login-register-page footer {
+  margin-top: 2em;
 }
  
 .logInRegister{
@@ -615,11 +619,7 @@ footer span {
     flex-direction: column;
     margin-top:3em;
 }
- 
-.form-container {
-    background-color: #F9F9F9;
-    padding: 5%;
-}
+
  
 .buttons button{
     border: none;
@@ -632,8 +632,8 @@ footer span {
  
 .buttons .active{
     font-weight: bold;
-    color: #FF6000;
-    border-bottom: 3px #FF6000 solid;
+    color: var(--detail-color-one);
+    border-bottom: 3px var(--detail-color-one) solid;
 }
  
 .login-register-page form input{
@@ -644,11 +644,12 @@ footer span {
 }
  
 .login-register-page input[type="submit"] {
-    background-color: #FF6000;
+    background-color: var(--detail-color-one);
     border: none;
     margin-top: 1em;
-    color: white;
+    color: var(--button-color-text);
     width: auto;
+    border-radius: var(--button-radius);
  
 }
  
@@ -789,8 +790,8 @@ footer span {
 
 
 /*about us pagina*/
-.About-us section{
-    margin: var(--desktop-margin);
+.About-us main{
+    margin-bottom: 3em;
 }
 
 .AboutUsBlok {
@@ -846,7 +847,7 @@ h2 {
 
 .accordion {
     background-color: transparent;
-    color: #444;
+    color: var(--font-color-one);
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -874,6 +875,7 @@ h2 {
     display: none;
     overflow: hidden;
     border-bottom: 1px lightgrey solid;
+    color: var(--font-color-two)
 
   }
 
@@ -884,7 +886,7 @@ h2 {
 .contact-card {
     display: flex;
     border-radius: 20px;
-    background-color: #f2f2f2;
+    background-color: var(--content-box-background);
     overflow: hidden;
 
   }
@@ -902,14 +904,14 @@ h2 {
   .contact-card-form {
     padding: 20px;
     box-sizing: border-box;
-    background-color: #ebebeb;
+    background-color: var(--content-box-background);
     display:flex;
     justify-content: center;
     align-items: center;
   }
 
   .contact-card-form form{
-    background-color: #ebebeb;
+    background-color: var(--content-box-background);
   }
   
   .contact-card-form input,
@@ -927,6 +929,9 @@ h2 {
     color: #fff;
     border: none;
     cursor: pointer;
+    border-radius: var(--button-radius);
+    padding: var(--button-padding);
+    font-size: var(--font-size-body);
   }
   
   .contact-card-form button:hover {
@@ -1029,19 +1034,20 @@ h2 {
 
 }
 
-.profilePage main{
-    margin: var(--desktop-margin)
+.profile {
+  margin-top: 3em;
 }
 
 .welcomeProfile{
     display:flex;
 }
 
-.profilePage img{
-    border-radius: 1em;
-    width: 15em;
-
+.welcomeProfile img {
+  border-radius: 1em;
+  width: 15em;
+  height: 100%;
 }
+
 
 .welcome-imageChange{
     margin:2em;
@@ -1124,6 +1130,14 @@ h2 {
     border-radius: 8px;
 }
 
+.no-favourites{
+  display:flex;
+  justify-content: center;
+  color: var(--font-color-one);
+  padding: 5em;
+  font-weight: bold;
+}
+
 .signOut [type="submit"]{
     background-color: var(--detail-color-one);
     padding: var(--button-padding);
@@ -1131,6 +1145,9 @@ h2 {
     text-decoration: none;
     color: var(--button-color-text);
     border: none;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    
 }
 
 

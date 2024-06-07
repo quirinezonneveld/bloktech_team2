@@ -16,7 +16,7 @@
 
     <header>
         <nav class="container">
-            <ul>    
+            <ul>
 
                 <li class="nav-home">
                     <a class="button" href="home" data-type="nav home">
@@ -25,17 +25,19 @@
                 </li>
                 <li class="nav-search-bar">
                     <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+                        <!-- de action moet worden aangepast -->
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc."
+                            maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                    </form>                    
+                    </form>
                 </li>
 
             </ul>
             <section class="nav-block">
+
             <ul>
                 <li class="nav-all-events"><a href="all-events">All Events</a></li>
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
@@ -55,117 +57,163 @@
                     <% } %>
                   </a></li>
             </ul>
+
             </section>
             <button class="hamburger" id="hamburger">
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
-        </nav> 
+        </nav>
+    </header>
 
+    <main class="container">
+    <section>
+        <h1>About Us</h1>
+        <div class="AboutUsBlok">
+            <p>Welkom bij Ticket+! Ontdek eenvoudig de leukste evenementen bij jou in de buurt, van festivals en
+                concerten tot sportwedstrijden en theatervoorstellingen. Voeg je favoriete evenementen toe aan je
+                favorieten lijst en krijg persoonlijke aanbevelingen op basis van jouw voorkeuren. Bij Ticket+ ben
+                je
+                altijd op de hoogte van wat er speelt en geniet je van betrouwbare, up-to-date informatie. Sluit je
+                aan
+                bij onze community en mis nooit meer een onvergetelijke ervaring.</p>
+            <img src="/assets/Logo-ticket+.png" alt="Logo Ticket+">
+        </div>
 
+        <h2>FAQ</h2>
+        <div class="accordeonPlaatsing">
+            <div class="accordeon">
+                <button class="accordion">Zijn mijn favoriete evenementen privé?</button>
+                <div class="panel">
+                    <p>Ja, jouw favorietenlijst is privé en alleen jij hebt toegang tot deze informatie. We delen
+                        jouw favoriete evenementen niet met anderen.</p>
+                </div>
+
+                <button class="accordion">Hoe kan ik een evenement aan mijn favorieten toevoegen?</button>
+                <div class="panel">
+                    <p>Het is heel eenvoudig! Wanneer je een evenement bekijkt, zoek dan naar de "Toevoegen aan
+                        Favorieten" knop naast de eventinformatie. Klik erop en het evenement wordt aan jouw
+                        favorietenlijst toegevoegd.</p>
+                </div>
+
+                <button class="accordion">Hoe vaak wordt de evenementenkalender bijgewerkt?</button>
+                <div class="panel">
+                    <p>We begrijpen hoe belangrijk het is om altijd up-to-date te blijven! Daarom streven we ernaar
+                        onze evenementenkalender zo snel mogelijk bij te werken zodra nieuwe informatie beschikbaar
+                        is. Ons team zet zich in om ervoor te zorgen dat je altijd de meest nauwkeurige en actuele
+                        informatie hebt over alle evenementen op Ticket+.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2>Contact</h2>
+        <div class="contact-card">
+            <div class="contact-card-image">
+                <img src="/assets/card-default.jpg" alt="Afbeelding">
+            </div>
+            <div class="contact-card-form">
+                <form>
+                    <input type="text" placeholder="Naam">
+                    <input type="email" placeholder="E-mailadres">
+                    <textarea placeholder="Bericht"></textarea>
+                    <button type="submit">Verzenden</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <footer>
         <section>
-            <h1>About Us</h1>
-            <div class="AboutUsBlok">
-                <p>Welkom bij Ticket+! Ontdek eenvoudig de leukste evenementen bij jou in de buurt, van festivals en
-                    concerten tot sportwedstrijden en theatervoorstellingen. Voeg je favoriete evenementen toe aan je
-                    favorieten lijst en krijg persoonlijke aanbevelingen op basis van jouw voorkeuren. Bij Ticket+ ben
-                    je
-                    altijd op de hoogte van wat er speelt en geniet je van betrouwbare, up-to-date informatie. Sluit je
-                    aan
-                    bij onze community en mis nooit meer een onvergetelijke ervaring.</p>
-                <img src="/assets/Logo-ticket+.png" alt="Logo Ticket+">
+            <div>
+                <h2>Find your event</h2>
+                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
             </div>
 
-            <h2>FAQ</h2>
-            <div class="accordeonPlaatsing">
-                <div class="accordeon">
-                    <button class="accordion">Zijn mijn favoriete evenementen privé?</button>
-                    <div class="panel">
-                        <p>Ja, jouw favorietenlijst is privé en alleen jij hebt toegang tot deze informatie. We delen
-                            jouw favoriete evenementen niet met anderen.</p>
-                    </div>
+            <ul>
+                <li><h6>Navigation</h6></li>
+                <li><a href="home">Home</a></li>
+                <li><a href="all-events">All Events</a></li>
+                <li><a href="about-us">About Us</a></li>
+                <li><a href="profile">Profile</a></li>
+            </ul>
 
-                    <button class="accordion">Hoe kan ik een evenement aan mijn favorieten toevoegen?</button>
-                    <div class="panel">
-                        <p>Het is heel eenvoudig! Wanneer je een evenement bekijkt, zoek dan naar de "Toevoegen aan
-                            Favorieten" knop naast de eventinformatie. Klik erop en het evenement wordt aan jouw
-                            favorietenlijst toegevoegd.</p>
-                    </div>
+            <div>
+                <div>
+                    <h6>Contact</h6>
+                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                </div>
 
-                    <button class="accordion">Hoe vaak wordt de evenementenkalender bijgewerkt?</button>
-                    <div class="panel">
-                        <p>We begrijpen hoe belangrijk het is om altijd up-to-date te blijven! Daarom streven we ernaar
-                            onze evenementenkalender zo snel mogelijk bij te werken zodra nieuwe informatie beschikbaar
-                            is. Ons team zet zich in om ervoor te zorgen dat je altijd de meest nauwkeurige en actuele
-                            informatie hebt over alle evenementen op Ticket+.</p>
-                    </div>
+                <div>
+                    <h6>Based in</h6>
+                    <p>Amsterdam, <br> The Netherlands</p>
                 </div>
-            </div>
 
-            <h2>Contact</h2>
-            <div class="contact-card">
-                <div class="contact-card-image">
-                    <img src="/assets/card-default.jpg" alt="Afbeelding">
-                </div>
-                <div class="contact-card-form">
-                    <form>
-                        <input type="text" placeholder="Naam">
-                        <input type="email" placeholder="E-mailadres">
-                        <textarea placeholder="Bericht"></textarea>
-                        <button type="submit">Verzenden</button>
-                    </form>
-                </div>
+                <address>
+                    <ul>
+                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                    </ul>
+                </address>
             </div>
         </section>
-        <script>
-            var acc = document.getElementsByClassName("accordion");
-            var i;
+        
+        <span>©2024 by Ticket+</span>
+    </footer>
+    
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
 
-            for (i = 0; i < acc.length; i++) {
-                acc[i].addEventListener("click", function () {
-                    this.classList.toggle("active");
-                    var panel = this.nextElementSibling;
-                    if (panel.style.display === "block") {
-                        panel.style.display = "none";
-                    } else {
-                        panel.style.display = "block";
-                    }
-                });
-            }
-
-            document.addEventListener("DOMContentLoaded", () => {
-    const loaderDiv = document.getElementById('loaderDiv');
-    const loadButton = document.getElementById('loadButton');
-    const dataDiv = document.getElementById('data');
-
-    async function fetchData(url) {
-        loaderDiv.classList.add("loading");
-        try {
-            await new Promise((resolve) => setTimeout(resolve, 3000)); // Simuleer een vertraging
-
-            // Maak een fetch-aanroep
-            const response = await fetch(url);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const data = await response.json();
-            dataDiv.innerHTML = `<p>${data.message}</p>`;
-        } catch (error) {
-            dataDiv.innerHTML = `<p>Error: ${error.message}</p>`;
-            console.error('Error:', error);
-        } finally {
-            loaderDiv.classList.remove("loading");
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
         }
-    }
 
-    loadButton.addEventListener('click', () => {
-        fetchData('/home'); // Pas de URL aan naar jouw endpoint
-    });
-});
+        document.addEventListener("DOMContentLoaded", () => {
+            const loaderDiv = document.getElementById('loaderDiv');
+            const loadButton = document.getElementById('loadButton');
+            const dataDiv = document.getElementById('data');
+
+            async function fetchData(url) {
+                loaderDiv.classList.add("loading");
+                try {
+                    await new Promise((resolve) => setTimeout(resolve, 3000)); // Simuleer een vertraging
+
+                    // Maak een fetch-aanroep
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    dataDiv.innerHTML = `<p>${data.message}</p>`;
+                } catch (error) {
+                    dataDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+                    console.error('Error:', error);
+                } finally {
+                    loaderDiv.classList.remove("loading");
+                }
+            }
+
+            loadButton.addEventListener('click', () => {
+                fetchData('/home'); // Pas de URL aan naar jouw endpoint
+            });
+        });
 
 
-        </script>
-    </header>
+    </script>
+
+
+
 
 </body>
