@@ -674,7 +674,7 @@ footer span {
  
 .buttons button{
     border: none;
-    background-color: white;
+    background-color: transparent;
     padding: 10px;
     display:flex;
     justify-content: space-around;
@@ -1047,6 +1047,7 @@ h2 {
     opacity: 1;
 }
 
+
 /*********/
 /* Error */
 /*********/
@@ -1076,4 +1077,253 @@ h2 {
   border: none;
   text-decoration: none;
   color: var(--button-color-text);
+
+
+.profilePage main{
+    margin: var(--desktop-margin)
+}
+
+.welcomeProfile{
+    display:flex;
+}
+
+.profilePage img{
+    border-radius: 1em;
+    width: 15em;
+
+}
+
+.welcome-imageChange{
+    margin:2em;
+}
+
+.welcome-imageChange button{
+    background-color: var(--detail-color-one);
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    color: var(--button-color-text);
+    border: none;
+}
+
+
+
+.profile_userInfo {
+    background-color: #ccc;
+    padding: 1em;
+    background-color: #f1f1f1;
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.profile_userInfo form{
+    display:flex;
+    justify-content: center;
+    margin: 2em;
+}
+
+.profile_userInfo [type="submit"]{
+    background-color: var(--detail-color-one);
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    color: var(--button-color-text);
+    border: none;
+}
+
+.infoDisplay{
+    display:flex;
+    justify-content: space-between;
+    font-size: 1.5em;
+    padding: 1em;
+    border-bottom: 1px solid #D1D1D1;
+}
+
+
+
+
+.profile h2 {
+    margin: 20px 0;
+}
+
+.profile_userInfo {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.profile-navigation {
+    display: flex;
+    justify-content: space-around;
+
+    margin: 20px 0;
+}
+
+.profile-navigation button {
+    border: none;
+    background-color: transparent;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.profile-navigation button.active {
+    font-weight: bold;
+    color: #FF6000;
+    border-bottom: 3px #FF6000 solid;
+}
+
+.favorite-events {
+    display: none;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.signOut [type="submit"]{
+    background-color: var(--detail-color-one);
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    text-decoration: none;
+    color: var(--button-color-text);
+    border: none;
+}
+
+
+.profilePageMain .card-container {
+    display: flex;
+    overflow-x: auto;
+    gap: 5em;
+    list-style-type: none;
+    scroll-behavior: smooth;
+    /* scroll-snap-type: x mandatory; */
+  }
+  .profilePageMain .card-container li {
+    scroll-snap-align: center;
+  }
+  .profilePageMain .card-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .profilePageMain .card-container article {
+    background-color: var(--card-background-color);
+    height: 20em;
+    width: 18em;
+    border-radius: var(--card-radius);
+    display: grid;
+    grid-template-columns: 1em 6em 1fr 2em 1em;
+    grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
+  }
+  .profilePageMain .card-container article > *,
+  .profilePageMain .card-container article a > * {
+    background-color: transparent;
+  }
+  
+  .profilePageMain .card-container img {
+    grid-area: 1 / 1 / 4 / -1;
+    border-radius: var(--card-radius) var(--card-radius) 0 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .profilePageMain .card-container a {
+    grid-area: 5 / 2 / 10 / 4;
+    text-decoration: none;
+  }
+  .profilePageMain .card-container a h5 {
+    grid-area: 5 / 2 / 6 / 4;
+  }
+  .profilePageMain .card-container a p:first-of-type {
+    grid-area: 7 / 2 / 8 / 4;
+    color: var(--font-color-two);
+  }
+  .profilePageMain .card-container a p:last-of-type {
+    grid-area: 9 / 2 / 10 / 3;
+    color: var(--font-color-two);
+  }
+  
+  .profilePageMain .card-container a * {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .profilePageMain .card-buttons {
+    display: flex;
+    width: 100%;
+    list-style-type: none;
+    padding-top: 1em;
+    padding-right: 8em;
+    justify-content: flex-end;
+    gap: 1em;
+  }
+  .profilePageMain .card-buttons button {
+    border: none;
+    background-color: transparent;
+  }
+  .profilePageMain .card-buttons button {
+    grid-area: 2 / 4 / 3 / 5;
+    border: none;
+    cursor: pointer;
+    background-color: var(--detail-color-one);
+    border-radius: var(--button-radius);
+    width: 3em;
+    height: 3em;
+  }
+  .profilePageMain .card-buttons button i {
+    color: var(--background-color-one);
+    background-color: transparent;
+  }
+  .profilePageMain .card-buttons button:hover {
+    background-color: var(--detail-color-one-hover);
+  }
+  
+
+  .unlike-form{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .unlike-form button{
+    padding: var(--button-padding);
+    border-radius: var(--button-radius);
+    margin: 1em;
+    background-color: var(--detail-color-one);
+    color: white;
+  }
+
+
+  .update {
+    display:flex;
+    justify-content: space-around;
+    margin-bottom: 3em;
+  }
+
+  .update div form{
+    display: flex;
+    flex-direction: column;
+  }
+
+.update div form input{
+    padding: 1em;
+    border-radius: 5px;
+    border: 2px lightgrey solid;
+    font-size: 1em;
+    margin: .5em;
+}
+
+.update div form [type="submit"]{
+    background-color: #FF6000;
+    border: none;
+    margin-top: 1em;
+    color: white;
+    width: auto;
+}
+
+.updatePage{
+    margin: var(--desktop-margin)
 }
