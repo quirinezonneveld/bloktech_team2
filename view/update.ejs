@@ -1,73 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>  
+    <title>Document</title>
     <link href="style.css" rel="stylesheet">
 </head>
+
 <body>
     <header>
-        <nav>
+        <nav class="container">
             <ul>    
-                <li>
-                    <a class="active" href="/home">
-                        <img src="assets/logo.png" alt="Logo">
-                        Naam
+
+                <li class="nav-home">
+                    <a class="active" href="home">
+                        <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
-                <li>
-                    <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
-                    <button>Search</button>
+                <li class="nav-search-bar">
+                    <form action="your-action-url" method="get">
+                    <!-- de action moet worden aangepast -->
+
+                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>                    
                 </li>
-                    <li><a href="/all-events">All Events</a></li>
-                    <li><a href="/about-us">About Us</a></li>
+
+            </ul>
+            <section class="nav-block">
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li><a href="/form">Sign In</a></li>
-                <li><a href="/profile">Profile</a></li>
+                <li class="nav-sign-in"><a href="form">Sign In
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a></li>
+                <li class="nav-profile"><a href="profile">Profile
+                    <img src="assets/profile-default.jpg" alt="Profile picture">
+                </a></li>
             </ul>
+            </section><button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
         </nav>
 
     </header>
-    <main>
+    <main class="updatePage">
         <h1>Updating data</h1>
         <!-- VERANDEREN VAN NAAM FORMULIER -->
-        <h2>Change Name</h2>
-        <form action="/update-name" method="POST">
-            <label for="emailUpdate">Email: <span>*</span></label>
-            <input type="email" id="emailUpdate" name="emailUpdate" required>
+        <section class="update">
+            <div class="changeName">
+                <h2>Change Name</h2>
+                <form action="/update-name" method="POST">
+                    <input type="email" id="emailUpdate" name="emailUpdate" placeholder="Email *" required>
+                    <input type="text" id="fNameUpdate" name="fNameUpdate" placeholder="New first name">
+                    <input type="text" id="lNameUpdate" name="lNameUpdate" placeholder="New last name">
 
-            <label for="fNameUpdate">New first name:</label>
-            <input type="text" id="fNameUpdate" name="fNameUpdate">
+                    <p><span>*</span> fields are required</p>
+
+                    <input type="submit" value="Update Name">
+                </form>
+            </div>
+
+            <!-- VERANDEREN VAN WACHTWOORD FORMULIER -->
+            <div class="changeName">
+                <h2>Change Password</h2>
+                <form action="/update-password" method="POST">
+                    <input type="email" id="emailUpdatePw" name="emailUpdate" placeholder="Email *" required>
+                    <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password *" required>
+                    <input type="password" id="newPassword" name="newPassword" placeholder="New Password *" required>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword"
+                        placeholder="Confirm New Password *" required>
+
+                    <p><span>*</span> fields are required</p>
+
+                    <input type="submit" value="Update Password">
+                </form>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <section>
+            <div>
+                <h2>Find your event</h2>
+                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+            </div>
+
+            <ul>
+                <li><h6>Navigation</h6></li>
+                <li><a href="home">Home</a></li>
+                <li><a href="all-events">All Events</a></li>
+                <li><a href="about-us">About Us</a></li>
+                <li><a href="profile">Profile</a></li>
+            </ul>
+
+            <div>
+                <div>
+                    <h6>Contact</h6>
+                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                </div>
+
+                <div>
+                    <h6>Based in</h6>
+                    <p>Amsterdam, <br> The Netherlands</p>
+                </div>
+
+                <address>
+                    <ul>
+                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
+                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
+                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                    </ul>
+                </address>
+            </div>
+        </section>
         
-            <label for="lNameUpdate">New last name:</label>
-            <input type="text" id="lNameUpdate" name="lNameUpdate">
-
-            <p><span>*</span> fields are required</p>
-
-            <input type="submit" value="Update Name">
-        </form>
-
-        <!-- VERANDEREN VAN WACHTWOORD FORMULIER -->
-        <h2>Change Password</h2>
-        <form action="/update-password" method="POST">
-            <label for="emailUpdatePw">Email: <span>*</span></label>
-            <input type="email" id="emailUpdatePw" name="emailUpdate" required>
-
-            <label for="oldPassword">Old Password: <span>*</span></label>
-            <input type="password" id="oldPassword" name="oldPassword" required>
-        
-            <label for="newPassword">New Password: <span>*</span></label>
-            <input type="password" id="newPassword" name="newPassword" required>
-        
-            <label for="confirmNewPassword">Confirm New Password: <span>*</span></label>
-            <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
-
-            <p><span>*</span> fields are required</p>   
-
-            <input type="submit" value="Update Password">
-        </form>
-</main>
+        <span>©2024 by Ticket+</span>
+    </footer>
 </body>
+
 </html>
