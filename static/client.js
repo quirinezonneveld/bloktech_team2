@@ -1,10 +1,15 @@
+
+getEvents();
+
 document.addEventListener('DOMContentLoaded', async () => {
   const likeButtons = document.querySelectorAll('.like-button');
   likeButtons.forEach((button) => {
     button.addEventListener('click', async (event) => {
       event.preventDefault();
-      const form = event.currentTarget.closest('form'); // Haal het formulier element
-      const eventId = form.querySelector('input[name="eventId"]').value; // Haal eventId uit het verborgen invoerveld
+      const form = event.currentTarget.closest('form');
+      const eventId = form.querySelector('input[name="eventId"]').value;
+
+      console.log('Submitting form with eventId:', eventId);
 
       try {
         const response = await fetch('/add_favorite', {
@@ -24,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       } catch (error) {
         console.error('Error adding favorite:', error);
       }
-
     });
   });
 });

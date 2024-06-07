@@ -168,7 +168,7 @@ app.post('/add_favorite', async (req, res) => {
   }
 
   const { eventId } = req.body;
-  console.log('Received eventId:', eventId); // Log the eventId for debugging
+  console.log('Received eventId:', eventId);
 
   if (!eventId) {
     console.error('Event ID is missing');
@@ -180,12 +180,11 @@ app.post('/add_favorite', async (req, res) => {
     const userId = new ObjectId(req.session.userId);
     const updateResult = await db.collection('users').updateOne(
       { _id: userId },
-      { $addToSet: { favorites: eventId } } // $addToSet ensures no duplicates
+      { $addToSet: { favorites: eventId } }
     );
 
     if (updateResult.modifiedCount === 1) {
       console.log(`Added favorite event for user ${userId}`);
-      res.redirect('/profile'); // Redirect to profile to show updated favorites
     } else {
       console.error('Failed to add favorite event');
       res.status(500).json({ message: 'Failed to add favorite event' });
