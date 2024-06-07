@@ -14,7 +14,7 @@
   --font-color-one: #eeebeb;
   --font-color-two: #979797;
 
-  --button-color-text: #101010;
+  --button-color-text: #fff;
   --button-radius: 4.69em;
   --button-padding: 0.5em 1em;
 
@@ -199,28 +199,6 @@ nav li:nth-of-type(2) button i {
   color: var(--font-color-one);
 }
 
-/* loging & profile */
-nav ul:last-of-type li:last-of-type a,
-nav ul:last-of-type li a {
-  background-color: var(--detail-color-one);
-  border-radius: var(--button-radius);
-  padding: var(--button-padding);
-}
-nav ul:last-of-type li:last-of-type a img {
-  border-radius: 100em;
-  width: 1.5em;
-}
-nav ul:last-of-type li:last-of-type a:hover,
-nav ul:last-of-type li a:hover {
-  color: var(--font-color-one);
-  background-color: var(--detail-color-one-hover);
-}
-
-nav ul:last-of-type li a {
-  display: flex;
-  gap: 0.6em;
-  align-items: center;
-}
 /* hamburger menu*/
 .hamburger {
   display: none;
@@ -269,18 +247,6 @@ footer section div:first-of-type h2 {
 footer section div:first-of-type i {
   color: var(--button-color-text);
   margin-right: 0.5em;
-}
-
-.cta-button {
-  background-color: var(--detail-color-one);
-  padding: var(--button-padding);
-  border-radius: var(--button-radius);
-  text-decoration: none;
-  color: var(--button-color-text);
-}
-
-.cta-button:hover {
-  background-color: var(--detail-color-one-hover);
 }
 
 footer section > div:last-of-type {
@@ -1327,4 +1293,28 @@ h2 {
 
 .updatePage {
     margin: var(--desktop-margin)
+}
+
+.button {
+  background-color: var(--detail-color-one);
+  padding: var(--button-padding);
+  border-radius: var(--button-radius);
+  text-decoration: none;
+  color: var(--button-color-text);
+  white-space: nowrap;
+}
+
+.button[data-type="nav"] {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.button[data-type="nav"] img{
+  border-radius: 100em;
+  width: 1.5em;
+}
+
+.button:hover {
+  background-color: var(--detail-color-one-hover);
 }
