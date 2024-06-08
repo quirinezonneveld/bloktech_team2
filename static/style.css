@@ -1,6 +1,16 @@
 /************/
 /* general */
 /************/
+
+*, html {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  scroll-behavior: smooth;
+  color: var(--font-color-one);
+}
+
 :root {
   --background-color-one: #101010;
   --background-color-two: #0d0c0c;
@@ -27,6 +37,7 @@
   --font-size-h4: 2em;
   --font-size-h5: 1.5em;
   --font-size-h6: 1.5em;
+  --font-size-quote: 1.5em;
 
   --font-size-body: 1em;
   --font-size-body-small: 0.8em;
@@ -35,32 +46,6 @@
 
   --desktop-margin: 8em; /* 128 px */
   /* --mobile-margin: ; */
-}
-*,
-html {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-  scroll-behavior: smooth;
-  color: var(--font-color-one);
-}
-
-ul,li {
-  text-decoration: none;
-  list-style: none;
-}
-
-a {
-  text-decoration: none;
-}
-
-body {
-  background-color: var(--background-color-one);
-  overflow-x: hidden;
-  background-image: url('assets/blur2.png'), url('assets/blur2.png');
-  background-position: -20em -20em, 20em 50em;
-  background-repeat: no-repeat;
 }
 
 @media (prefers-color-scheme: light) {
@@ -76,6 +61,24 @@ body {
     --content-box-background: #ebebeb;
   }
 }
+
+ul,li {
+  text-decoration: none;
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: var(--background-color-one);
+  overflow-x: hidden;
+  background-image: url('assets/blur2.png'), url('assets/blur2.png'), url('assets/blur2.png');
+  background-position: -20em -20em, 20em 41em, -20em 80em;
+  background-repeat: no-repeat;
+}
+
 
 h1 {
   font-size: var(--font-size-h1);
@@ -100,6 +103,12 @@ h6 {
 p {
   font-size: var(--font-size-body);
   color: var(--font-color-one);
+}
+
+@media (max-width: 800px) {
+  h1 {
+    font-size: 4em;
+  }
 }
 
 header > a {
@@ -143,9 +152,10 @@ nav {
   /* display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px; */
-  /* position: sticky; */
+  width: 100%;
+  /* position: fixed; */
   z-index: 10;
-  border-bottom: 0.1em solid var(--font-color-two);
+  /* border-bottom: 0.1em solid var(--font-color-two); */
 }
 nav ul {
   display: flex;
@@ -221,7 +231,7 @@ nav li:nth-of-type(2) button i {
 footer section {
   padding: var(--desktop-margin);
   background-image: url('assets/footer-background.gif');
-  /* background-repeat: no-repeat; */
+  background-color: #101010;
   background-size: cover;
   display: flex;
   justify-content: space-between;
@@ -322,6 +332,7 @@ footer span {
 .assymetrical-container {
   padding-left: 8em;
   width: 100%;
+  padding-bottom: 8em;
 }
 .assymetrical-container div {
   display: flex;
@@ -385,22 +396,8 @@ footer span {
   justify-self: flex-start;
   padding: 0.3em 0.8em;
 }
-.card-container button {
-  grid-area: 2 / 4 / 3 / 5; /*row-start / column-start / row-end / column-end;*/
-  /* scale: 1.5; */
-  border: none;
-  cursor: pointer;
-  background-color: var(--background-color-two);
-  border-radius: var(--button-radius);
-}
-.card-container button i {
-  color: var(--card-background-color);
-  background-color: transparent;
-}
-.liked {
-  color: var(--detail-color-one);
-  border: solid red 10px;
-}
+
+
 
 .card-container a {
   grid-area: 5 / 2 / 10 / 4; /* Zorg ervoor dat de link al deze cellen beslaat */
@@ -426,6 +423,88 @@ footer span {
   text-overflow: ellipsis;
 }
 
+
+
+/* like */
+.card-container .favorite-form {
+  grid-area: 2 / 4 / 3 / 5;
+  border: none;
+  cursor: pointer;
+  background-color: var(--background-color-two);
+  border-radius: var(--button-radius);
+}
+.card-container .favorite-form button {
+  border: none;
+  background-color: transparent;
+}
+.card-container .favorite-form i {
+  color: var(--font-color-one);
+  padding: 0.68em 0.68em;
+}
+
+.card-container .favorite-form:hover {
+  background-color: var(--card-background-color);
+  cursor: pointer;
+}
+
+
+
+/* like animatie */
+
+.liked-heart::before {
+  color: var(--detail-color-one);
+  position: absolute;
+  z-index: 10000;
+}
+
+.liked {
+  background-color: orange;
+  border-radius: 100em;
+
+  animation-name:heart-animation;
+  animation-duration: 3s;
+}
+
+@keyframes heart-animation {
+  0%, 20% {
+    transform: none;
+  }
+  27% {
+    transform: scale(1.1, 0.9); 
+  }
+  34% {
+    transform: scale(0.95, 1.05); 
+  }
+  38% {
+    transform: scale(1.15, 0.85);
+    animation-timing-function: cubic-bezier(0.165, 0.840, 0.440, 1.000);
+  }
+  50% {
+    transform: translateY(-0.5em) scale(0.9, 1.1); 
+    animation-timing-function: cubic-bezier(0.895, 0.030, 0.685, 0.220);
+  }
+  62% {
+    transform: scale(1.1, 0.9); 
+  }
+  68% {
+    transform: scale(0.95, 1.05); 
+  }
+  72% {
+    transform: scale(1.05, 0.95); 
+  }
+  75% {
+    transform: scale(0.98, 1.02); 
+  }
+  78% {
+    transform: scale(1.02, 0.98); 
+  }
+  80%, 100% {
+    transform: none;
+  }
+}
+
+
+
 /* card buttons */
 .card-buttons {
   display: flex;
@@ -438,9 +517,33 @@ footer span {
 }
 
 .card-buttons button {
+  border: none;
+  background-color: transparent;
+}
+.card-buttons button {
+  border: none;
+  cursor: pointer;
+  background-color: var(--detail-color-one);
+  border-radius: var(--button-radius);
   width: 3em;
   height: 3em;
 } 
+
+
+/* quote */
+.quote {
+  background-color: var(--background-color-two);
+  display: flex;
+  flex-direction: column;
+}
+.quote p {
+  padding: 3em;
+
+  align-self: center;
+  font-size: var(--font-size-quote);
+  font-style: italic;
+}
+
 
 /* slider */
 @keyframes slideAnimatie {
@@ -484,7 +587,6 @@ footer span {
   width: 500vw;
   animation: 25s slideAnimatie infinite;
   display: flex;
-  gap: 3%;
   list-style-type: none;
 }
 .slider li {
@@ -549,6 +651,9 @@ footer span {
     margin: 0;
 }
 
+.detail-faq {
+  margin: var(--desktop-margin);
+}
 
 
 

@@ -57,6 +57,7 @@
                   </a></li>
             </ul>
             </section>
+
             <button class="hamburger" id="hamburger">
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
@@ -124,10 +125,10 @@
 			</ul>
         </section>
 
-        <section>
+        <section class="quote">
             <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/w_DUDTnG76U" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-            <p>"passievol quotje"</p>
+            <p>&quot;It&#39;s not just an event, it&#39;s a memory in the making&quot;</p>
         </section>
 
 
@@ -145,10 +146,15 @@
                         <p>
                             <%= event.classifications[0].genre.name %>
                         </p>
-                        <button class="like-button" data-event-id="<%= event.id %>">
-                            <i class="fa-solid fa-heart"></i>
-                        </button>
-                        <a href="<%= event.url %>">
+
+                        <form action="/add_favorite" method="POST" class="favorite-form">
+                            <input type="hidden" name="eventId" value="<%= event.id %>">
+                            <button type="submit" class="like-button">
+                                <i class="fa-solid fa-heart"></i>
+                            </button>
+                        </form>
+                        <a href="/detail?event_id=<%= event.id %>">
+
                             <h5><%= event.name %></h5>
                             <p><%= event.info %></p>
                             <p><%= event.dates.start.dateTime %></p>
@@ -175,13 +181,12 @@
 
 
         <section class="slider">
-            <h2>Slider</h2>
             <ul>
-                <li><img src="assets/slider-default.png" alt="Ticket"></li>
-                <li><img src="assets/slider-default.png" alt="Ticket"></li>
-                <li><img src="assets/slider-default.png" alt="Ticket"></li>
-                <li><img src="assets/slider-default.png" alt="Ticket"></li>
-                <li><img src="assets/slider-default.png" alt="Ticket"></li>
+                <li><img src="assets/ticket-1.png" alt="Ticket"></li>
+                <li><img src="assets/ticket-2.png" alt="Ticket"></li>
+                <li><img src="assets/ticket-3.png" alt="Ticket"></li>
+                <li><img src="assets/ticket-4.png" alt="Ticket"></li>
+                <li><img src="assets/ticket-1.png" alt="Ticket"></li>
             </ul>
         <section>
 
