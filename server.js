@@ -21,7 +21,9 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const getEvents = async (classificationName, countryCode) => {
+// Loading events & filters
+
+const getEvents = async (classificationName, countryCode, keyword) => {
   // const response = await axios.get(URL);
   // const data = response.data;
   // return data._embedded.events;
@@ -29,7 +31,7 @@ const getEvents = async (classificationName, countryCode) => {
     process.env.KEY
   }${classificationName ? `&classificationName=${classificationName}` : ''}${
     countryCode ? `&countryCode=${countryCode}` : ''
-  }`;
+  }${keyword ? `&keyword=${keyword}` : ''}`;
 
   try {
     const response = await axios.get(URL);
@@ -40,14 +42,6 @@ const getEvents = async (classificationName, countryCode) => {
     return [];
   }
 };
-// test filter
-// const fetchEvents = async () => {
-//   const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
-//   const events = await getEvents('music', URL);
-//   console.log(events);
-// };
-
-// fetchEvents();
 
 const getEvent = async (event_id) => {
   get_event_url = `https://app.ticketmaster.com/discovery/v2/events/${event_id}.json?apikey=${process.env.KEY}`;
@@ -203,10 +197,16 @@ app.get('/form', (req, res) => {
 //Events
 app.get('/all-events', async (req, res) => {
   try {
-    const { classificationName, countryCode } = req.query;
+    const { classificationName, countryCode, keyword } = req.query;
     console.log('classificationName ---------->', classificationName);
     const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
-    const events = await getEvents(classificationName, countryCode, URL);
+
+    const events = await getEvents(
+      classificationName,
+      countryCode,
+      keyword,
+      URL
+    );
     res.render('all-events', { events });
   } catch (error) {
     console.error('Error fetching events:', error);

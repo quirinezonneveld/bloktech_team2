@@ -1,10 +1,11 @@
 // Add info from .env file to process.env
 // require('dotenv').config();
+
 // async function getEvents() {
 //   try {
 //     const response = await fetch(URL);
 //     const data = await response.json();
-//     //console.log(data);
+//     console.log(data);
 //   } catch (error) {
 //     console.error('error loading data', error);
 //   }

@@ -130,15 +130,11 @@ function handleSubmitFilter(event) {
   submitFilterButton.innerText = 'Verzenden...';
   setTimeout(() => {
     console.log('Formulier verzonden!');
-    // Hier zou je eventueel de submit van het formulier kunnen forceren:
-    // event.target.submit();
 
-    // Verwijder loading state nadat logica is uitgevoerd
+    // Removing loading state
     submitFilterButton.classList.remove('loading');
     loaderFilter.classList.remove('loading');
     submitFilterButton.innerText = 'Verzenden'; // Herstel de tekst van de knop
     submitFilterButton.disabled = false;
-
-    // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
-  }, 2000);
+  }, 90000);
 }
