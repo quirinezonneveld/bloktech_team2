@@ -45,7 +45,7 @@
   --content-box-background: #141414;
 
   --desktop-margin: 8em; /* 128 px */
-  /* --mobile-margin: ; */
+  --mobile-margin: 1em;
 }
 
 @media (prefers-color-scheme: light) {
@@ -137,8 +137,7 @@ header > a:focus {
   padding: 0 5em;
 }
 
-/* skip to main content: 
-https://www.youtube.com/watch?v=287mLmuamoM https://www.youtube.com/watch?v=jDDaOFr9nqQ */
+
 
 /************/
 /* navigatie */
@@ -224,6 +223,7 @@ nav li:nth-of-type(2) button i {
   font-weight: 900;
 }
 
+
 /************/
 /* footer */
 /************/
@@ -305,12 +305,10 @@ footer span {
 
 .header-homepage {
   display: flex;
-  /* padding: 5em; */
   justify-content: space-between;
   align-items: center;
 }
 .header-homepage div:last-of-type {
-  /* width: 70%; */
   height: 100%;
   overflow: visible;
 }
@@ -322,11 +320,7 @@ footer span {
   align-items: start;
   gap: 3em;
 }
-/* .header-homepage div:last-of-type img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-} */
+
 
 /* upcoming */
 .assymetrical-container {
@@ -346,6 +340,7 @@ footer span {
 }
 .assymetrical-container a:hover {
   color: var(--detail-color-one-hover);
+  font-weight: 600;
 }
 
 /* card */
@@ -400,9 +395,11 @@ footer span {
 
 
 .card-container a {
-  grid-area: 5 / 2 / 10 / 4; /* Zorg ervoor dat de link al deze cellen beslaat */
-  text-decoration: none; /* Verwijdert de onderstreping van de link */
-  /* background-color: var(--card-background-color); */
+  grid-area: 5 / 2 / 10 / 4;
+  text-decoration: none;
+}
+.card-container a h5:hover, .card-container a p:first-of-type:hover, .card-container a p:last-of-type:hover {
+  color: var(--detail-color-one-hover);
 }
 .card-container a h5 {
   grid-area: 5 / 2 / 6 / 4;
@@ -610,6 +607,9 @@ footer span {
     width: 30em;
     object-fit: cover;
 }
+.detail-info div img, .join-event div img {
+  border-radius: var(--card-radius);
+}
 
 .detail-info article {
     display: flex;
@@ -653,6 +653,29 @@ footer span {
 
 .detail-faq {
   margin: var(--desktop-margin);
+}
+
+@media (max-width: 800px) {
+  .detail-info {
+    flex-direction: column;
+    margin: var(--mobile-margin);
+  }
+  .detail-info div img {
+    width: 15em;
+  }
+  .detail-info article h1 {
+    font-size: 2em;
+  }
+  .detail-info article p {
+    font-size: 0.8em;
+  }
+
+  .join-event {
+    padding: var(--mobile-margin);
+  }
+  .join-event h2 {
+    font-size: 1.8em;
+  }
 }
 
 
