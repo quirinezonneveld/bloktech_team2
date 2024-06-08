@@ -1,174 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="../style.css">
-</head>
-<body class="allEvents">
-    <nav>
-        <ul>    
-            <li>
-                <a class="active" href="/home">
-                    <img src="assets/logo.png" alt="Logo">
-                    Naam
-                </a>
-            </li>
-            <li>
-                <input type="search" id="site-search" name="q" placeholder="Event, artist, date etc." maxlength="30" aria-label="Search through site content">
-                <button>Search</button>
-            </li>
-                <li><a href="/all-events">All Events</a></li>
-                <li><a href="/about-us">About Us</a></li>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <nav class="container">
+      <ul>
+        <li class="nav-home">
+          <a class="active" href="home">
+            <img src="assets/logo-ticket+2.png" alt="Logo" />
+          </a>
+        </li>
+        <li class="nav-search-bar">
+          <form action="your-action-url" method="get">
+            <!-- de action moet worden aangepast -->
+
+            <input
+              type="search"
+              id="site-search"
+              name="q"
+              placeholder="Search: event, artist, date etc."
+              maxlength="20"
+              aria-label="Search through site content"
+            />
+            <button type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </li>
+      </ul>
+      <section class="nav-block">
+        <ul>
+          <li class="nav-all-events"><a href="all-events">All Events</a></li>
+          <li class="nav-about-us"><a href="about-us">About Us</a></li>
         </ul>
         <ul>
-            <li><a href="/form">Sign In</a></li>
-            <li><a href="/profile">Profile</a></li>
+          <li class="nav-sign-in">
+            <a href="form"
+              >Sign In
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </li>
+          <li class="nav-profile">
+            <a href="profile"
+              >Profile
+              <img src="assets/profile-default.jpg" alt="Profile picture" />
+            </a>
+          </li>
         </ul>
+      </section>
+      <button class="hamburger" id="hamburger">
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
     </nav>
+
     <section>
-    <h1>All events</h1>
+      <h1>All events</h1>
 
-    <div id="loaderDiv"></div>
+      <div id="loader-filter"></div>
 
-    <div class="filterDiv">
-        <form action="/submit" method="post">
-            <!-- Datum invoerveld -->
-            <input type="date" id="datum" name="datum">
-    
-            <!-- Segment dropdown -->
-            <select id="segment" name="segment">
-                <option value="" disabled selected>Segment</option>
-                <option value="segment1">Segment 1</option>
-                <option value="segment2">Segment 2</option>
-                <option value="segment3">Segment 3</option>
-            </select>
-    
-            <!-- Genre dropdown -->
-            <select id="genre" name="genre">
-                <option value="" disabled selected>Genre</option>
-                <option value="action">Actie</option>
-                <option value="comedy">Komedie</option>
-                <option value="drama">Drama</option>
-                <option value="horror">Horror</option>
-                <option value="sci-fi">Science Fiction</option>
-            </select>
-    
-            <!-- Regio dropdown -->
-            <select id="regio" name="regio">
-                <option value="" disabled selected>Regio</option>
-                <option value="north">Noord</option>
-                <option value="south">Zuid</option>
-                <option value="east">Oost</option>
-                <option value="west">West</option>
-            </select>
-    
-            <!-- Prijs dropdown -->
-            <select id="price" name="price">
-                <option value="" disabled selected>Price</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-    
-            <button id="submitButton" type="submit" onclick="handleSubmit(event)">Verzenden</button>
+      <div class="filter-container">
+        <form id="filter-form" onsubmit="handleSubmitFilter(event)">
+          <!-- Datum invoerveld -->
+          <input type="date" id="datum" name="datum" />
 
+          <!-- Segment dropdown -->
+          <select id="classificationName" name="classificationName">
+            <option value="" disabled selected>Classification Name</option>
+            <option value="Music">Music</option>
+            <option value="Sports">Sports</option>
+            <option value="Arts & Theatre">Arts & Theatre</option>
+            <option value="Film">Film</option>
+            <option value="Miscellaneous">Miscellaneous</option>
+          </select>
+
+          <select id="countryCode" name="countryCode">
+            <option value="" disabled selected>Country</option>
+            <option value="us">US</option>
+            <option value="at">Austria</option>
+            <option value="be">Belgium</option>
+            <option value="de">Germany</option>
+            <option value="nl">Netherlands</option>
+          </select>
+      
+          <!-- Genre dropdown -->
+          <select id="genre" name="genre">
+            <option value="" disabled selected>Genre</option>
+            <option value="action">Actie</option>
+            <option value="comedy">Komedie</option>
+            <option value="drama">Drama</option>
+            <option value="horror">Horror</option>
+            <option value="sci-fi">Science Fiction</option>
+          </select>
+
+          <!-- Regio dropdown -->
+          <!-- <select id="regio" name="regio">
+            <option value="" disabled selected>Regio</option>
+            <option value="north">Noord</option>
+            <option value="south">Zuid</option>
+            <option value="east">Oost</option>
+            <option value="west">West</option>
+          </select> -->
+
+          <!-- Prijs dropdown -->
+          <select id="price" name="price">
+            <option value="" disabled selected>Price</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+
+          <button id="submit-filter-button" type="submit">
+            Verzenden
+          </button>
         </form>
+      </div>
+    </section>
+
+    <section class="assymetrical-container">
+    <div>
+      <h2>Populair</h2>
+      <a href="/all-events">See all</a>
     </div>
-
-    <ul class="card">
+    <ul id="card-container" class="card-container">
+        <% if (events && events.length) { %>
+            <% events.forEach(event => { %>
         <li>
-            <article>
-                <img src="assets/card-default.jpg" alt="Event photo">
-                <p>Concert</p>
-                <button>
-                    <i class="fa-solid fa-heart"></i>
-                </button>
-                <a href="detail.ejs">
-                    <h5>Naam artiest</h5>
-                    <p>Informatie over event en artiest...</p>
-                    <p>date</p>
-                </a>
-            </article>
+          <article class="event-template">
+            <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+            <p><%= event.classifications[0].genre.name %></p>
+            <button class="like-button" data-event-id="<%= event.id %>">
+              <i class="fa-solid fa-heart"></i>
+            </button>
+            <a href="<%= event.url %>">
+              <h5><%= event.name %></h5>
+              <p><%= event.info %></p>
+              <p><%= event.dates.start.dateTime %></p>
+            </a>
+          </article>
         </li>
-        </ul>
+        <% }) %>
+        <% } else { %>
+          <li>No events available.</li>
+        <% } %>
+    </ul>
+    <ul class="card-buttons">
+      <li>
+        <button>
+          <i class="fa-solid fa-arrow-left"></i>
+        </button>
+      </li>
+      <li>
+        <button>
+          <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </li>
+    </ul>
+  </section>
 
-</section>
-    
-    
 
     <footer>
-        <section>
-            <div>
-                <h2>Find your event</h2>
-                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
-            </div>
+      <section>
+        <div>
+          <h2>Find your event</h2>
+          <a href="all-events" class="cta-button"
+            ><i class="fa-solid fa-magnifying-glass"></i>Search Event</a
+          >
+        </div>
 
+        <ul>
+          <li><h6>Navigation</h6></li>
+          <li><a href="home">Home</a></li>
+          <li><a href="all-events">All Events</a></li>
+          <li><a href="about-us">About Us</a></li>
+          <li><a href="profile">Profile</a></li>
+        </ul>
+
+        <div>
+          <div>
+            <h6>Contact</h6>
+            <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+          </div>
+
+          <div>
+            <h6>Based in</h6>
+            <p>
+              Amsterdam, <br />
+              The Netherlands
+            </p>
+          </div>
+
+          <address>
             <ul>
-                <li><h6>Navigation</h6></li>
-                <li><a href="home">Home</a></li>
-                <li><a href="all-events">All Events</a></li>
-                <li><a href="about-us">About Us</a></li>
-                <li><a href="profile">Profile</a></li>
+              <li>
+                <a href="https://instagram.com" target="_blank"
+                  ><i class="fa-brands fa-instagram"></i
+                ></a>
+              </li>
+              <li>
+                <a href="https://facebook.com" target="_blank"
+                  ><i class="fa-brands fa-facebook"></i
+                ></a>
+              </li>
+              <li>
+                <a href="https://youtube.com" target="_blank"
+                  ><i class="fa-brands fa-youtube"></i
+                ></a>
+              </li>
             </ul>
+          </address>
+        </div>
+      </section>
 
-            <div>
-                <div>
-                    <h6>Contact</h6>
-                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
-                </div>
-
-                <div>
-                    <h6>Based in</h6>
-                    <p>Amsterdam, <br> The Netherlands</p>
-                </div>
-
-                <address>
-                    <ul>
-                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
-                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
-                    </ul>
-                </address>
-            </div>
-        </section>
-        
-        <span>©2024 by Ticket+</span>
+      <span>©2024 by Ticket+</span>
     </footer>
-    
+
     <script>
+    //   function handleSubmitFilter(event) {
+    //     event.preventDefault(); // Voorkom standaard form submit gedrag
 
-function handleSubmit(event) {
-    event.preventDefault(); // Voorkom standaard form submit gedrag
+    //     const submitFilterButton = document.getElementById('submit-filter-button');
+    //     const loaderFilter = document.getElementById('loader-filter');
 
-    const submitButton = document.getElementById('submitButton');
-    const loaderDiv = document.getElementById('loaderDiv');
-    
-    submitButton.classList.add("loading");
-    loaderDiv.classList.add("loading"); // Voeg loading class toe aan loader
-    submitButton.disabled = true;
-    submitButton.innerText = "Verzenden..."; // Verander de tekst van de knop
+    //     submitFilterButton.classList.add('loading');
+    //     loaderFilter.classList.add('loading'); // Voeg loading class toe aan loader
+    //     submitFilterButton.disabled = true;
+    //     submitFilterButton.innerText = 'Verzenden...'; // Verander de tekst van de knop
 
-    // Voer hier je logica uit voor het verzenden van het formulier, bijvoorbeeld een fetch-aanroep
-    setTimeout(() => {
-        console.log("Formulier verzonden!");
-        // Hier zou je eventueel de submit van het formulier kunnen forceren:
-        // event.target.submit();
-        
-        // Verwijder loading state nadat logica is uitgevoerd
-        submitButton.classList.remove("loading");
-        loaderDiv.classList.remove("loading");
-        submitButton.innerText = "Verzenden"; // Herstel de tekst van de knop
-        submitButton.disabled = false;
+    //     // Voer hier je logica uit voor het verzenden van het formulier, bijvoorbeeld een fetch-aanroep
+    //     setTimeout(() => {
+    //       console.log('Formulier verzonden!');
+    //       // Hier zou je eventueel de submit van het formulier kunnen forceren:
+    //       // event.target.submit();
 
-        // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
-    }, 2000); // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
-}
+    //       // Verwijder loading state nadat logica is uitgevoerd
+    //       submitFilterButton.classList.remove('loading');
+    //       loaderFilter.classList.remove('loading');
+    //       submitFilterButton.innerText = 'Verzenden'; // Herstel de tekst van de knop
+    //       submitFilterButton.disabled = false;
+
+    //       // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
+    //     }, 2000); // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
+    //   }
+    </script>
 
 
-</script>
-
-</body>
-
+    <script src="client.js"></script>
+    <script src="filterButton.js"></script>
+    <script src="hamburger.js"></script>
+    <script defer src="card.js"></script>
+  </body>
 </html>
