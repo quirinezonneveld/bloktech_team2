@@ -266,19 +266,22 @@ app.get('/detail', async (req, res) => {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
     }
-    // retrieving the specific event from event_id url paramter
+    
+    // retrieving the specific event from event_id url parameter
     const eventId = req.query.event_id;
-    const event_details = await getEvent(eventId)
+    const event_details = await getEvent(eventId);
     console.log('detail --------->');
-    console.log('----')
-    console.log(event_details)
-    res.render('detail.ejs', { isLoggedIn, profileImage });
-    } catch (error) {
-      res.status(500).render('error', {
-        errorCode: 500,
-        errorMessage: 'Server error',
-      })
-    };
+    console.log('----');
+    console.log(event_details);
+    
+    // Pass event_details to the template
+    res.render('detail.ejs', { isLoggedIn, profileImage, event_details });
+  } catch (error) {
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
+  }
 });
 
 //About us
