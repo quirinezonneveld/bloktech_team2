@@ -639,7 +639,7 @@ footer span {
     padding: var(--desktop-margin);
     background-color: var(--background-color-two);
 }
-.join-event > p {
+.join-event > p, .join-event img {
     margin-bottom: 2em;
 }
 .join-event div img {
