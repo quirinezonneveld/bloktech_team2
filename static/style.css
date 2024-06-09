@@ -143,6 +143,33 @@ header > a:focus {
 /* navigatie */
 /************/
 
+.info-nav {
+  display: flex;
+	background-color: var(--background-color-two);
+	padding: 2em 0;
+  justify-content: center;
+  align-content: center;
+}
+.info-nav img {
+	width: 1em;
+  height: 1em;
+  margin-right: 1em;
+}
+.info-nav p {
+	font-size: var(--font-size-body-small);
+	color: var(--font-color-one);
+	font-weight: 300;
+}
+.navigatieVerschijn {
+	animation: verschijn 3s ease;
+}
+@keyframes verschijn {
+    0% {opacity: 0;}
+    100% {opacity: 100;}
+}
+
+
+
 nav {
   display: flex;
   flex-direction: row;
@@ -450,7 +477,6 @@ footer span {
 
 .liked-heart::before {
   color: var(--detail-color-one);
-  position: absolute;
   z-index: 10000;
 }
 
@@ -525,6 +551,19 @@ footer span {
   width: 3em;
   height: 3em;
 } 
+
+/* liked pop-up */
+.liked-popup {
+  width: 50%;
+  height: 50%;
+  position: fixed;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust the centering */
+  z-index: 1000;
+  animation: fadein 0.5s, fadeout 0.5s 3s;
+}
+
 
 
 /* quote */
@@ -801,10 +840,6 @@ footer span {
   background-color: grey;
 }
 
-/* hidden */
-.hiddenVisibility {
-  visibility: hidden;
-}
 
   
 @media (min-width: 1440px) {
@@ -1448,4 +1483,26 @@ h2 {
 .button:hover {
   background-color: var(--detail-color-one-hover);
   color: var(--button-color-text);
+}
+
+
+
+/* styling */
+
+.hiddenVisibility {
+  visibility: hidden;
+}
+
+.hiddenAnimation {
+	opacity: 0;
+	transition: opacity 1100ms ease-in;
+}
+.slideAnimation {
+	transform: translateX(-10%);
+	transition: transform 800ms ease-in;
+}
+
+.show {
+	opacity: 1;
+	transform: translateX(0);
 }

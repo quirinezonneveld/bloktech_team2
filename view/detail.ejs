@@ -72,8 +72,8 @@
                 <% } %>
             </div>
         
-            <article>
-                <h1><%= event_details.name || 'No name available' %></h1>
+            <article class="hiddenAnimation">
+                <h1 class="slideAnimation"><%= event_details.name || 'No name available' %></h1>
                 <p><%= event_details.dates && event_details.dates.start ? event_details.dates.start.localDate : 'No date available' %></p>
                 <p><%= event_details.info || 'No information available' %></p>
         
@@ -106,12 +106,12 @@
     </header>
     <main>
         <section class="join-event">
-            <h2>Decide to join the event</h2>
+            <h2 class="slideAnimation">Decide to join the event</h2>
             <p>Be part of an amazing experience. Discover, engage, and enjoy the best moments with us. Don&#39;t miss out!</p>
 
             <div>
                 <% if (event_details.images && event_details.images[0]) { %>
-                    <img src="<%= event_details.images[3].url %>">
+                    <img src="assets/footer-background.gif">
                 <% } else { %>
                     <p>No image available</p>
                 <% } %>
@@ -125,7 +125,7 @@
 
         </section>
 
-        <section class="detail-faq">
+        <section class="detail-faq hiddenAnimation">
         <h2>FAQ</h2>
             <div class="accordeonPlaatsing"> 
                 <div class="accordeon">
@@ -152,6 +152,11 @@
                 </div>
             </div>
         </section>
+
+        <div class="info-nav">
+            <img src="assets/iconCheck2.svg" alt="check">
+            <p></p>
+        </div>
     </main>
 
     <footer>

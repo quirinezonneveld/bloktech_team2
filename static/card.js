@@ -1,3 +1,31 @@
+// navigatie melding
+let navigatieMelding = document.querySelector('.info-nav p');
+let navigatieMeldingCheck = document.querySelector('.info-nav img');
+let navigatieMeldingText = ["An unforgettable experience!", "Loved every moment!", "Fantastic event!"];
+let index = 0;
+
+
+async function updateAndRemove() {
+    navigatieMelding.classList.add('navigatieVerschijn');
+    navigatieMeldingCheck.classList.add('navigatieVerschijn');
+
+    navigatieMelding.textContent = navigatieMeldingText[index];
+    index = (index + 1) % navigatieMeldingText.length;
+
+    await sleep(3600);
+    navigatieMelding.classList.remove('navigatieVerschijn');
+    navigatieMeldingCheck.classList.remove('navigatieVerschijn');
+        
+}
+
+if (navigatieMelding) {
+    updateAndRemove();
+    setInterval(updateAndRemove, 4000);
+}
+
+
+
+
 //card
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -40,15 +68,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// like buttons
+
+// like buttons & like pop-up
+// Helper function to sleep for a given amount of milliseconds
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Select all like buttons and the pop-up element
 const likeButtons = document.querySelectorAll('.favorite-form');
+const likePopup = document.querySelector('.liked-popup');
 
 likeButtons.forEach(likeButton => {
-  const likeHeart = likeButton.querySelector('i');
+    const likeHeart = likeButton.querySelector('i');
 
-  likeButton.addEventListener('click', () => {
-    likeButton.classList.toggle('liked');
-    likeHeart.classList.toggle('liked-heart');
-  });
+    likeButton.addEventListener('click', async (event) => {
+        event.preventDefault(); // Prevent form submission
+
+        likeButton.classList.toggle('liked');
+        likeHeart.classList.toggle('liked-heart');
+
+        likePopup.classList.remove('hiddenVisibility');
+        await sleep(3600); // Show the pop-up for 3.6 seconds
+        likePopup.classList.add('hiddenVisibility');
+    });
 });
 
+
+
+
+// scroll animation
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('show');
+        } else {
+            entry.target.classList.remove('show');
+        }
+    });
+});
+
+
+const elementsToObserve = document.querySelectorAll('.hiddenAnimation, .slideAnimation');
+
+elementsToObserve.forEach((element) => {
+    observer.observe(element);
+});
