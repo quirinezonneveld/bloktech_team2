@@ -45,7 +45,7 @@
   --content-box-background: #141414;
 
   --desktop-margin: 8em; /* 128 px */
-  /* --mobile-margin: ; */
+  --mobile-margin: 1em;
 }
 
 @media (prefers-color-scheme: light) {
@@ -137,12 +137,38 @@ header > a:focus {
   padding: 0 5em;
 }
 
-/* skip to main content: 
-https://www.youtube.com/watch?v=287mLmuamoM https://www.youtube.com/watch?v=jDDaOFr9nqQ */
+
 
 /************/
 /* navigatie */
 /************/
+
+.info-nav {
+  display: flex;
+	background-color: var(--background-color-two);
+	padding: 2em 0;
+  justify-content: center;
+  align-content: center;
+}
+.info-nav img {
+	width: 1em;
+  height: 1em;
+  margin-right: 1em;
+}
+.info-nav p {
+	font-size: var(--font-size-body-small);
+	color: var(--font-color-one);
+	font-weight: 300;
+}
+.navigatieVerschijn {
+	animation: verschijn 3s ease;
+}
+@keyframes verschijn {
+    0% {opacity: 0;}
+    100% {opacity: 100;}
+}
+
+
 
 nav {
   display: flex;
@@ -223,6 +249,7 @@ nav li:nth-of-type(2) button i {
 .active {
   font-weight: 900;
 }
+
 
 /************/
 /* footer */
@@ -305,12 +332,10 @@ footer span {
 
 .header-homepage {
   display: flex;
-  /* padding: 5em; */
   justify-content: space-between;
   align-items: center;
 }
 .header-homepage div:last-of-type {
-  /* width: 70%; */
   height: 100%;
   overflow: visible;
 }
@@ -322,11 +347,7 @@ footer span {
   align-items: start;
   gap: 3em;
 }
-/* .header-homepage div:last-of-type img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-} */
+
 
 /* upcoming */
 .assymetrical-container {
@@ -346,6 +367,7 @@ footer span {
 }
 .assymetrical-container a:hover {
   color: var(--detail-color-one-hover);
+  font-weight: 600;
 }
 
 /* card */
@@ -400,9 +422,11 @@ footer span {
 
 
 .card-container a {
-  grid-area: 5 / 2 / 10 / 4; /* Zorg ervoor dat de link al deze cellen beslaat */
-  text-decoration: none; /* Verwijdert de onderstreping van de link */
-  /* background-color: var(--card-background-color); */
+  grid-area: 5 / 2 / 10 / 4;
+  text-decoration: none;
+}
+.card-container a h5:hover, .card-container a p:first-of-type:hover, .card-container a p:last-of-type:hover {
+  color: var(--detail-color-one-hover);
 }
 .card-container a h5 {
   grid-area: 5 / 2 / 6 / 4;
@@ -453,7 +477,6 @@ footer span {
 
 .liked-heart::before {
   color: var(--detail-color-one);
-  position: absolute;
   z-index: 10000;
 }
 
@@ -529,6 +552,19 @@ footer span {
   height: 3em;
 } 
 
+/* liked pop-up */
+.liked-popup {
+  width: 50%;
+  height: 50%;
+  position: fixed;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust the centering */
+  z-index: 1000;
+  animation: fadein 0.5s, fadeout 0.5s 3s;
+}
+
+
 
 /* quote */
 .quote {
@@ -593,6 +629,28 @@ footer span {
   float: left;
 }
 
+/* responsive homepage */
+@media (max-width: 800px) {
+  .assymetrical-container {
+    padding-left: var(--mobile-margin);
+  }
+  .card-container {
+    gap: 1em;
+  }
+  .assymetrical-container div {
+    flex-direction: column;
+  }
+  .assymetrical-container h2 {
+    margin-bottom: 0;
+  }
+  .assymetrical-container a {
+    margin-bottom: 1em;
+  }
+  .quote p {
+    font-size: var(--font-size-body-small);
+  }
+}
+
 
 
 
@@ -609,6 +667,9 @@ footer span {
 .detail-info div img {
     width: 30em;
     object-fit: cover;
+}
+.detail-info div img, .join-event div img {
+  border-radius: var(--card-radius);
 }
 
 .detail-info article {
@@ -639,7 +700,7 @@ footer span {
     padding: var(--desktop-margin);
     background-color: var(--background-color-two);
 }
-.join-event > p {
+.join-event > p, .join-event img {
     margin-bottom: 2em;
 }
 .join-event div img {
@@ -653,6 +714,38 @@ footer span {
 
 .detail-faq {
   margin: var(--desktop-margin);
+}
+
+@media (max-width: 800px) {
+  .header-homepage div p {
+    font-size: var(--font-size-body-small);
+  }
+  .container {
+    padding: var(--mobile-margin);
+  }
+  .detail-info {
+    flex-direction: column;
+    margin: var(--mobile-margin);
+  }
+  .detail-info div img {
+    width: 15em;
+  }
+  .detail-info article h1 {
+    font-size: 2em;
+  }
+  .detail-info article p {
+    font-size: 0.8em;
+  }
+  .join-event {
+    padding: var(--mobile-margin);
+  }
+  .join-event h2 {
+    font-size: 1.8em;
+  }
+  .slider {
+    scale: 1;
+    padding-bottom: 2em;
+  }
 }
 
 
@@ -778,10 +871,6 @@ footer span {
   background-color: grey;
 }
 
-/* hidden */
-.hiddenVisibility {
-  visibility: hidden;
-}
 
   
 @media (min-width: 1440px) {
@@ -1425,4 +1514,26 @@ h2 {
 .button:hover {
   background-color: var(--detail-color-one-hover);
   color: var(--button-color-text);
+}
+
+
+
+/* styling */
+
+.hiddenVisibility {
+  visibility: hidden;
+}
+
+.hiddenAnimation {
+	opacity: 0;
+	transition: opacity 1100ms ease-in;
+}
+.slideAnimation {
+	transform: translateX(-10%);
+	transition: transform 800ms ease-in;
+}
+
+.show {
+	opacity: 1;
+	transform: translateX(0);
 }
