@@ -1249,10 +1249,7 @@ h2 {
     border-radius: var(--button-radius);
     text-decoration: none;
     color: var(--button-color-text);
-    border: none;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    
+    border: none;    
 }
 
 
@@ -1425,4 +1422,15 @@ h2 {
 .button:hover {
   background-color: var(--detail-color-one-hover);
   color: var(--button-color-text);
+}
+
+.profile__buttons-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+
+.profile__buttons-container [type=submit] {
+  margin: 1em 0;
 }
