@@ -63,19 +63,16 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
     });
-    
-    console.log('test hello world');
-
 });
 
 
+
+
 // like buttons & like pop-up
-// Helper function to sleep for a given amount of milliseconds
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-// Select all like buttons and the pop-up element
 const likeButtons = document.querySelectorAll('.favorite-form');
 const likePopup = document.querySelector('.liked-popup');
 
@@ -83,13 +80,11 @@ likeButtons.forEach(likeButton => {
     const likeHeart = likeButton.querySelector('i');
 
     likeButton.addEventListener('click', async (event) => {
-        event.preventDefault(); // Prevent form submission
-
         likeButton.classList.toggle('liked');
         likeHeart.classList.toggle('liked-heart');
 
         likePopup.classList.remove('hiddenVisibility');
-        await sleep(3600); // Show the pop-up for 3.6 seconds
+        await sleep(3600); 
         likePopup.classList.add('hiddenVisibility');
     });
 });
