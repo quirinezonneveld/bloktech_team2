@@ -156,10 +156,15 @@
                     <p class="no-favourites">No favorite events found.</p>
                 <% } %>
         </div>
+        <div class="profile__buttons-container">
+            <form class="signOut" action="/signout" method="GET">
+                <input type="submit" class="button" value="Sign out">
+            </form>
 
-        <form class="signOut" action="/signout" method="GET">
-            <input type="submit" class="button" value="Sign out">
-        </form>
+            <form class="deleteProfile" action="/delete_profile" method="POST">
+                <input type="submit" class="button" value="Delete Account">
+            </form>
+        </div>
     </main>
 
     <footer>

@@ -540,6 +540,42 @@ app.get('/signout', (req, res) => {
   });
 });
 
+app.post('/delete_profile', async (req, res) => {
+  if (!req.session.userId) {
+    res.redirect('/form');
+    return;
+  }
+
+  try {
+    const userId = new ObjectId(req.session.userId);
+    const deleteResult = await db.collection('users').deleteOne({_id: userId })
+
+    if(deleteResult.deletedCount === 1) {
+      console.log(`Deleted account for user ${userId}`);
+      req.session.destroy(err => {
+        if (err) {
+          console.error('Error destroying session', err);
+          res.status(500).render('error', { errorCode: 500, errorMessage: 'Server error' });
+          return;
+        }
+        res.redirect('/form');
+      });
+    } else {
+      console.error('Failed to delete account');
+      res.status(500).render('error', { 
+        errorCode: 500, 
+        errorMessage: 'Failed to delete account' 
+      });
+    }
+  } catch (error) {
+    console.error('Error deleting account from database', error);
+    res.status(500).render('error', { 
+      errorCode: 500, 
+      errorMessage: 'Server error' 
+    });
+  }
+})
+
 /*****************/
 /* Updating data */
 /*****************/
