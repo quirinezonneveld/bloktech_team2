@@ -143,9 +143,16 @@
                 <p>Genre not available</p>
               <% } %>
                
-          <button class="like-button" data-event-id="<%= event.id %>">
-            <i class="fa-solid fa-heart"></i>
-          </button>
+          <form action="/toggle_favorite" method="POST" class="favorite-form">
+                <input type="hidden" name="eventId" value="<%= event.id %>">
+                <button type="submit" class="like-button">
+                  <% if (favoriteEvents.includes(event.id)) { %>
+                    <i class="fa-solid fa-heart liked"></i>
+                  <% } else { %>
+                    <i class="fa-solid fa-heart"></i>
+                  <% } %>
+                </button>
+              </form>
           <a href="<%= event.url %>">
             <h5><%= event.name %></h5>
             <% if (event.info) { %>
@@ -177,6 +184,8 @@
       </li>
     </ul>
   </section>
+
+  <img class="hiddenVisibility liked-popup" src="assets/liked-popup.png" alt="Event added to your favorites">
 
 
     <footer>

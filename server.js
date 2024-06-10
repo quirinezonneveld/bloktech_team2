@@ -140,14 +140,20 @@ app.get('/', async (req, res) => {
   try {
     const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+    let favoriteEvents = [];
 
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
+      
+      const user = await db.collection('users').findOne({ _id: userId });
+      if (user && user.favorites) {
+        favoriteEvents = user.favorites;
+      }
     }
 
     const events = await getEvents();
-    res.render('home.ejs', { events, isLoggedIn, profileImage });
+    res.render('home.ejs', { events, isLoggedIn, profileImage, favoriteEvents });
   } catch (error) {
     res.status(500).render('error', {
       errorCode: 500,
@@ -160,18 +166,20 @@ app.get('/home', async (req, res) => {
   try {
     const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+    let favoriteEvents = [];
 
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
+      const user = await db.collection('users').findOne({ _id: userId });
+      if (user && user.favorites) {
+        favoriteEvents = user.favorites;
+      }
     }
-  const events = await getEvents();
 
-
-
-
-  res.render('home.ejs', { events, isLoggedIn, profileImage });
-} catch (error) {
+    const events = await getEvents();
+    res.render('home.ejs', { events, isLoggedIn, profileImage, favoriteEvents });
+  } catch (error) {
     res.status(500).render('error', {
       errorCode: 500,
       errorMessage: 'Server error',
@@ -179,8 +187,7 @@ app.get('/home', async (req, res) => {
   }
 });
 
-// Route to add favorite event
-app.post('/add_favorite', async (req, res) => {
+app.post('/toggle_favorite', async (req, res) => {
   if (!req.session.userId) {
     res.redirect('/form');
     return;
@@ -197,22 +204,44 @@ app.post('/add_favorite', async (req, res) => {
 
   try {
     const userId = new ObjectId(req.session.userId);
-    const updateResult = await db.collection('users').updateOne(
-      { _id: userId },
-      { $addToSet: { favorites: eventId } }
-    );
+    const user = await db.collection('users').findOne({ _id: userId });
 
-    if (updateResult.modifiedCount === 1) {
-      console.log(`Added favorite event for user ${userId}`);
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    if (user.favorites && user.favorites.includes(eventId)) {
+      // Remove the event from favorites
+      const updateResult = await db.collection('users').updateOne(
+        { _id: userId },
+        { $pull: { favorites: eventId } }
+      );
+
+      if (updateResult.modifiedCount === 1) {
+        console.log(`Removed favorite event for user ${userId}`);
+      } else {
+        console.error('Failed to remove favorite event');
+        res.status(500).json({ message: 'Failed to remove favorite event' });
+      }
     } else {
-      console.error('Failed to add favorite event');
-      res.status(500).json({ message: 'Failed to add favorite event' });
+      // Add the event to favorites
+      const updateResult = await db.collection('users').updateOne(
+        { _id: userId },
+        { $addToSet: { favorites: eventId } }
+      );
+
+      if (updateResult.modifiedCount === 1) {
+        console.log(`Added favorite event for user ${userId}`);
+        //res.redirect('/home')
+      } else {
+        console.error('Failed to add favorite event');
+        res.status(500).json({ message: 'Failed to add favorite event' });
+      }
     }
   } catch (error) {
-    console.error('Error adding favorite event to database', error);
-    res
-      .status(500)
-      .json({ message: 'Error adding favorite event to database' });
+    console.error('Error toggling favorite event in database', error);
+    res.status(500).json({ message: 'Error toggling favorite event in database' });
   }
 });
 
@@ -252,10 +281,10 @@ app.get('/form', (req, res) => {
   res.render('form');
 });
 
+
 //Events
 app.get('/all-events', async (req, res) => {
   try {
-
     const { classificationName, countryCode, keyword } = req.query;
     console.log('classificationName ---------->', classificationName);
     const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
@@ -266,20 +295,28 @@ app.get('/all-events', async (req, res) => {
       keyword,
       URL
     );
-     const isLoggedIn = !!req.session.userId;
+    
+    const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
 
+    // Favoriete evenementen ophalen uit de database als de gebruiker is ingelogd
+    let favoriteEvents = [];
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
+      const user = await db.collection('users').findOne({ _id: userId });
+      if (user) {
+        favoriteEvents = user.favorites || [];
+      }
     }
-    res.render('all-events', { isLoggedIn, profileImage, events });
+
+    res.render('all-events', { isLoggedIn, profileImage, events, favoriteEvents });
   } catch (error) {
     console.error('Error fetching events:', error);
     res.render('all-events', { events: [] });
-
   }
 });
+
 
 app.get('/all-events/:eventId', (req, res) => {
   //console.log('all-events 1 --------->', req.params.eventId);

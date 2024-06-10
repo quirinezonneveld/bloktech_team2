@@ -481,9 +481,8 @@ footer span {
 }
 
 .liked {
-  background-color: orange;
   border-radius: 100em;
-
+  color: var(--detail-color-one) !important; 
   animation-name:heart-animation;
   animation-duration: 3s;
 }
