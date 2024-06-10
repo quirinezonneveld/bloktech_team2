@@ -120,7 +120,7 @@ app.use(
 
 
 async function getProfileImage(userId) {
-  let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+  let profileImage = 'assets/profile-default.jpg'; // Standard image
 
   try {
     const user = await db.collection('users').findOne({ _id: userId });
@@ -389,9 +389,9 @@ app.get('/profile', async (req, res) => {
       }
     }
 
+    const { name, surname, email } = user;
+    const profileImage = await getProfileImage(userId);
 
-    const { name, surname, email, profileImage } = user;
-  
     res.render('profile', { name, surname, email, profileImage, favoriteEvents, isLoggedIn });
 
   } catch (error) {
@@ -400,7 +400,6 @@ app.get('/profile', async (req, res) => {
       errorCode: 500,
       errorMessage: 'Server error',
     });
-
   }
 });
 

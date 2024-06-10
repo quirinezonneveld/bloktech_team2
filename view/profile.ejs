@@ -42,19 +42,19 @@
             </ul>
             <ul>
                 <% if (!isLoggedIn) { %>
-                    <li><a href="form" class="button" data-type="nav">Sign In
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a></li>
-                <% } %>
-                
-                <li><a href="profile" class="button" data-type="nav">Profile
-                    <% if (profileImage.startsWith('data:image')) { %>
-                      <img src="<%= profileImage %>" alt="Profile picture">
-                    <% } else { %>
-                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                    <% } %>
+                  <li><a href="form" class="button" data-type="nav">Sign In
+                    <i class="fa-solid fa-arrow-right"></i>
                   </a></li>
-            </ul>
+                <% } %>
+              
+                <li><a href="profile" class="button" data-type="nav">Profile
+                  <% if (profileImage && profileImage.startsWith('data:image')) { %>
+                    <img src="<%= profileImage %>" alt="Profile picture">
+                  <% } else { %>
+                    <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                  <% } %>
+                  </a></li>
+              </ul>
             </section>
             <button class="hamburger" id="hamburger">
                 <i class="fa-solid fa-arrow-right"></i>
@@ -206,7 +206,7 @@
     </footer>
 
     <script src="client.js"></script>
-    <script src="profile.js"></script>
+    <!-- <script src="profile.js"></script> -->
 
     <script>
         function showProfile() {
