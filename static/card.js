@@ -63,7 +63,7 @@ likeButtons.forEach(likeButton => {
 // review slider
 let navigatieMelding = document.querySelector('.info-nav p');
 let navigatieMeldingCheck = document.querySelector('.info-nav img');
-let navigatieMeldingText = ["An unforgettable experience!", "Loved every moment!", "Fantastic event!"];
+let navigatieMeldingText = ["Every moment was magic! Counting down the days until the next one!", "A masterpiece of an event! Pure brilliance in every detail!", "What an incredible event! Truly unforgettable!"];
 let index = 0;
 
 
