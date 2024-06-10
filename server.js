@@ -225,17 +225,10 @@ app.post('/unlike', async (req, res) => {
     const userId = new ObjectId(req.session.userId);
 
     // Remove the eventId from the user's favorites
-    const updateResult = await db
-      .collection('users')
-      .updateOne({ _id: userId }, { $pull: { favorites: eventId } });
-
-
-
-      // Remove the eventId from the user's favorites
-      const updateResult = await db.collection('users').updateOne(
-          { _id: userId },
-          { $pull: { favorites: eventId } }
-      )
+    const updateResult = await db.collection('users').updateOne(
+        { _id: userId },
+        { $pull: { favorites: eventId } }
+    )
 
       if (updateResult.modifiedCount === 1) {
         res.redirect('/profile');
@@ -280,7 +273,7 @@ app.get('/all-events', async (req, res) => {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
     }
-    res.render('all-events', { isLoggedIn, profileImage });
+    res.render('all-events', { isLoggedIn, profileImage, events });
   } catch (error) {
     console.error('Error fetching events:', error);
     res.render('all-events', { events: [] });
@@ -398,9 +391,7 @@ app.get('/profile', async (req, res) => {
 
 
     const { name, surname, email, profileImage } = user;
-    
-    const profileImage = await getProfileImage(userId);
-
+  
     res.render('profile', { name, surname, email, profileImage, favoriteEvents, isLoggedIn });
 
   } catch (error) {
@@ -502,10 +493,7 @@ app.post('/signin', async (req, res) => {
 /* Profile Pictures */
 /********************/
 
-app.post(
-  '/upload-profile-picture',
-  upload.single('profileImage'),
-  async (req, res) => {
+app.post('/upload-profile-picture', upload.single('profileImage'), async (req, res) => {
     if (!req.session.userId) {
       res.redirect('/form');
       return;
