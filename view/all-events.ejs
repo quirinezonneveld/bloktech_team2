@@ -60,7 +60,7 @@
         </nav> 
 
     <section>
-      <h1>All events</h1>
+      <h1 class="slideAnimation">All events</h1>
 
       <div id="loader-filter"></div>
 
@@ -124,10 +124,10 @@
 
     <section class="assymetrical-container">
     <div>
-      <h2>Populair</h2>
+      <h2 class="slideAnimation">Populair</h2>
       <a href="/all-events">See all</a>
     </div>
-    <ul id="card-container" class="card-container">
+    <ul id="card-container" class="card-container hiddenAnimation">
         <% if (events && events.length) { %>
             <% events.forEach(event => { %>
         <li>
