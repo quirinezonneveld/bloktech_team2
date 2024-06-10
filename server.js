@@ -118,21 +118,65 @@ app.use(
   })
 );
 
+
+async function getProfileImage(userId) {
+  let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+
+  try {
+    const user = await db.collection('users').findOne({ _id: userId });
+    if (user && user.profileImage) {
+      const base64Image = user.profileImage.toString('base64');
+      profileImage = `data:image/jpeg;base64,${base64Image}`;
+    }
+  } catch (error) {
+    console.error('Error fetching profile image:', error);
+  }
+
+  return profileImage;
+}
+
 //Routes
 app.get('/', async (req, res) => {
-  const events = await getEvents();
-  const isLoggedIn = !!req.session.userId;
-  //console.log('events ------->', events);
-  res.render('home.ejs', { events, isLoggedIn });
+  try {
+    const isLoggedIn = !!req.session.userId;
+    let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+
+    if (isLoggedIn) {
+      const userId = new ObjectId(req.session.userId);
+      profileImage = await getProfileImage(userId);
+    }
+
+    const events = await getEvents();
+    res.render('home.ejs', { events, isLoggedIn, profileImage });
+  } catch (error) {
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
+  }
 });
 
 app.get('/home', async (req, res) => {
-  // requets for events
-  const events = await getEvents();
-  const isLoggedIn = !!req.session.userId;
-  // console.log('events ------->', events);
+  try {
+    const isLoggedIn = !!req.session.userId;
+    let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
 
-  res.render('home.ejs', { events, isLoggedIn });
+    if (isLoggedIn) {
+      const userId = new ObjectId(req.session.userId);
+      profileImage = await getProfileImage(userId);
+    }
+  const events = await getEvents();
+
+
+
+
+  res.render('home.ejs', { events, isLoggedIn, profileImage });
+} catch (error) {
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
+  }
 });
 
 // Route to add favorite event
@@ -143,15 +187,27 @@ app.post('/add_favorite', async (req, res) => {
   }
 
   const { eventId } = req.body;
+  console.log('Received eventId:', eventId);
+
+  if (!eventId) {
+    console.error('Event ID is missing');
+    res.status(400).json({ message: 'Event ID is missing' });
+    return;
+  }
 
   try {
     const userId = new ObjectId(req.session.userId);
-    await db.collection('users').updateOne(
+    const updateResult = await db.collection('users').updateOne(
       { _id: userId },
-      { $addToSet: { favorites: eventId } } // $addToSet ensures no duplicates
+      { $addToSet: { favorites: eventId } }
     );
 
-    console.log(`Added favorite event for user ${userId}`);
+    if (updateResult.modifiedCount === 1) {
+      console.log(`Added favorite event for user ${userId}`);
+    } else {
+      console.error('Failed to add favorite event');
+      res.status(500).json({ message: 'Failed to add favorite event' });
+    }
   } catch (error) {
     console.error('Error adding favorite event to database', error);
     res
@@ -173,14 +229,23 @@ app.post('/unlike', async (req, res) => {
       .collection('users')
       .updateOne({ _id: userId }, { $pull: { favorites: eventId } });
 
-    if (updateResult.modifiedCount === 1) {
-      res.redirect('profile');
-    } else {
-      res.status(500).render('error', {
-        errorCode: 500,
-        errorMessage: 'Failed to remove the event from favorites',
-      });
-    }
+
+
+      // Remove the eventId from the user's favorites
+      const updateResult = await db.collection('users').updateOne(
+          { _id: userId },
+          { $pull: { favorites: eventId } }
+      )
+
+      if (updateResult.modifiedCount === 1) {
+        res.redirect('/profile');
+      } else {
+          res.status(500).render('error', { 
+            errorCode: 500, 
+            errorMessage: 'Failed to remove the event from favorites' 
+          })
+      } 
+
   } catch (error) {
     res.status(500).render('error', {
       errorCode: 500,
@@ -197,6 +262,7 @@ app.get('/form', (req, res) => {
 //Events
 app.get('/all-events', async (req, res) => {
   try {
+
     const { classificationName, countryCode, keyword } = req.query;
     console.log('classificationName ---------->', classificationName);
     const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
@@ -207,10 +273,18 @@ app.get('/all-events', async (req, res) => {
       keyword,
       URL
     );
-    res.render('all-events', { events });
+     const isLoggedIn = !!req.session.userId;
+    let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+
+    if (isLoggedIn) {
+      const userId = new ObjectId(req.session.userId);
+      profileImage = await getProfileImage(userId);
+    }
+    res.render('all-events', { isLoggedIn, profileImage });
   } catch (error) {
     console.error('Error fetching events:', error);
     res.render('all-events', { events: [] });
+
   }
 });
 
@@ -221,18 +295,49 @@ app.get('/all-events/:eventId', (req, res) => {
 
 // Events detail
 app.get('/detail', async (req, res) => {
-  // retrieving the specific event from event_id url paramter
-  const eventId = req.query.event_id;
-  const event_details = await getEvent(eventId);
-  console.log('detail --------->');
-  console.log('----');
-  console.log(event_details);
-  res.render('detail.ejs', { event_details });
+
+
+  try {
+    const isLoggedIn = !!req.session.userId;
+    let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+
+    if (isLoggedIn) {
+      const userId = new ObjectId(req.session.userId);
+      profileImage = await getProfileImage(userId);
+    }
+    
+    // retrieving the specific event from event_id url parameter
+    const eventId = req.query.event_id;
+    const event_details = await getEvent(eventId);
+ 
+    // Pass event_details to the template
+    res.render('detail.ejs', { isLoggedIn, profileImage, event_details });
+  } catch (error) {
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
+  }
+
 });
 
 //About us
-app.get('/about-us', (req, res) => {
-  res.render('about-us');
+app.get('/about-us', async (req, res) => {
+  try {
+    const isLoggedIn = !!req.session.userId;
+    let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+
+    if (isLoggedIn) {
+      const userId = new ObjectId(req.session.userId);
+      profileImage = await getProfileImage(userId);
+    }
+    res.render('about-us', { isLoggedIn, profileImage });
+    } catch (error) {
+      res.status(500).render('error', {
+        errorCode: 500,
+        errorMessage: 'Server error',
+      })
+    };
 });
 
 //API
@@ -267,11 +372,18 @@ app.get('/profile', async (req, res) => {
   }
 
   try {
+    const isLoggedIn = !!req.session.userId;
     const userId = new ObjectId(req.session.userId);
     const user = await db.collection('users').findOne({ _id: userId });
-    const favoriteEventIds = user.favorites;
 
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
+    }
+
+    const favoriteEventIds = Array.isArray(user.favorites) ? user.favorites : [];
     let favoriteEvents = [];
+
     for (const eventId of favoriteEventIds) {
       try {
         const response = await axios.get(
@@ -284,20 +396,65 @@ app.get('/profile', async (req, res) => {
       }
     }
 
+
     const { name, surname, email, profileImage } = user;
-    res.render('profile', {
-      name,
-      surname,
-      email,
-      profileImage,
-      favoriteEvents,
-    });
+    
+    const profileImage = await getProfileImage(userId);
+
+    res.render('profile', { name, surname, email, profileImage, favoriteEvents, isLoggedIn });
+
   } catch (error) {
     console.error('Error fetching profile:', error);
     res.status(500).render('error', {
       errorCode: 500,
       errorMessage: 'Server error',
     });
+
+  }
+});
+
+/************/
+/* Registry */
+/************/
+
+
+app.post('/registry', async (req, res) => {
+  const firstName = req.body.fName;
+  const lastName = req.body.lName;
+  const email = req.body.emailRegister;
+  const password = req.body.passwordRegister;
+ 
+  console.log(`Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`); 
+ 
+  try {
+    //Checking if the email adress is unique
+    const existingUser = await db.collection('users').findOne({ email: email });
+    if (existingUser) {
+      console.log('Email address already in use');
+      res.status(409).send('Email adress already in use');
+      return
+    }
+ 
+    // Hash the password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    console.log('Password hashed:', hashedPassword);
+ 
+ 
+    //Filling in the data of the user registry
+    const result = await db.collection('users').insertOne({ name: firstName, surname: lastName, password: hashedPassword, email: email });
+    console.log(`Gebruiker opgeslagen met id: ${result.insertedId}`);
+    
+    // Update session with userId
+    req.session.userId = result.insertedId;
+
+    // Redirect to profile page
+    res.redirect('/profile');
+ 
+  } catch (error) {
+    console.error('Error inserting data into database', error);
+    res.status(500).send('Error inserting data into database');
+
   }
 });
 
@@ -429,17 +586,68 @@ app.get('/signout', (req, res) => {
   });
 });
 
-/*****************/
-/* Updating data */
-/*****************/
-
-app.get('/update', (req, res) => {
+app.post('/delete_profile', async (req, res) => {
   if (!req.session.userId) {
     res.redirect('/form');
     return;
   }
-  res.render('update');
+
+  try {
+    const userId = new ObjectId(req.session.userId);
+    const deleteResult = await db.collection('users').deleteOne({_id: userId })
+
+    if(deleteResult.deletedCount === 1) {
+      console.log(`Deleted account for user ${userId}`);
+      req.session.destroy(err => {
+        if (err) {
+          console.error('Error destroying session', err);
+          res.status(500).render('error', { errorCode: 500, errorMessage: 'Server error' });
+          return;
+        }
+        res.redirect('/form');
+      });
+    } else {
+      console.error('Failed to delete account');
+      res.status(500).render('error', { 
+        errorCode: 500, 
+        errorMessage: 'Failed to delete account' 
+      });
+    }
+  } catch (error) {
+    console.error('Error deleting account from database', error);
+    res.status(500).render('error', { 
+      errorCode: 500, 
+      errorMessage: 'Server error' 
+    });
+  }
+})
+
+/*****************/
+/* Updating data */
+/*****************/
+
+app.get('/update', async (req, res) => {
+  try {
+    if (!req.session.userId) {
+      res.redirect('/form');
+      return;
+    }
+    const isLoggedIn = !!req.session.userId;
+    const userId = new ObjectId(req.session.userId);
+    const profileImage = await getProfileImage(userId, true);
+    res.render('update', { profileImage, isLoggedIn });
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
+  }
 });
+
+
+
+
 
 // Route for updating the name
 app.post('/update-name', async (req, res) => {
