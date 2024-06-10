@@ -234,7 +234,7 @@ app.post('/toggle_favorite', async (req, res) => {
 
       if (updateResult.modifiedCount === 1) {
         console.log(`Added favorite event for user ${userId}`);
-        
+        //res.redirect('/home')
       } else {
         console.error('Failed to add favorite event');
         res.status(500).json({ message: 'Failed to add favorite event' });

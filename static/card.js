@@ -44,10 +44,7 @@ likeButtons.forEach(likeButton => {
     const likeHeart = likeButton.querySelector('i');
 
     likeButton.addEventListener('submit', async (event) => {
-       
-
-      
-
+    
         likeButton.classList.toggle('liked');
         likeHeart.classList.toggle('liked-heart');
 
@@ -57,8 +54,7 @@ likeButtons.forEach(likeButton => {
             await sleep(3600); 
             likePopup.classList.add('hiddenVisibility');
         }
-
-        
+   
     });
 });
 
