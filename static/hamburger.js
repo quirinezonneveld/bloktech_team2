@@ -1,9 +1,17 @@
 document.addEventListener('DOMContentLoaded', async () => {
-  const hamburger = document.getElementById('hamburger');
+  const hamburgerOpenButton = document.getElementById('hamburger');
   const navBlock = document.querySelector('.nav-block');
+  const hamburgerClosigButton = document.getElementById(
+    'hamburger-closing-button'
+  );
 
-  hamburger.addEventListener('click', () => {
-    console.log('button clicked');
-    navBlock.classList.toggle('show');
+  hamburgerOpenButton.addEventListener('click', () => {
+    console.log('menu opened');
+    navBlock.classList.add('show');
+  });
+
+  hamburgerClosigButton.addEventListener('click', () => {
+    console.log('menu closed');
+    navBlock.classList.remove('show');
   });
 });

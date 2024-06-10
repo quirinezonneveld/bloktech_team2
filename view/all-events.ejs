@@ -13,51 +13,52 @@
 
 
 <body class="allEvents">
-    <nav class="container">
-            <ul>    
+  <nav class="container">
+    <ul>    
 
-                <li class="nav-home">
-                    <a class="button" href="home" data-type="nav home">
-                        <img src="assets/logo-ticket+2.png" alt="Logo">
-                    </a>
-                </li>
-                <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+        <li class="nav-home">
+            <a class="button" href="home" data-type="nav home">
+                <img src="assets/logo-ticket+2.png" alt="Logo">
+            </a>
+        </li>
+        <li class="nav-search-bar">
+            <form id="search-form" action="/all-events" method="get">
 
-                       <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
-                    <button type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </form>                    
-                </li>
+                <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                <button type="submit">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </button>
+            </form>                    
+        </li>
 
-            </ul>
-            <section class="nav-block">
-            <ul>
-                <li class="nav-all-events"><a href="all-events">All Events</a></li>
-                <li class="nav-about-us"><a href="about-us">About Us</a></li>
-            </ul>
-            <ul>
-                <% if (!isLoggedIn) { %>
-                    <li><a href="form" class="button" data-type="nav">Sign In
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a></li>
-                <% } %>
-                
-                <li><a href="profile" class="button" data-type="nav">Profile
-                    <% if (profileImage.startsWith('data:image')) { %>
-                      <img src="<%= profileImage %>" alt="Profile picture">
-                    <% } else { %>
-                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                    <% } %>
-                  </a></li>
-            </ul>
-            </section>
-            <button class="hamburger" id="hamburger">
+    </ul>
+    <section class="nav-block">
+      <button class="hamburger" id="hamburger-closing-button">              <i class="fa-solid fa-xmark"></i></button>
+    <ul>
+        <li class="nav-all-events"><a href="all-events">All Events</a></li>
+        <li class="nav-about-us"><a href="about-us">About Us</a></li>
+    </ul>
+    <ul>
+        <% if (!isLoggedIn) { %>
+            <li><a href="form" class="button" data-type="nav">Sign In
                 <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </nav> 
+            </a></li>
+        <% } %>
+        
+        <li><a href="profile" class="button" data-type="nav">Profile
+            <% if (profileImage.startsWith('data:image')) { %>
+              <img src="<%= profileImage %>" alt="Profile picture">
+            <% } else { %>
+              <img src="assets/profile-default.jpg" alt="Default Profile picture">
+            <% } %>
+          </a></li>
+    </ul>
+    </section>
+
+    <button class="hamburger" id="hamburger">
+<i class="fa-solid fa-bars"></i></i>
+    </button>
+</nav> 
 
     <section>
       <h1>All events</h1>

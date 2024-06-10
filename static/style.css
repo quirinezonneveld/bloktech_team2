@@ -243,6 +243,8 @@ nav li:nth-of-type(2) button i {
 .hamburger {
   display: none;
   cursor: pointer;
+  border: unset;
+  background-color: transparent;
 }
 
 /* class active in html op pagina zetten waarop je je bevind  */
@@ -882,7 +884,6 @@ footer span {
   .hamburger {
     display: block;
     position: relative;
-    right: 4.5em;
   }
 
   .nav-block {
@@ -907,8 +908,10 @@ footer span {
   display: flex;
   flex-direction: column;
   position: absolute;
+  z-index: 2;
   right: 0;
   top: 0;
+  padding: 1em;
   max-width: min-content;
   background-color: var(--background-color-two);
 }
