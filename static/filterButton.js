@@ -127,14 +127,14 @@ function handleSubmitFilter(event) {
   submitFilterButton.classList.add('loading');
   loaderFilter.classList.add('loading'); // Voeg loading class toe aan loader
   submitFilterButton.disabled = true;
-  submitFilterButton.innerText = 'Verzenden...';
+  submitFilterButton.innerText = 'Sending...';
   setTimeout(() => {
     console.log('Formulier verzonden!');
 
     // Removing loading state
     submitFilterButton.classList.remove('loading');
     loaderFilter.classList.remove('loading');
-    submitFilterButton.innerText = 'Verzenden'; // Herstel de tekst van de knop
+    submitFilterButton.innerText = 'Send'; // Herstel de tekst van de knop
     submitFilterButton.disabled = false;
   }, 90000);
 }
