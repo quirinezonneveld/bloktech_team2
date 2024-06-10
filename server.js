@@ -171,7 +171,6 @@ app.get('/home', async (req, res) => {
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
-
       const user = await db.collection('users').findOne({ _id: userId });
       if (user && user.favorites) {
         favoriteEvents = user.favorites;
@@ -282,10 +281,10 @@ app.get('/form', (req, res) => {
   res.render('form');
 });
 
+
 //Events
 app.get('/all-events', async (req, res) => {
   try {
-
     const { classificationName, countryCode, keyword } = req.query;
     console.log('classificationName ---------->', classificationName);
     const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
@@ -296,20 +295,28 @@ app.get('/all-events', async (req, res) => {
       keyword,
       URL
     );
-     const isLoggedIn = !!req.session.userId;
+    
+    const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
 
+    // Favoriete evenementen ophalen uit de database als de gebruiker is ingelogd
+    let favoriteEvents = [];
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
+      const user = await db.collection('users').findOne({ _id: userId });
+      if (user) {
+        favoriteEvents = user.favorites || [];
+      }
     }
-    res.render('all-events', { isLoggedIn, profileImage, events });
+
+    res.render('all-events', { isLoggedIn, profileImage, events, favoriteEvents });
   } catch (error) {
     console.error('Error fetching events:', error);
     res.render('all-events', { events: [] });
-
   }
 });
+
 
 app.get('/all-events/:eventId', (req, res) => {
   //console.log('all-events 1 --------->', req.params.eventId);
