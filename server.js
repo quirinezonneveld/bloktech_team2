@@ -2,6 +2,10 @@
 const express = require('express');
 const app = express();
 
+//axios
+const axios = require('axios');
+const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
+
 // Add info from .env file to process.env
 require('dotenv').config();
 
@@ -17,15 +21,27 @@ const multer = require('multer');
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-const getEvents = async () => {
-  const response = await axios.get(URL);
-  const data = response.data;
-  return data._embedded.events;
+// Loading events & filters
+
+const getEvents = async (classificationName, countryCode, keyword) => {
+  // const response = await axios.get(URL);
+  // const data = response.data;
+  // return data._embedded.events;
+  const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${
+    process.env.KEY
+  }${classificationName ? `&classificationName=${classificationName}` : ''}${
+    countryCode ? `&countryCode=${countryCode}` : ''
+  }${keyword ? `&keyword=${keyword}` : ''}`;
+
+  try {
+    const response = await axios.get(URL);
+    const data = response.data;
+    return data._embedded ? data._embedded.events : [];
+  } catch (error) {
+    console.error('Error fetching events:', error);
+    return [];
+  }
 };
-
-
-
-
 
 const getEvent = async (event_id) => {
   get_event_url = `https://app.ticketmaster.com/discovery/v2/events/${event_id}.json?apikey=${process.env.KEY}`;
@@ -151,6 +167,9 @@ app.get('/home', async (req, res) => {
     }
   const events = await getEvents();
 
+
+
+
   res.render('home.ejs', { events, isLoggedIn, profileImage });
 } catch (error) {
     res.status(500).render('error', {
@@ -191,18 +210,26 @@ app.post('/add_favorite', async (req, res) => {
     }
   } catch (error) {
     console.error('Error adding favorite event to database', error);
-    res.status(500).json({ message: 'Error adding favorite event to database' });
+    res
+      .status(500)
+      .json({ message: 'Error adding favorite event to database' });
   }
 });
 
 app.post('/unlike', async (req, res) => {
-
   const { eventId } = req.body;
-  
+
   console.log('Event ID to remove:', eventId); // Log eventId
 
   try {
-      const userId = new ObjectId(req.session.userId);
+    const userId = new ObjectId(req.session.userId);
+
+    // Remove the eventId from the user's favorites
+    const updateResult = await db
+      .collection('users')
+      .updateOne({ _id: userId }, { $pull: { favorites: eventId } });
+
+
 
       // Remove the eventId from the user's favorites
       const updateResult = await db.collection('users').updateOne(
@@ -218,13 +245,14 @@ app.post('/unlike', async (req, res) => {
             errorMessage: 'Failed to remove the event from favorites' 
           })
       } 
+
   } catch (error) {
-      res.status(500).render('error', { 
-        errorCode: 500, 
-        errorMessage: 'Server error' 
-      })
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
   }
-})
+});
 
 //Sign In / Register
 app.get('/form', (req, res) => {
@@ -234,20 +262,29 @@ app.get('/form', (req, res) => {
 //Events
 app.get('/all-events', async (req, res) => {
   try {
-    const isLoggedIn = !!req.session.userId;
+
+    const { classificationName, countryCode, keyword } = req.query;
+    console.log('classificationName ---------->', classificationName);
+    const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
+
+    const events = await getEvents(
+      classificationName,
+      countryCode,
+      keyword,
+      URL
+    );
+     const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
 
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
     }
-
     res.render('all-events', { isLoggedIn, profileImage });
   } catch (error) {
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Server error',
-    });
+    console.error('Error fetching events:', error);
+    res.render('all-events', { events: [] });
+
   }
 });
 
@@ -258,6 +295,8 @@ app.get('/all-events/:eventId', (req, res) => {
 
 // Events detail
 app.get('/detail', async (req, res) => {
+
+
   try {
     const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
@@ -270,10 +309,7 @@ app.get('/detail', async (req, res) => {
     // retrieving the specific event from event_id url parameter
     const eventId = req.query.event_id;
     const event_details = await getEvent(eventId);
-    console.log('detail --------->');
-    console.log('----');
-    console.log(event_details);
-    
+ 
     // Pass event_details to the template
     res.render('detail.ejs', { isLoggedIn, profileImage, event_details });
   } catch (error) {
@@ -282,6 +318,7 @@ app.get('/detail', async (req, res) => {
       errorMessage: 'Server error',
     });
   }
+
 });
 
 //About us
@@ -304,10 +341,6 @@ app.get('/about-us', async (req, res) => {
 });
 
 //API
-const axios = require('axios');
-const URL = `https://app.ticketmaster.com/discovery/v2/events.json?size=50&page=1&apikey=${process.env.KEY}`;
-
-
 
 app.get('/api-data', async (req, res) => {
   try {
@@ -320,7 +353,7 @@ app.get('/api-data', async (req, res) => {
     res.status(500).render('error', {
       errorCode: 500,
       errorMessage: 'Error loading data',
-  })
+    });
   }
 });
 
@@ -329,7 +362,7 @@ app.get('/api-data', async (req, res) => {
 /***********/
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 app.get('/profile', async (req, res) => {
@@ -353,7 +386,9 @@ app.get('/profile', async (req, res) => {
 
     for (const eventId of favoriteEventIds) {
       try {
-        const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.KEY}`);
+        const response = await axios.get(
+          `https://app.ticketmaster.com/discovery/v2/events/${eventId}.json?apikey=${process.env.KEY}`
+        );
         favoriteEvents.push(response.data);
         await sleep(200);
       } catch (error) {
@@ -361,16 +396,20 @@ app.get('/profile', async (req, res) => {
       }
     }
 
-    const { name, surname, email } = user;
+
+    const { name, surname, email, profileImage } = user;
+    
     const profileImage = await getProfileImage(userId);
 
     res.render('profile', { name, surname, email, profileImage, favoriteEvents, isLoggedIn });
+
   } catch (error) {
     console.error('Error fetching profile:', error);
     res.status(500).render('error', {
       errorCode: 500,
       errorMessage: 'Server error',
     });
+
   }
 });
 
@@ -415,6 +454,7 @@ app.post('/registry', async (req, res) => {
   } catch (error) {
     console.error('Error inserting data into database', error);
     res.status(500).send('Error inserting data into database');
+
   }
 });
 
@@ -437,7 +477,10 @@ app.post('/signin', async (req, res) => {
         surname: user.surname,
         email: user.email,
       };
-      console.log( 'Login succesvol: Sessie gestart voor gebruiker ID:', user._id );
+      console.log(
+        'Login succesvol: Sessie gestart voor gebruiker ID:',
+        user._id
+      );
       res.redirect('/profile');
     } else {
       console.log('Invalid email or password');
@@ -459,7 +502,10 @@ app.post('/signin', async (req, res) => {
 /* Profile Pictures */
 /********************/
 
-app.post('/upload-profile-picture', upload.single('profileImage'), async (req, res) => {
+app.post(
+  '/upload-profile-picture',
+  upload.single('profileImage'),
+  async (req, res) => {
     if (!req.session.userId) {
       res.redirect('/form');
       return;
@@ -691,56 +737,51 @@ app.post('/update-password', async (req, res) => {
 
 // loading state //
 async function fetchData(url) {
-  loaderDiv.classList.add("loading"); // Activeer de loader
+  loaderDiv.classList.add('loading'); // Activeer de loader
   // Simuleer een vertraging van 3 seconden (3000 milliseconden)
   await new Promise((resolve) => setTimeout(resolve, 3000));
   // Voer hier je logica uit voor het ophalen van de API-data
   const response = await fetch(url);
   const data = await response.json();
-  loaderDiv.classList.remove("loading"); // Deactiveer de loader
+  loaderDiv.classList.remove('loading'); // Deactiveer de loader
   // Voer verdere verwerkingslogica uit
 }
 
+function handleSubmit(event) {
+  event.preventDefault(); // Voorkom standaard form submit gedrag
 
-    function handleSubmit(event) {
-    event.preventDefault(); // Voorkom standaard form submit gedrag
-    
-    const submitButton = document.getElementById('submitButton');
-    const loaderDiv = document.getElementById('loaderDiv');
-    
-    submitButton.classList.add("loading");
-    loaderDiv.classList.add("loading"); // Voeg loading class toe aan loader
-    submitButton.disabled = true;
-    submitButton.innerText = "Verzenden..."; // Verander de tekst van de knop
+  const submitButton = document.getElementById('submitButton');
+  const loaderDiv = document.getElementById('loaderDiv');
 
-    // Voer hier je logica uit voor het verzenden van het formulier, bijvoorbeeld een fetch-aanroep
-    setTimeout(() => {
-        console.log("Formulier verzonden!");
-        // Hier zou je eventueel de submit van het formulier kunnen forceren:
-        // event.target.submit();
-        
-        // Verwijder loading state nadat logica is uitgevoerd
-        submitButton.classList.remove("loading");
-        loaderDiv.classList.remove("loading");
-        submitButton.innerText = "Verzenden"; // Herstel de tekst van de knop
-        submitButton.disabled = false;
+  submitButton.classList.add('loading');
+  loaderDiv.classList.add('loading'); // Voeg loading class toe aan loader
+  submitButton.disabled = true;
+  submitButton.innerText = 'Verzenden...'; // Verander de tekst van de knop
 
-        // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
-    }, 2000); // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
+  // Voer hier je logica uit voor het verzenden van het formulier, bijvoorbeeld een fetch-aanroep
+  setTimeout(() => {
+    console.log('Formulier verzonden!');
+    // Hier zou je eventueel de submit van het formulier kunnen forceren:
+    // event.target.submit();
+
+    // Verwijder loading state nadat logica is uitgevoerd
+    submitButton.classList.remove('loading');
+    loaderDiv.classList.remove('loading');
+    submitButton.innerText = 'Verzenden'; // Herstel de tekst van de knop
+    submitButton.disabled = false;
+
+    // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
+  }, 2000); // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
 }
-
-
 
 // Middleware to handle not found errors - error 404
 app.use((req, res) => {
   // log error to console
   console.error('404 error at URL: ' + req.url);
   // send back a HTTP response with status code 404
-  res
-    .status(404)
-    .render('error', {
-      errorCode: 404,
-      errorMessage: '404 error at URL: ' + req.url,
+  res.status(404).render('error', {
+    errorCode: 404,
+    errorMessage: '404 error at URL: ' + req.url,
   });
 });
 
@@ -749,14 +790,15 @@ app.use((err, req, res) => {
   // log error to console
   console.error(err.stack);
   // send back a HTTP response with status code 500
-  res
-    .status(500)
-    .render('error', { 
-      errorCode: 500, 
-      errorMessage: 'Server error' });
+  res.status(500).render('error', {
+    errorCode: 500,
+    errorMessage: 'Server error',
+  });
 });
 
 // Start the webserver and listen for HTTP requests at specified port
 app.listen(3000, () => {
-  console.log(`I did not change this message and now my webserver is listening at port 3000`);
+  console.log(
+    `I did not change this message and now my webserver is listening at port 3000`
+  );
 });

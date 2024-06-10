@@ -858,7 +858,7 @@ footer span {
     margin-top: -10px;
 }
 
-.filterDiv form {
+.filter-container form {
   background-color: grey;
   padding: 2em;
   border-radius: 1em;
@@ -914,11 +914,11 @@ footer span {
   background-color: var(--background-color-two);
 }
 
-.allEvents section {
+/* .allEvents section {
     margin: var(--desktop-margin);
-}
+} */
 
-.filterDiv {
+.filter-container {
     display: flex;
     justify-content: center;
     padding: 1em;
@@ -927,7 +927,7 @@ footer span {
     margin-bottom: 2em;
 }
 
-.filterDiv form {
+.filter-container form {
     background-color: lightgrey;
     padding: 1em;
     border-radius: 1em;
@@ -940,8 +940,8 @@ footer span {
     box-sizing: border-box;
 }
 
-.filterDiv input,
-.filterDiv select {
+.filter-container input,
+.filter-container select {
     padding: 1em;
     border-radius: 5px;
     border: 2px lightgrey solid;
@@ -950,7 +950,7 @@ footer span {
     box-sizing: border-box;
 }
 
-.filterDiv button {
+.filter-container button {
     background-color: #FF6000;
     border: none;
     color: white;
@@ -962,16 +962,16 @@ footer span {
 }
 
 @media (max-width: 768px) {
-    .filterDiv {
+    .filter-container {
         flex-direction: column;
         align-items: stretch;
     }
     
-    .filterDiv form {
+    .filter-container form {
         width: 100%; /* Full width on small screens */
     }
     
-    .filterDiv button {
+    .filter-container button {
         align-self: stretch; /* Full width button on small screens */
     }
 }
@@ -1152,7 +1152,7 @@ h2 {
 
   /* Loading state */
 
-  #loaderDiv {
+  #loader-filter {
     background-image: url("https://s1.ticketm.net/dam/a/e8c/5265b9d2-a06c-4dc8-a432-a8dd9d042e8c_SOURCE");
     background-position: center;
     background-repeat: no-repeat;
@@ -1191,7 +1191,7 @@ h2 {
     }
 }
 
-#loaderDiv.loading {
+#loader-filter.loading {
     opacity: 1;
 }
 

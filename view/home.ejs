@@ -26,10 +26,9 @@
                     </a>
                 </li>
                 <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+                    <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -90,29 +89,44 @@
                 <a href="/all-events">See all</a>
             </div>
 
-            <ul id="card-container" class="card-container">
-                <% for (const event of events) { %>
-                  <li>
-                    <article class="event-template">
-                      <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
-                      <p><%= event.classifications[0].genre.name %></p>
-              
-                      <form action="/add_favorite" method="POST" class="favorite-form">
-                        <input type="hidden" name="eventId" value="<%= event.id %>">
-                        <button type="submit" class="like-button" data-event-id="<%= event.id %>">
-                          <i class="fa-solid fa-heart"></i>
-                        </button>
-                      </form>
-              
-                      <a href="/detail?event_id=<%= event.id %>">
-                        <h5><%= event.name %></h5>
-                        <p><%= event.info %></p>
-                        <p><%= event.dates.start.dateTime %></p>
-                      </a>
-                    </article>
-                  </li>
-                <% } %>
-            </ul>
+  <ul id="card-container" class="card-container">
+        <% if (events && events.length) { %>
+            <% events.forEach(event => { %>
+        <li>
+          <article class="event-template">
+            <% if (event.images && event.images.length > 0) { %>
+                <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+              <% } else { %>
+                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img">
+              <% } %>
+              <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
+                <p><%= event.classifications[0].genre.name %></p>
+              <% } else { %>
+                <p>Genre not available</p>
+              <% } %>
+               
+          <button class="like-button" data-event-id="<%= event.id %>">
+            <i class="fa-solid fa-heart"></i>
+          </button>
+          <a href="<%= event.url %>">
+            <h5><%= event.name %></h5>
+            <% if (event.info) { %>
+              <p><%= event.info %></p>
+            <% } %>
+            <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
+              <p><%= event.dates.start.dateTime %></p>
+            <% } else { %>
+              <p>Date not available</p>
+            <% } %>
+          </a>
+          </article>
+        </li>
+        <% }) %>
+        <% } else { %>
+          <li>No events available.</li>
+        <% } %>
+    </ul>
+
             
             <ul class="card-buttons">
 				<li>
@@ -242,6 +256,7 @@
     <script src="client.js"></script>
     <script src="hamburger.js"></script>
     <script defer src="card.js"></script>
+
     
 </body>
 </html>
