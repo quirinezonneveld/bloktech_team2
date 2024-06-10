@@ -140,14 +140,20 @@ app.get('/', async (req, res) => {
   try {
     const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+    let favoriteEvents = [];
 
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
+      
+      const user = await db.collection('users').findOne({ _id: userId });
+      if (user && user.favorites) {
+        favoriteEvents = user.favorites;
+      }
     }
 
     const events = await getEvents();
-    res.render('home.ejs', { events, isLoggedIn, profileImage });
+    res.render('home.ejs', { events, isLoggedIn, profileImage, favoriteEvents });
   } catch (error) {
     res.status(500).render('error', {
       errorCode: 500,
@@ -160,18 +166,21 @@ app.get('/home', async (req, res) => {
   try {
     const isLoggedIn = !!req.session.userId;
     let profileImage = 'assets/profile-default.jpg'; // Standaard afbeelding
+    let favoriteEvents = [];
 
     if (isLoggedIn) {
       const userId = new ObjectId(req.session.userId);
       profileImage = await getProfileImage(userId);
+
+      const user = await db.collection('users').findOne({ _id: userId });
+      if (user && user.favorites) {
+        favoriteEvents = user.favorites;
+      }
     }
-  const events = await getEvents();
 
-
-
-
-  res.render('home.ejs', { events, isLoggedIn, profileImage });
-} catch (error) {
+    const events = await getEvents();
+    res.render('home.ejs', { events, isLoggedIn, profileImage, favoriteEvents });
+  } catch (error) {
     res.status(500).render('error', {
       errorCode: 500,
       errorMessage: 'Server error',
@@ -179,8 +188,7 @@ app.get('/home', async (req, res) => {
   }
 });
 
-// Route to add favorite event
-app.post('/add_favorite', async (req, res) => {
+app.post('/toggle_favorite', async (req, res) => {
   if (!req.session.userId) {
     res.redirect('/form');
     return;
@@ -197,55 +205,48 @@ app.post('/add_favorite', async (req, res) => {
 
   try {
     const userId = new ObjectId(req.session.userId);
-    const updateResult = await db.collection('users').updateOne(
-      { _id: userId },
-      { $addToSet: { favorites: eventId } }
-    );
+    const user = await db.collection('users').findOne({ _id: userId });
 
-    if (updateResult.modifiedCount === 1) {
-      console.log(`Added favorite event for user ${userId}`);
-    } else {
-      console.error('Failed to add favorite event');
-      res.status(500).json({ message: 'Failed to add favorite event' });
+    if (!user) {
+      res.status(404).send('User not found');
+      return;
     }
-  } catch (error) {
-    console.error('Error adding favorite event to database', error);
-    res
-      .status(500)
-      .json({ message: 'Error adding favorite event to database' });
-  }
-});
 
-app.post('/unlike', async (req, res) => {
-  const { eventId } = req.body;
-
-  console.log('Event ID to remove:', eventId); // Log eventId
-
-  try {
-    const userId = new ObjectId(req.session.userId);
-
-    // Remove the eventId from the user's favorites
-    const updateResult = await db.collection('users').updateOne(
+    if (user.favorites && user.favorites.includes(eventId)) {
+      // Remove the event from favorites
+      const updateResult = await db.collection('users').updateOne(
         { _id: userId },
         { $pull: { favorites: eventId } }
-    )
+      );
 
       if (updateResult.modifiedCount === 1) {
-        res.redirect('/profile');
+        console.log(`Removed favorite event for user ${userId}`);
+        res.sendStatus(200); // Stuur een successtatus terug
       } else {
-          res.status(500).render('error', { 
-            errorCode: 500, 
-            errorMessage: 'Failed to remove the event from favorites' 
-          })
-      } 
+        console.error('Failed to remove favorite event');
+        res.status(500).json({ message: 'Failed to remove favorite event' });
+      }
+    } else {
+      // Add the event to favorites
+      const updateResult = await db.collection('users').updateOne(
+        { _id: userId },
+        { $addToSet: { favorites: eventId } }
+      );
 
+      if (updateResult.modifiedCount === 1) {
+        console.log(`Added favorite event for user ${userId}`);
+        res.sendStatus(200); // Stuur een successtatus terug
+      } else {
+        console.error('Failed to add favorite event');
+        res.status(500).json({ message: 'Failed to add favorite event' });
+      }
+    }
   } catch (error) {
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Server error',
-    });
+    console.error('Error toggling favorite event in database', error);
+    res.status(500).json({ message: 'Error toggling favorite event in database' });
   }
 });
+
 
 //Sign In / Register
 app.get('/form', (req, res) => {
