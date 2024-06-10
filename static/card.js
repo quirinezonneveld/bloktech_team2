@@ -43,14 +43,22 @@ const likePopup = document.querySelector('.liked-popup');
 likeButtons.forEach(likeButton => {
     const likeHeart = likeButton.querySelector('i');
 
-    likeButton.addEventListener('click', async (event) => {
+    likeButton.addEventListener('submit', async (event) => {
+       
+
+      
+
         likeButton.classList.toggle('liked');
         likeHeart.classList.toggle('liked-heart');
 
-        await sleep(2500); 
-        likePopup.classList.remove('hiddenVisibility');
-        await sleep(3600); 
-        likePopup.classList.add('hiddenVisibility');
+        if (likeButton.classList.contains('liked')) {
+            await sleep(2500); 
+            likePopup.classList.remove('hiddenVisibility');
+            await sleep(3600); 
+            likePopup.classList.add('hiddenVisibility');
+        }
+
+        
     });
 });
 

@@ -221,7 +221,6 @@ app.post('/toggle_favorite', async (req, res) => {
 
       if (updateResult.modifiedCount === 1) {
         console.log(`Removed favorite event for user ${userId}`);
-        res.sendStatus(200); // Stuur een successtatus terug
       } else {
         console.error('Failed to remove favorite event');
         res.status(500).json({ message: 'Failed to remove favorite event' });
@@ -235,7 +234,7 @@ app.post('/toggle_favorite', async (req, res) => {
 
       if (updateResult.modifiedCount === 1) {
         console.log(`Added favorite event for user ${userId}`);
-        res.sendStatus(200); // Stuur een successtatus terug
+        
       } else {
         console.error('Failed to add favorite event');
         res.status(500).json({ message: 'Failed to add favorite event' });
@@ -247,6 +246,36 @@ app.post('/toggle_favorite', async (req, res) => {
   }
 });
 
+app.post('/unlike', async (req, res) => {
+  const { eventId } = req.body;
+
+  console.log('Event ID to remove:', eventId); // Log eventId
+
+  try {
+    const userId = new ObjectId(req.session.userId);
+
+    // Remove the eventId from the user's favorites
+    const updateResult = await db.collection('users').updateOne(
+        { _id: userId },
+        { $pull: { favorites: eventId } }
+    )
+
+      if (updateResult.modifiedCount === 1) {
+        res.redirect('/profile');
+      } else {
+          res.status(500).render('error', { 
+            errorCode: 500, 
+            errorMessage: 'Failed to remove the event from favorites' 
+          })
+      } 
+
+  } catch (error) {
+    res.status(500).render('error', {
+      errorCode: 500,
+      errorMessage: 'Server error',
+    });
+  }
+});
 
 //Sign In / Register
 app.get('/form', (req, res) => {
