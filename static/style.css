@@ -1048,12 +1048,12 @@ h2 {
     border: none;
     outline: none;
     transition: 0.4s;
-    border-bottom: 1px lightgrey solid;
+    border-bottom: 0.1em solid var(--card-background-color);
     font-weight: bold;
   }
   
   .accordion:first-of-type {
-    border-top: 1px lightgrey solid;
+    border-bottom: 0.1em solid var(--card-background-color);
 }
 
   
