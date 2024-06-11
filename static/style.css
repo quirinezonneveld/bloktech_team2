@@ -307,6 +307,9 @@ footer section div:last-of-type address ul li i:hover {
   color: var(--detail-color-one);
   scale: 1.5;
 }
+footer h2 {
+  margin: 0;
+}
 
 @media (max-width: 850px) {
   footer section {
