@@ -74,7 +74,7 @@
                         <img src="/assets/profile-default.jpg" alt="Default Profile Image">
                         <% } %>
                             <div class="welcome-imageChange">
-                                <h2>Welcome <%= name %>!
+                                <h2 class="slideAnimation">Welcome <%= name %>!
                                 </h2>
                                 <div class="imageChanger">
                                     <button class="changeImage button" onclick="toggleImageChanger()">Change Image</button>
@@ -93,7 +93,7 @@
                             </div>
             </div>
 
-            <div class="profile-navigation">
+            <div class="profile-navigation hiddenAnimation">
                 <button id="profileButton" onclick="showProfile()">Profile</button>
                 <button id="favoritesButton" onclick="showFavorites()">Favorites</button>
             </div>
@@ -206,6 +206,8 @@
     </footer>
 
     <script src="client.js"></script>
+    <script src="hamburger.js"></script>
+    <script defer src="card.js"></script>
     <!-- <script src="profile.js"></script> -->
 
     <script>
