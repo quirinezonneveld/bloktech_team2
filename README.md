@@ -10,6 +10,9 @@ Dit project is een website die de Ticketmaster API gebruikt om evenementen te to
 - [Installatie](#installatie)
 - [Gebruik](#gebruik)
 - [Routes](#routes)
+- [Contributie](#contributie)
+- [Contributors](#contributors)
+- [License](#license)
 
 ## Beschrijving
 
@@ -116,4 +119,26 @@ De .env komt er dan zo uit te zien:
   - `GET /signout` - Uitloggen.
   - `POST /delete_profile` - Verwijder gebruikersaccount.
 - **Foutafhandeling:**
-  - `GET /error` - Toon foutpagina.     
+  - `GET /error` - Toon foutpagina.
+ 
+## Contributie
+
+Toevoegingen aan het project zijn altijd welkom. Volg onderstaande stappen om mee te werken aan dit project. 
+
+1. Fork deze repository.
+2. Maak een nieuwe branch aan
+3. Commit de wijzigingen 
+4. Push naar de branch
+5. Maak een pull requests aan.
+
+Wij zullen regelmatig kijken naar de pull requests en zo nodig toevoegen aan het project.
+ 
+## Contributors
+
+- Quirine Zonneveld
+- Karina Korytska
+- Mischa Melkert
+- Melvin Vermast
+
+## License
+Dit project is gelicentieerd onder de MIT-licentie. Zie het [LICENSE](LICENSE) bestand voor meer informatie.
