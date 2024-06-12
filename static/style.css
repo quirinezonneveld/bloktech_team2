@@ -24,7 +24,7 @@
   --font-color-one: #eeebeb;
   --font-color-two: #dcdcdc;
 
-  --button-color-text: #fff;
+  --button-color-text: #101010;
   --button-radius: 4.69em;
   --button-padding: 0.5em 1em;
 
@@ -972,14 +972,17 @@ footer span {
 }
 
 .filter-container button {
-    background-color: #FF6000;
+    background-color: var(--detail-color-one);
     border: none;
-    color: white;
+    color: var(--button-color-text);
     padding: 1.1em;
     font-size: 1em;
     border-radius: 5px;
     align-self: flex-start; /* Align button to the top */
     flex: 0 0 auto; /* Prevent button from growing */
+}
+.filter-container button:hover {
+  background-color: var(--detail-color-one-hover);
 }
 
 @media (max-width: 768px) {
@@ -1141,7 +1144,7 @@ h2 {
   
   .contact-card-form button {
     background-color: var(--detail-color-one);
-    color: #fff;
+    color: var(--button-color-text);
     border: none;
     cursor: pointer;
     border-radius: var(--button-radius);
@@ -1488,7 +1491,7 @@ h2 {
     border-radius: var(--button-radius);
     margin: 1em;
     background-color: var(--detail-color-one);
-    color: white;
+    color: var(--button-color-text);
   }
 
 
