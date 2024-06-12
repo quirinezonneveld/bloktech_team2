@@ -74,7 +74,7 @@ De .env komt er dan zo uit te zien:
 * Maak een nieuw cluster aan, volg de instructies van MongoDB om de configuratie te voltooinen
 * Voeg het IP-adres toe van waaruit je toegang wilt hebben tot de database. Dit kan gedaan worden in de "Network Access" sectie van je clusterinstellingen
 * Maak een nieuwe gebruiker aan, zorg ervoor dat deze voldoende rechten heeft om toegang te krijgen tot de database. Dit kan via de "Database Access" sectie
-* Maak een verbinding tussen de applicatie en de database. Dit kan gedaan worden door de .env correct in te vullen met de juiste waardes. Hieronder staat een voorbeeld
+* Maak een verbinding tussen de applicatie en de database. Dit kan gedaan worden door de .env correct in te vullen met de juiste waardes. Hieronder staat een voorbeeld:
 
   ```bash
     DB_HOST = myHost
@@ -94,6 +94,12 @@ De .env komt er dan zo uit te zien:
 
 ## Gebruik
 
+   - **Homepagina:** De hoofdpagina geeft een overzicht van evenementen.
+   - **Zoeken:** In de navigatie balk bevindt zich een zoekbalk waarmee met termen de evenementen kunnen worden opgezocht.
+   - **Filteren:** Gebruikers kunnen op de All Events pagina filteren op de evenementen.
+   - **Inloggen/Registreren:** Gebruikers kunnen zich inloggen en registreren om functies te gebruiken zoals het opslaan in favorieten.
+   - **ProfielPagina:** Gebruikers kunnen op hun profielpagina een profielfoto toevoegen en hun favorieten zien en eventueel verwijderen.
+    
 ## Routes
 - **Home:**
   - 'GET /home' - Toon de homepagina
