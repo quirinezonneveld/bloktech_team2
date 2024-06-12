@@ -146,9 +146,10 @@ header > a:focus {
 .info-nav {
   display: flex;
 	background-color: var(--background-color-two);
-	padding: 2em 0;
+	
   justify-content: center;
   align-content: center;
+  padding: var(--mobile-margin)
 }
 .info-nav img {
 	width: 1em;
@@ -317,6 +318,7 @@ footer h2 {
   footer section {
     flex-direction: column;
     gap: 2em;
+    padding: 4em;
   }
 }
 
@@ -746,7 +748,12 @@ footer span {
     margin: var(--mobile-margin);
   }
   .detail-info div img {
-    width: 60%
+    width: 60%;
+    object-fit: cover;
+  }
+
+  .detail-faq {
+    margin: var(--mobile-margin);
   }
 
   .links-container {
