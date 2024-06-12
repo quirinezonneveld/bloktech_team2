@@ -86,7 +86,7 @@ De .env komt er dan zo uit te zien:
     KEY = TicketmasterAPIKey
   ```
 
-  5. **Start de applicatie**
+5. **Start de applicatie**
  
     ```bash
       node server.js
