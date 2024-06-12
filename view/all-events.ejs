@@ -63,7 +63,14 @@
     <section>
       <h1 class="slideAnimation">All events</h1>
 
-      <div id="loader-filter"></div>
+      <div id="loader-filter">
+        <div class="loader-image"></div>
+        <div class="loader-image-2"></div>
+        <img src="assets/logo-loader.png" alt="Loading">
+      </div>
+      
+      
+      
 
       <div class="filter-container">
         <form id="filter-form" onsubmit="handleSubmitFilter(event)">
@@ -128,8 +135,11 @@
       <h2 class="slideAnimation">Populair</h2>
       <a href="/all-events">See all</a>
     </div>
-    <ul id="card-container" class="card-container hiddenAnimation">
-        <% if (events && events.length) { %>
+    
+    <div class="card-grid">
+      <ul id="card-container" class="card-container hiddenAnimation">
+
+<% if (events && events.length) { %>
             <% events.forEach(event => { %>
         <li>
           <article class="event-template">
@@ -164,6 +174,7 @@
             <% } else { %>
               <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img">
             <% } %>
+
             <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
               <p><%= event.classifications[0].genre.name %></p>
             <% } else { %>

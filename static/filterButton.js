@@ -2,7 +2,7 @@
 
 //   event.preventDefault(); // Voorkom standaard form submit gedrag
 
-//   const submitFilterButton = document.getElementById('submit-filter-button');
+//   const submitFilterButton = document.getElementById('on');
 //   const loaderFilter = document.getElementById('loader-filter');
 //   const classificationName =
 //     document.getElementById('classificationName').value;
@@ -102,39 +102,45 @@
 //   }, 2000);
 // }
 
-function handleSubmitFilter(event) {
-  event.preventDefault();
+// In filterButton.js
+
+// In filterButton.js
+
+async function handleSubmitFilter(event) {
   console.log('i set filter');
-  const classificationName =
-    document.getElementById('classificationName').value;
+  const classificationName = document.getElementById('classificationName').value;
   const countryCode = document.getElementById('countryCode').value;
 
   let queryParams = '';
 
-  if (classificationName && countryCode) {
-    queryParams = `?classificationName=${classificationName}&countryCode=${countryCode}`;
-  } else if (classificationName) {
-    queryParams = `?classificationName=${classificationName}`;
-  } else if (countryCode) {
-    queryParams = `?countryCode=${countryCode}`;
-  }
+  if (classificationName && countryCode) { queryParams = `?classificationName=${encodeURIComponent(classificationName)}&countryCode=${encodeURIComponent(countryCode)}`; } else if (classificationName) { queryParams = `?classificationName=${encodeURIComponent(classificationName)}`; } else if (countryCode) { queryParams = `?countryCode=${encodeURIComponent(countryCode)}`; }
 
-  window.location.href = `/all-events${queryParams}`;
+  console.log('Query Params:', queryParams);
 
-  const submitFilterButton = document.getElementById('submit-filter-button');
   const loaderFilter = document.getElementById('loader-filter');
+  const loaderImage = document.querySelector('.loader-image');
+  const loaderImage2 = document.querySelector('.loader-image-2');
 
-  submitFilterButton.classList.add('loading');
   loaderFilter.classList.add('loading'); // Voeg loading class toe aan loader
-  submitFilterButton.disabled = true;
-  submitFilterButton.innerText = 'Sending...';
-  setTimeout(() => {
-    console.log('Formulier verzonden!');
+  loaderImage.classList.add('move');
+  loaderImage2.classList.add('move-delay');
 
-    // Removing loading state
-    submitFilterButton.classList.remove('loading');
+  try {
+    const response = await fetch(`/all-events${queryParams}`);
+    if (!response.ok) {
+      throw new Error('Er is een fout opgetreden bij het ophalen van de data');
+    }
+    const data = await response.json();
+    console.log('Formulier verzonden!', data);
+    // Voer hier eventuele verdere verwerkingslogica uit met de ontvangen data
+
+    // Doorsturen naar nieuwe pagina na succesvolle verwerking
+    window.location.href = `/all-events${queryParams}`;
+  } catch (error) {
+    console.error('Er is een fout opgetreden bij het ophalen van de data:', error);
+  } finally {
     loaderFilter.classList.remove('loading');
-    submitFilterButton.innerText = 'Send'; // Herstel de tekst van de knop
-    submitFilterButton.disabled = false;
-  }, 90000);
+    loaderImage.classList.remove('move');
+    loaderImage2.classList.remove('move-delay');
+  }
 }

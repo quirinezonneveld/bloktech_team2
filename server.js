@@ -307,6 +307,7 @@ app.get('/all-events', async (req, res) => {
       countryCode,
       keyword,
       URL
+
     )
     
     const isLoggedIn = !!req.session.userId
@@ -330,6 +331,9 @@ app.get('/all-events', async (req, res) => {
     res.render('all-events', { events: [] })
   }
 })
+
+
+
 
 
 app.get('/all-events/:eventId', (req, res) => {
@@ -758,32 +762,7 @@ async function fetchData(url) {
   // Voer verdere verwerkingslogica uit
 }
 
-function handleSubmit(event) {
-  event.preventDefault() // Voorkom standaard form submit gedrag
 
-  const submitButton = document.getElementById('submitButton')
-  const loaderDiv = document.getElementById('loaderDiv')
-
-  submitButton.classList.add('loading')
-  loaderDiv.classList.add('loading') // Voeg loading class toe aan loader
-  submitButton.disabled = true
-  submitButton.innerText = 'Verzenden...' // Verander de tekst van de knop
-
-  // Voer hier je logica uit voor het verzenden van het formulier, bijvoorbeeld een fetch-aanroep
-  setTimeout(() => {
-    console.log('Formulier verzonden!')
-    // Hier zou je eventueel de submit van het formulier kunnen forceren:
-    // event.target.submit()
-
-    // Verwijder loading state nadat logica is uitgevoerd
-    submitButton.classList.remove('loading')
-    loaderDiv.classList.remove('loading')
-    submitButton.innerText = 'Verzenden' // Herstel de tekst van de knop
-    submitButton.disabled = false
-
-    // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
-  }, 2000) // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
-}
 
 // Middleware to handle not found errors - error 404
 app.use((req, res) => {
