@@ -44,13 +44,15 @@
                     </a></li>
                 <% } %>
                 
-                <li><a href="profile" class="button" data-type="nav">Profile
-                    <% if (profileImage.startsWith('data:image')) { %>
-                      <img src="<%= profileImage %>" alt="Profile picture">
-                    <% } else { %>
-                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                    <% } %>
-                  </a></li>
+                <% if (isLoggedIn) { %>
+                    <li><a href="profile" class="button" data-type="nav">Profile
+                        <% if (profileImage.startsWith('data:image')) { %>
+                          <img src="<%= profileImage %>" alt="Profile picture">
+                        <% } else { %>
+                          <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                        <% } %>
+                      </a></li>
+                <% } %>
             </ul>
             </section>
             <button class="hamburger" id="hamburger">
@@ -61,7 +63,7 @@
 
     </header>
     <main class="container">
-        <h1>Updating data</h1>
+        <h1>Changing data</h1>
         <a class="button" href="/profile"><i class="fa-solid fa-arrow-left"></i> Back to profile</a>
         <!-- VERANDEREN VAN NAAM FORMULIER -->
         <section class="update">
@@ -69,12 +71,12 @@
                 <h2>Change Name</h2>
                 <form action="/update-name" method="POST">
                     <input type="email" id="emailUpdate" name="emailUpdate" placeholder="Email *" required>
-                    <input type="text" id="fNameUpdate" name="fNameUpdate" placeholder="New first name">
-                    <input type="text" id="lNameUpdate" name="lNameUpdate" placeholder="New last name">
+                    <input type="text" id="fNameUpdate" name="fNameUpdate" placeholder="New first name *" required>
+                    <input type="text" id="lNameUpdate" name="lNameUpdate" placeholder="New last name *" required>
 
                     <p><span>*</span> fields are required</p>
 
-                    <input type="submit" value="Update Name">
+                    <input type="submit" value="Change Name">
                 </form>
             </div>
 
@@ -85,12 +87,11 @@
                     <input type="email" id="emailUpdatePw" name="emailUpdate" placeholder="Email *" required>
                     <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password *" required>
                     <input type="password" id="newPassword" name="newPassword" placeholder="New Password *" required>
-                    <input type="password" id="confirmNewPassword" name="confirmNewPassword"
-                        placeholder="Confirm New Password *" required>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password *" required>
 
                     <p><span>*</span> fields are required</p>
 
-                    <input type="submit" value="Update Password">
+                    <input type="submit" value="Change Password">
                 </form>
             </div>
         </section>

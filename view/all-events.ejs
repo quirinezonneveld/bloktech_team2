@@ -45,6 +45,7 @@
                     </a></li>
                 <% } %>
                 
+                <% if (isLoggedIn) { %>
                 <li><a href="profile" class="button" data-type="nav">Profile
                     <% if (profileImage.startsWith('data:image')) { %>
                       <img src="<%= profileImage %>" alt="Profile picture">
@@ -52,6 +53,7 @@
                       <img src="assets/profile-default.jpg" alt="Default Profile picture">
                     <% } %>
                   </a></li>
+                <% } %>
             </ul>
             </section>
             <button class="hamburger" id="hamburger">

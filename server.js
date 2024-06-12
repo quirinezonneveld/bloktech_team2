@@ -155,10 +155,7 @@ app.get('/', async (req, res) => {
     const events = await getEvents();
     res.render('home.ejs', { events, isLoggedIn, profileImage, favoriteEvents });
   } catch (error) {
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Server error',
-    });
+    sendError(req, res, 500, 'Server error')
   }
 });
 
@@ -180,10 +177,7 @@ app.get('/home', async (req, res) => {
     const events = await getEvents();
     res.render('home.ejs', { events, isLoggedIn, profileImage, favoriteEvents });
   } catch (error) {
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Server error',
-    });
+    return sendError(req, res, 500, 'Server error')
   }
 });
 
@@ -207,8 +201,7 @@ app.post('/toggle_favorite', async (req, res) => {
     const user = await db.collection('users').findOne({ _id: userId });
 
     if (!user) {
-      res.status(404).send('User not found');
-      return;
+      sendError(req, res, 404, 'User not found')
     }
 
     if (user.favorites && user.favorites.includes(eventId)) {
@@ -260,25 +253,20 @@ app.post('/unlike', async (req, res) => {
     )
 
       if (updateResult.modifiedCount === 1) {
-        res.redirect('/profile');
+        res.redirect('profile')
       } else {
-          res.status(500).render('error', { 
-            errorCode: 500, 
-            errorMessage: 'Failed to remove the event from favorites' 
-          })
+        sendError(req, res, 500, 'Failed to remove the event from favorites')
       } 
 
   } catch (error) {
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Server error',
-    });
+    sendError(req, res, 500, 'Server error')
   }
 });
 
 //Sign In / Register
 app.get('/form', (req, res) => {
-  res.render('form');
+  const isLoggedIn = !!req.session.userId;
+  res.render('form', {isLoggedIn});
 });
 
 
@@ -343,10 +331,7 @@ app.get('/detail', async (req, res) => {
     // Pass event_details to the template
     res.render('detail.ejs', { isLoggedIn, profileImage, event_details });
   } catch (error) {
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Server error',
-    });
+    sendError(req, res, 500, 'Server error')
   }
 
 });
@@ -363,11 +348,8 @@ app.get('/about-us', async (req, res) => {
     }
     res.render('about-us', { isLoggedIn, profileImage });
     } catch (error) {
-      res.status(500).render('error', {
-        errorCode: 500,
-        errorMessage: 'Server error',
-      })
-    };
+      sendError(req, res, 500, 'Server error')
+    }
 });
 
 //API
@@ -380,10 +362,7 @@ app.get('/api-data', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error loading data', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error loading data',
-    });
+    sendError(req, res, 500, 'Error loading data')
   }
 });
 
@@ -407,8 +386,7 @@ app.get('/profile', async (req, res) => {
     const user = await db.collection('users').findOne({ _id: userId });
 
     if (!user) {
-      res.status(404).send('User not found');
-      return;
+      sendError(req, res, 404, 'User not found')
     }
 
     const favoriteEventIds = Array.isArray(user.favorites) ? user.favorites : [];
@@ -433,10 +411,7 @@ app.get('/profile', async (req, res) => {
 
   } catch (error) {
     console.error('Error fetching profile:', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Server error',
-    });
+    sendError(req, res, 500, 'Server error')
   }
 });
 
@@ -450,6 +425,7 @@ app.post('/registry', async (req, res) => {
   const lastName = req.body.lName;
   const email = req.body.emailRegister;
   const password = req.body.passwordRegister;
+  const confirmPassword = req.body.confirmRegisterPassword
  
   console.log(`Ontvangen gegevens: Naam - ${firstName}, Achternaam - ${lastName}, Wachtwoord - ${password}, Email - ${email}`); 
  
@@ -458,15 +434,16 @@ app.post('/registry', async (req, res) => {
     const existingUser = await db.collection('users').findOne({ email: email });
     if (existingUser) {
       console.log('Email address already in use');
-      res.status(409).send('Email adress already in use');
-      return
+      sendError(req, res, 409, 'Email adress already in use')
+    } else if (password != confirmPassword) {
+      console.log('Passwords do not match')
+      sendError(req, res, 409, 'Passwords do not match')
     }
  
     // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
     console.log('Password hashed:', hashedPassword);
- 
  
     //Filling in the data of the user registry
     const result = await db.collection('users').insertOne({ name: firstName, surname: lastName, password: hashedPassword, email: email });
@@ -480,8 +457,7 @@ app.post('/registry', async (req, res) => {
  
   } catch (error) {
     console.error('Error inserting data into database', error);
-    res.status(500).send('Error inserting data into database');
-
+    sendError(req, res, 500, 'Error inserting data into database')
   }
 });
 
@@ -489,7 +465,6 @@ app.post('/registry', async (req, res) => {
 /* Sign in */
 /***********/
 
-// Gegevens uit MongoDB vergelijken voor inloggen
 app.post('/signin', async (req, res) => {
   const email = req.body.emailSignin;
   const password = req.body.passwordSignin;
@@ -497,6 +472,7 @@ app.post('/signin', async (req, res) => {
   try {
     const user = await db.collection('users').findOne({ email: email });
 
+    // Gegevens uit MongoDB vergelijken voor inloggen
     if (user && (await bcrypt.compare(password, user.password))) {
       req.session.userId = user._id;
       req.session.user = {
@@ -504,24 +480,15 @@ app.post('/signin', async (req, res) => {
         surname: user.surname,
         email: user.email,
       };
-      console.log(
-        'Login succesvol: Sessie gestart voor gebruiker ID:',
-        user._id
-      );
+      console.log('Login succesvol: Sessie gestart voor gebruiker ID:', user._id);
       res.redirect('/profile');
     } else {
       console.log('Invalid email or password');
-      res.status(401).render('error', {
-        errorCode: 401,
-        errorMessage: 'Invalid email or password',
-      });
+      sendError(req, res, 401, 'Invalid email or password')
     }
   } catch (error) {
     console.error('Error fetching data from database', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error fetching data from database',
-    });
+    sendError(req, res, 500, 'Error fetching data from database')
   }
 });
 
@@ -561,10 +528,7 @@ app.post('/upload-profile-picture', upload.single('profileImage'), async (req, r
       res.redirect('/profile');
     } catch (error) {
       console.error('Error updating profile image in database', error);
-      res.status(500).render('error', {
-        errorCode: 500,
-        errorMessage: 'Error updating profile image in database',
-      });
+      sendError(req, res, 500, 'Error updating profile image in database')
     }
   }
 );
@@ -586,10 +550,7 @@ app.post('/delete-profile-picture', async (req, res) => {
     res.redirect('/profile');
   } catch (error) {
     console.error('Error deleting profile image from database', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error deleting profile image from database',
-    });
+    sendError(req, res, 500, 'Error deleting profile image from database')
   }
 });
 
@@ -600,10 +561,9 @@ app.post('/delete-profile-picture', async (req, res) => {
 app.get('/signout', (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res
-        .status(500)
-        .render('error', { errorCode: 500, errorMessage: 'Error logging out' });
+      sendError(req, res, 500, 'Error logging out')
     }
+    
     res.clearCookie('connect.sid');
     console.log('Uitloggen succesvol: Sessie beëindigd');
     res.redirect('/'); // Redirect to homepage or login page after logout
@@ -706,10 +666,7 @@ app.post('/update-name', async (req, res) => {
     res.redirect('/profile');
   } catch (error) {
     console.error('Error updating data in database', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error updating data in database',
-    });
+    sendError(req, res, 500, 'Error updating data in database')
   }
 });
 
@@ -723,10 +680,7 @@ app.post('/update-password', async (req, res) => {
   } = req.body;
 
   if (newPassword !== confirmNewPassword) {
-    res.status(400).render('error', {
-      errorCode: 400,
-      errorMessage: 'New passwords do not match',
-    });
+    sendError(req, res, 400, 'New passwords do not match')
     return;
   }
 
@@ -734,30 +688,34 @@ app.post('/update-password', async (req, res) => {
     const user = await db.collection('users').findOne({ email: email });
 
     if (!user || !(await bcrypt.compare(oldPassword, user.password))) {
-      res.status(401).render('error', {
-        errorCode: 401,
-        errorMessage: 'Invalid email or password',
-      });
+      sendError(req, res, 401, 'Invalid email or password')
       return;
     }
 
     const saltRounds = 10;
     const hashedNewPassword = await bcrypt.hash(newPassword, saltRounds);
 
-    await db
-      .collection('users')
-      .updateOne({ email: email }, { $set: { password: hashedNewPassword } });
+    await db.collection('users').updateOne({ email: email }, { $set: { password: hashedNewPassword } });
 
     console.log(`Password updated for email: ${email}`);
     res.redirect('/profile');
   } catch (error) {
     console.error('Error updating password in database', error);
-    res.status(500).render('error', {
-      errorCode: 500,
-      errorMessage: 'Error updating password in database',
-    });
+    sendError(req, res, 500, 'Error updating password in database')
   }
 });
+
+app.get('/error', (req, res) => {
+  const errorCode = req.query.errorCode;
+  const errorMessage = req.query.errorMessage;
+  const isLoggedIn = !!req.session.userId;
+  res.render('error', { errorCode, errorMessage, isLoggedIn });
+});
+
+function sendError(req, res, errorCode, errorMessage) {
+  const isLoggedIn = !!req.session.userId;
+  res.render('error', { errorCode, errorMessage, isLoggedIn });
+}
 
 // loading state //
 async function fetchData(url) {
@@ -803,10 +761,7 @@ app.use((req, res) => {
   // log error to console
   console.error('404 error at URL: ' + req.url);
   // send back a HTTP response with status code 404
-  res.status(404).render('error', {
-    errorCode: 404,
-    errorMessage: '404 error at URL: ' + req.url,
-  });
+  sendError(req, res, 404, '404 error at URL'  + req.url)
 });
 
 // Middleware to handle server errors - error 500
@@ -814,15 +769,10 @@ app.use((err, req, res) => {
   // log error to console
   console.error(err.stack);
   // send back a HTTP response with status code 500
-  res.status(500).render('error', {
-    errorCode: 500,
-    errorMessage: 'Server error',
-  });
+  sendError(req, res, 500, 'Server error')
 });
 
 // Start the webserver and listen for HTTP requests at specified port
 app.listen(3000, () => {
-  console.log(
-    `I did not change this message and now my webserver is listening at port 3000`
-  );
+  console.log(`I did not change this message and now my webserver is listening at port 3000`);
 });

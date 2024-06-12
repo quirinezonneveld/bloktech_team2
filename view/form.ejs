@@ -41,12 +41,21 @@
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                <li><a href="form" class="button" data-type="nav">Sign In
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a></li>
-                <li><a href="profile" class="button" data-type="nav">Profile
-                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                </a></li>
+                <% if (!isLoggedIn) { %>
+                    <li><a href="form" class="button" data-type="nav">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
+                <% if (isLoggedIn) { %>
+                    <li><a href="profile" class="button" data-type="nav">Profile
+                        <% if (profileImage.startsWith('data:image')) { %>
+                          <img src="<%= profileImage %>" alt="Profile picture">
+                        <% } else { %>
+                          <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                        <% } %>
+                      </a></li>
+                <% } %>
             </ul>
             </section>
             <button class="hamburger" id="hamburger">
@@ -75,7 +84,13 @@
         <input id="emailRegister" type="email" name="emailRegister" placeholder="E-mail" required>
 
         <span>*</span>
-        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Password" required>
+        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Password" required>   
+        
+        <span>*</span>
+        <input type="password" id="confirmRegisterPassword" name="confirmRegisterPassword" placeholder="Confirm Password *" required>
+
+
+
 
         <p>* Fields are required</p>
 
