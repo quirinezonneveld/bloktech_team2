@@ -61,7 +61,7 @@
 </nav> 
 
     <section>
-      <h1>All events</h1>
+      <h1 class="slideAnimation">All events</h1>
 
       <div id="loader-filter"></div>
 
@@ -125,16 +125,42 @@
 
     <section class="assymetrical-container">
     <div>
-      <h2>Populair</h2>
+      <h2 class="slideAnimation">Populair</h2>
       <a href="/all-events">See all</a>
     </div>
-    <ul id="card-container" class="card-container">
-      <% if (events && events.length) { %>
-          <% events.forEach(event => { %>
-      <li>
-        <article class="event-template">
-          <% if (event.images && event.images.length > 0) { %>
-              <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+    <ul id="card-container" class="card-container hiddenAnimation">
+        <% if (events && events.length) { %>
+            <% events.forEach(event => { %>
+        <li>
+          <article class="event-template">
+            <% if (event.images && event.images.length > 0) { %>
+                <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+              <% } else { %>
+                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img">
+              <% } %>
+              <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
+                <p><%= event.classifications[0].genre.name %></p>
+              <% } else { %>
+                <p>Genre not available</p>
+              <% } %>
+               
+          <form action="/toggle_favorite" method="POST" class="favorite-form">
+                <input type="hidden" name="eventId" value="<%= event.id %>">
+                <button type="submit" class="like-button">
+                  <% if (favoriteEvents.includes(event.id)) { %>
+                    <i class="fa-solid fa-heart liked"></i>
+                  <% } else { %>
+                    <i class="fa-solid fa-heart"></i>
+                  <% } %>
+                </button>
+              </form>
+          <a href="<%= event.url %>">
+            <h5><%= event.name %></h5>
+            <% if (event.info) { %>
+              <p><%= event.info %></p>
+            <% } %>
+            <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
+              <p><%= event.dates.start.dateTime %></p>
             <% } else { %>
               <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img">
             <% } %>
@@ -246,34 +272,7 @@
       <span>©2024 by Ticket+</span>
     </footer>
 
-    <script>
-    //   function handleSubmitFilter(event) {
-    //     event.preventDefault(); // Voorkom standaard form submit gedrag
-
-    //     const submitFilterButton = document.getElementById('submit-filter-button');
-    //     const loaderFilter = document.getElementById('loader-filter');
-
-    //     submitFilterButton.classList.add('loading');
-    //     loaderFilter.classList.add('loading'); // Voeg loading class toe aan loader
-    //     submitFilterButton.disabled = true;
-    //     submitFilterButton.innerText = 'Verzenden...'; // Verander de tekst van de knop
-
-    //     // Voer hier je logica uit voor het verzenden van het formulier, bijvoorbeeld een fetch-aanroep
-    //     setTimeout(() => {
-    //       console.log('Formulier verzonden!');
-    //       // Hier zou je eventueel de submit van het formulier kunnen forceren:
-    //       // event.target.submit();
-
-    //       // Verwijder loading state nadat logica is uitgevoerd
-    //       submitFilterButton.classList.remove('loading');
-    //       loaderFilter.classList.remove('loading');
-    //       submitFilterButton.innerText = 'Verzenden'; // Herstel de tekst van de knop
-    //       submitFilterButton.disabled = false;
-
-    //       // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
-    //     }, 2000); // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
-    //   }
-    </script>
+  
 
 
     <script src="client.js"></script>

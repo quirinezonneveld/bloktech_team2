@@ -67,33 +67,30 @@
         <div class="profile">
             <div class="welcomeProfile">
                 <% if (profileImage) { %>
+                  <img src="<%= profileImage %>" alt="Profile Image">
+                <% } else { %>
+                  <img src="/assets/profile-default.jpg" alt="Default Profile Image">
+                <% } %>
+                <div class="welcome-imageChange">
+                  <h2 class="slideAnimation">Welcome <%= name %>!</h2>
+                  <div class="imageChanger">
+                    <button class="changeImage button" onclick="toggleImageChanger()">Change Image</button>
+                    <div class="imageChangerContent" style="display: none;">
+                      <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="profileImage">
+                        <input type="submit" value="Upload Photo">
+                      </form>
+                      <form action="/delete-profile-picture" method="POST" onsubmit="confirmDeletion(event)">
+                        <input type="submit" value="Delete Photo">
+                      </form>
+                      <button class="button" onclick="toggleImageChanger()">X</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
 
-                    <img src="<%= profileImage %>" alt="Profile Image">
-
-                    <% } else { %>
-                        <img src="/assets/profile-default.jpg" alt="Default Profile Image">
-                        <% } %>
-                            <div class="welcome-imageChange">
-                                <h2>Welcome <%= name %>!
-                                </h2>
-                                <div class="imageChanger">
-                                    <button class="changeImage button" onclick="toggleImageChanger()">Change Image</button>
-                                    <div class="imageChangerContent" style="display: none;">
-                                        <form action="/upload-profile-picture" method="POST"
-                                            enctype="multipart/form-data">
-                                            <input type="file" name="profileImage">
-                                            <input type="submit" value="Upload Photo">
-                                        </form>
-                                        <form action="/delete-profile-picture" method="POST" onsubmit="confirmDeletion(event)">
-                                            <input type="submit" value="Delete Photo">
-                                        </form>
-                                        <button class="button" onclick="toggleImageChanger()">X</button>
-                                    </div>
-                                </div>
-                            </div>
-            </div>
-
-            <div class="profile-navigation">
+            <div class="profile-navigation hiddenAnimation">
                 <button id="profileButton" onclick="showProfile()">Profile</button>
                 <button id="favoritesButton" onclick="showFavorites()">Favorites</button>
             </div>
@@ -119,7 +116,7 @@
                     </p>
                 </div>
                 <form action="/update" method="GET">
-                    <input type="submit" class="button" value="Update Profile">
+                    <input type="submit" class="button" value="Change Profile">
                 </form>
             </div>
         </div>
@@ -144,7 +141,7 @@
                                     </p>
                                 </a>
                             </article>
-                            <form action="/unlike" method="POST" class="unlike-form">
+                            <form action="/remove-favorite" method="POST" class="unlike-form">
                                 <input type="hidden" name="eventId" value="<%= event.id %>">
                                 <button type="submit" class="button">Remove</button>
                             </form>
@@ -206,6 +203,8 @@
     </footer>
 
     <script src="client.js"></script>
+    <script src="hamburger.js"></script>
+    <script defer src="card.js"></script>
     <!-- <script src="profile.js"></script> -->
 
     <script>

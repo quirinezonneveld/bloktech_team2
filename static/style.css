@@ -309,6 +309,9 @@ footer section div:last-of-type address ul li i:hover {
   color: var(--detail-color-one);
   scale: 1.5;
 }
+footer h2 {
+  margin: 0;
+}
 
 @media (max-width: 850px) {
   footer section {
@@ -555,8 +558,7 @@ footer span {
 
 /* liked pop-up */
 .liked-popup {
-  width: 50%;
-  height: 50%;
+  width: 30em;
   position: fixed;
   top: 50%; /* Center vertically */
   left: 50%; /* Center horizontally */
@@ -572,6 +574,11 @@ footer span {
   background-color: var(--background-color-two);
   display: flex;
   flex-direction: column;
+}
+.quote img {
+  width: 100%;
+  height: 30em;
+  object-fit: cover;
 }
 .quote p {
   padding: 3em;
@@ -650,6 +657,9 @@ footer span {
   .quote p {
     font-size: var(--font-size-body-small);
   }
+  .liked-popup {
+    width: 20em;
+  }
 }
 
 
@@ -664,11 +674,10 @@ footer span {
     gap: 5%;
     margin: var(--desktop-margin);
 }
-
-.detail-info div img {
+/* .detail-info div img {
     width: 30em;
     object-fit: cover;
-}
+} */
 .detail-info div img, .join-event div img {
   border-radius: var(--card-radius);
 }
@@ -1068,12 +1077,12 @@ h2 {
     border: none;
     outline: none;
     transition: 0.4s;
-    border-bottom: 1px lightgrey solid;
+    border-bottom: 0.1em solid var(--card-background-color);
     font-weight: bold;
   }
   
   .accordion:first-of-type {
-    border-top: 1px lightgrey solid;
+    border-bottom: 0.1em solid var(--card-background-color);
 }
 
   
