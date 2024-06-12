@@ -22,10 +22,9 @@
                     </a>
                 </li>
                 <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+                    <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -34,6 +33,9 @@
 
             </ul>
             <section class="nav-block">
+              <button class="hamburger" id="hamburger-closing-button">              
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             <ul>
                 <li class="nav-all-events"><a href="all-events">All Events</a></li>
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
@@ -45,22 +47,20 @@
                     </a></li>
                 <% } %>
                 
-                <% if (isLoggedIn) { %>
-                    <li><a href="profile" class="button" data-type="nav">Profile
-                        <% if (profileImage.startsWith('data:image')) { %>
-                          <img src="<%= profileImage %>" alt="Profile picture">
-                        <% } else { %>
-                          <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                        <% } %>
-                      </a></li>
-                <% } %>
+                <li><a href="profile" class="button" data-type="nav">Profile
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
             </ul>
             </section>
+
             <button class="hamburger" id="hamburger">
-                <i class="fa-solid fa-arrow-right"></i>
+                <i class="fa-solid fa-bars"></i>
             </button>
         </nav> 
-
 
     </header>
     <main class="container">
@@ -135,6 +135,7 @@
         
         <span>©2024 by Ticket+</span>
     </footer>
+    <script src="hamburger.js"></script>
 </body>
 
 </html>
