@@ -1,8 +1,3 @@
-
-
-getEvents();
-
-
 document.addEventListener('DOMContentLoaded', async () => {
   const likeButtons = document.querySelectorAll('.like-button');
   likeButtons.forEach((button) => {
@@ -10,7 +5,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       event.preventDefault();
       const form = event.currentTarget.closest('form');
       const eventId = form.querySelector('input[name="eventId"]').value;
-
 
       try {
         const response = await fetch('/add_favorite', {
@@ -32,7 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       }
     });
   });
-
 });
 
 document.addEventListener('DOMContentLoaded', () => {

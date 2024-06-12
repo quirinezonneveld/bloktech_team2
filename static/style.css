@@ -243,6 +243,8 @@ nav li:nth-of-type(2) button i {
 .hamburger {
   display: none;
   cursor: pointer;
+  border: unset;
+  background-color: transparent;
 }
 
 /* class active in html op pagina zetten waarop je je bevind  */
@@ -704,6 +706,13 @@ footer span {
     background-color: var(--detail-color-one-hover);
 }
 
+.links-container{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  max-width: 480px;
+}
+
 .join-event {
     padding: var(--desktop-margin);
     background-color: var(--background-color-two);
@@ -733,10 +742,20 @@ footer span {
   }
   .detail-info {
     flex-direction: column;
+    gap: 3em;
     margin: var(--mobile-margin);
   }
   .detail-info div img {
-    width: 15em;
+    width: 60%
+  }
+
+  .links-container {
+    max-width: 35%;
+  }
+  .detail-info div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
   .detail-info article h1 {
     font-size: 2em;
@@ -891,7 +910,6 @@ footer span {
   .hamburger {
     display: block;
     position: relative;
-    right: 4.5em;
   }
 
   .nav-block {
@@ -916,8 +934,10 @@ footer span {
   display: flex;
   flex-direction: column;
   position: absolute;
+  z-index: 2;
   right: 0;
   top: 0;
+  padding: 1em;
   max-width: min-content;
   background-color: var(--background-color-two);
 }
