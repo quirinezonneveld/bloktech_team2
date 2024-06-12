@@ -866,6 +866,14 @@ footer span {
   justify-content: space-around;
 }
 
+.filter-container form select{
+  color: grey;
+}
+
+.filter-container form input{
+  color: grey;
+}
+
 .testTile {
   background-color: grey;
 }
@@ -914,7 +922,7 @@ footer span {
 }
 
 /* .allEvents section {
-    margin: var(--desktop-margin);
+    
 } */
 
 .filter-container {
@@ -1152,47 +1160,73 @@ h2 {
   /* Loading state */
 
   #loader-filter {
-    background-image: url("https://s1.ticketm.net/dam/a/e8c/5265b9d2-a06c-4dc8-a432-a8dd9d042e8c_SOURCE");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
     border-radius: 1em;
     pointer-events: none;
     user-select: none;
     opacity: 0;
-    transition: .15s;
-    animation: rotate .6s linear infinite;
-    /* Voeg hier de breedte, hoogte en positie toe */
-    /* Voorbeeld: */
+    transition: opacity .15s;
     width: 8em;
     height: 8em;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-}
+  }
 
-@keyframes rotate {
+  #loader-filter img {
+    position: absolute; /* Absoluut positioneren */
+    top: calc(50% + 5em); /* Plaats het verticaal in het midden met een extra 5 em naar beneden */
+    left: 50%; /* Plaats het horizontaal in het midden */
+    transform: translate(-50%, -50%); /* Correctie om het exact in het midden te plaatsen */
+    width: 20em; /* Pas de breedte aan */
+    height: auto; /* Houd de aspect ratio */
+  }
+  
+
+  .loader-image, .loader-image-2 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 70%;
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 1em;
+    opacity: 0;
+  }
+
+  .loader-image {
+    background-image: url("https://s1.ticketm.net/dam/a/e8c/5265b9d2-a06c-4dc8-a432-a8dd9d042e8c_SOURCE");
+  }
+
+  .loader-image-2 {
+    background-image: url("https://s1.ticketm.net/dam/a/b37/f62cde9b-e0b9-4791-8d0b-929f42b7bb37_1325001_RETINA_LANDSCAPE_16_9.jpg"); /* Pas de link aan naar de tweede afbeelding */
+  }
+
+  @keyframes move {
     0% {
-        transform: rotate(0deg);
+      transform: translateY(0);
+      opacity: 1;
     }
-
-    10%{
-        transform: rotate(0deg);
-    }
-
-    90%{
-        transform: rotate(360deg);
-    }
-
     100% {
-        transform: rotate(360deg);
+      transform: translateY(-100%);
+      opacity: 0;
     }
-}
+  }
 
-#loader-filter.loading {
+  .move {
+    animation: move 1s linear forwards;
+  }
+
+  .move-delay {
+    animation: move 1s linear forwards 1s; /* Start na 1 seconde */
+  }
+
+  #loader-filter.loading {
     opacity: 1;
-}
+  }
 
 
 /*********/
@@ -1231,6 +1265,10 @@ h2 {
   margin-top: 3em;
 }
 
+.profile p{
+  color: var(--);
+}
+
 .welcomeProfile{
     display:flex;
 }
@@ -1258,9 +1296,8 @@ h2 {
 
 
 .profile_userInfo {
-    background-color: #ccc;
+    background-color: var(--content-box-background);
     padding: 1em;
-    background-color: #f1f1f1;
     border: none;
     border-radius: 8px;
     margin-bottom: 20px;
@@ -1287,11 +1324,7 @@ h2 {
     margin: 20px 0;
 }
 
-.profile_userInfo {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-}
+
 
 .profile-navigation {
     display: flex;
@@ -1318,7 +1351,7 @@ h2 {
 
 .favorite-events {
     display: none;
-    background-color: #fff;
+    background-color: var(--content-box-background);
     padding: 20px;
     border-radius: 8px;
 }
@@ -1542,4 +1575,63 @@ h2 {
 .show {
 	opacity: 1;
 	transform: translateX(0);
+}
+
+
+.allEvents section h1{
+  padding: 0 .5em;
+}
+
+.card-grid {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-grid .card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18em, 1fr)); /* Aanpassen aan de inhoud, met minimale breedte van 18em */
+  gap: 1.5em; /* Aanpassen van de ruimte tussen de grid items */
+}
+
+.card-grid .card-container article {
+  background-color: var(--card-background-color);
+  width: 100%; /* Volledige breedte van de container nemen */
+  border-radius: var(--card-radius);
+  display: grid;
+  grid-template-columns: 1em 6em 1fr 2em 1em;
+  grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
+}
+
+/* Media query voor middelgrote schermen */
+@media screen and (min-width: 800px) and (max-width: 999px) {
+  .card-grid .card-container {
+    grid-template-columns: repeat(2, 1fr); /* Twee kolommen op middelgrote schermen */
+    
+  }
+
+}
+
+/* Media query voor grotere schermen */
+@media screen and (min-width: 1000px) {
+  .card-grid .card-container {
+    grid-template-columns: repeat(3, 1fr); /* Drie kolommen op grotere schermen */
+  }
+}
+
+/* Media query voor zeer grote schermen */
+@media screen and (min-width: 1400px) {
+  .card-grid .card-container {
+    grid-template-columns: repeat(4, 1fr); /* Vier kolommen op zeer grote schermen */
+  }
+}
+
+@media screen and (max-width: 799px){
+  .allEvents .assymetrical-container {
+    padding-left: var(--mobile-margin);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

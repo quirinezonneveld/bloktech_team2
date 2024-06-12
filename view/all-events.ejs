@@ -60,9 +60,16 @@
         </nav> 
 
     <section>
-      <h1>All events</h1>
+      <h1 class="slideAnimation">All events</h1>
 
-      <div id="loader-filter"></div>
+      <div id="loader-filter">
+        <div class="loader-image"></div>
+        <div class="loader-image-2"></div>
+        <img src="assets/logo-loader.png" alt="Loading">
+      </div>
+      
+      
+      
 
       <div class="filter-container">
         <form id="filter-form" onsubmit="handleSubmitFilter(event)">
@@ -127,6 +134,8 @@
       <h2>Populair</h2>
       <a href="/all-events">See all</a>
     </div>
+    
+    <div class="card-grid">
     <ul id="card-container" class="card-container">
         <% if (events && events.length) { %>
             <% events.forEach(event => { %>
@@ -171,6 +180,7 @@
           <li>No events available.</li>
         <% } %>
     </ul>
+  </div>
     <ul class="card-buttons">
       <li>
         <button>
