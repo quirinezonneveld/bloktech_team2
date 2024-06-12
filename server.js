@@ -747,21 +747,6 @@ function sendError(req, res, errorCode, errorMessage) {
   res.render('error', { errorCode, errorMessage, isLoggedIn })
 }
 
-/*****************/
-/* Loading State */
-/*****************/
-
-async function fetchData(url) {
-  loaderDiv.classList.add('loading') // Activeer de loader
-  // Simuleer een vertraging van 3 seconden (3000 milliseconden)
-  await new Promise((resolve) => setTimeout(resolve, 3000))
-  // Voer hier je logica uit voor het ophalen van de API-data
-  const response = await fetch(url)
-  const data = await response.json()
-  loaderDiv.classList.remove('loading') // Deactiveer de loader
-  // Voer verdere verwerkingslogica uit
-}
-
 
 
 // Middleware to handle not found errors - error 404

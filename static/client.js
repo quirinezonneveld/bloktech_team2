@@ -1,33 +1,3 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const likeButtons = document.querySelectorAll('.like-button');
-  likeButtons.forEach((button) => {
-    button.addEventListener('click', async (event) => {
-      event.preventDefault();
-      const form = event.currentTarget.closest('form');
-      const eventId = form.querySelector('input[name="eventId"]').value;
-
-      try {
-        const response = await fetch('/add_favorite', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ eventId }),
-        });
-
-        const data = await response.json();
-        if (data.redirect) {
-          window.location.href = data.redirect;
-        } else {
-          console.log(data.message);
-        }
-      } catch (error) {
-        console.error('Error adding favorite:', error);
-      }
-    });
-  });
-});
-
 document.addEventListener('DOMContentLoaded', () => {
   const unlikeForms = document.querySelectorAll('.unlike-form');
 
@@ -39,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const eventId = formData.get('eventId');
 
       try {
-        const response = await fetch('/unlike', {
+        const response = await fetch('/remove-favorite', {
           method: 'POST',
           body: new URLSearchParams(formData),
           headers: {

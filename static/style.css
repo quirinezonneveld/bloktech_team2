@@ -784,20 +784,8 @@ footer span {
 /* login & register page */
 /*************************/
 
-.login-register-page body {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: var(--background-color-one);
-    font-family: Arial, Helvetica, sans-serif;
-}
-
  
-.logo-header img{
-    width:130px;
-}
- 
-.login-register-page hr{
+.logInRegister hr{
     width: 50%;
     margin: 0;
     border: .5px solid #D1D1D1;
@@ -824,16 +812,16 @@ footer span {
  
 }
  
-.login-register-page span {
+.logInRegister span {
     color: red;
     background-color: var(--content-box-background);
 }
  
-.login-register-page p{
+.logInRegister p{
     background-color: var(--content-box-background);
 }
 
-.login-register-page footer {
+.logInRegister footer {
   margin-top: 2em;
 }
  
@@ -861,14 +849,14 @@ footer span {
     border-bottom: 3px var(--detail-color-one) solid;
 }
  
-.login-register-page form input{
+.logInRegister form input{
     padding: 1em;
     border-radius: 5px;
     border: 2px lightgrey solid;
     font-size: 1em;
 }
  
-.login-register-page input[type="submit"] {
+.logInRegister input[type="submit"] {
     background-color: var(--detail-color-one);
     border: none;
     margin-top: 1em;
@@ -878,7 +866,7 @@ footer span {
  
 }
  
-.login-register-page form span{
+.logInRegister form span{
     display: flex;
     justify-content: end;
     margin-bottom: -15px;
@@ -950,9 +938,6 @@ footer span {
   background-color: var(--background-color-two);
 }
 
-/* .allEvents section {
-    
-} */
 
 .filter-container {
     display: flex;
@@ -1607,9 +1592,7 @@ h2 {
 }
 
 
-.allEvents section h1{
-  padding: 0 .5em;
-}
+
 
 .card-grid {
   width: 100%;
@@ -1637,9 +1620,7 @@ h2 {
 @media screen and (min-width: 800px) and (max-width: 999px) {
   .card-grid .card-container {
     grid-template-columns: repeat(2, 1fr); /* Twee kolommen op middelgrote schermen */
-    
   }
-
 }
 
 /* Media query voor grotere schermen */
@@ -1658,9 +1639,14 @@ h2 {
 
 @media screen and (max-width: 799px){
   .allEvents .assymetrical-container {
-    padding-left: var(--mobile-margin);
-    display:flex;
+    padding: 0 var(--mobile-margin);
+    display: flex;
     justify-content: center;
     align-items: center;
   }
+  
+  .allEvents .assymetrical-container div {
+    padding-right: 0;
+  }
+  
 }

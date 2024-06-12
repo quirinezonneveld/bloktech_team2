@@ -51,7 +51,7 @@ likeButtons.forEach(likeButton => {
         if (likeButton.classList.contains('liked')) {
             await sleep(2500); 
             likePopup.classList.remove('hiddenVisibility');
-            await sleep(3000); 
+            await sleep(2000); 
             likePopup.classList.add('hiddenVisibility');
         }
    
