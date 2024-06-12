@@ -137,35 +137,7 @@
         <% } %>
     </ul>
 
-          <ul class="card-container hiddenAnimation">
-              <% for (const event of events) { %>
-                <li>
-                  <article class="event-template">
-                    <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
-                    <p>
-                      <%= event.classifications[0].genre.name %>
-                    </p>
-            
-                    <form action="/toggle_favorite" method="POST" class="favorite-form">
-                      <input type="hidden" name="eventId" value="<%= event.id %>">
-                      <button type="submit" class="like-button">
-                        <% if (favoriteEvents.includes(event.id)) { %>
-                          <i class="fa-solid fa-heart liked"></i>
-                        <% } else { %>
-                          <i class="fa-solid fa-heart"></i>
-                        <% } %>
-                      </button>
-                    </form>
-            
-                    <a href="/detail?event_id=<%= event.id %>">
-                      <h5><%= event.name %></h5>
-                      <p><%= event.info %></p>
-                      <p><%= event.dates.start.dateTime %></p>
-                    </a>
-                  </article>
-                </li>
-              <% } %>
-          </ul>
+        
           
           <ul class="card-buttons">
             <li>
