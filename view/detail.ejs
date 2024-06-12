@@ -19,17 +19,15 @@
         <nav class="container">
             <ul>    
 
-
                 <li class="nav-home">
                     <a class="button" href="home" data-type="nav home">
                         <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
                 <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+                    <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -38,6 +36,7 @@
 
             </ul>
             <section class="nav-block">
+              <button class="hamburger" id="hamburger-closing-button">              <i class="fa-solid fa-xmark"></i></button>
             <ul>
                 <li class="nav-all-events"><a href="all-events">All Events</a></li>
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
@@ -58,18 +57,32 @@
                   </a></li>
             </ul>
             </section>
+
             <button class="hamburger" id="hamburger">
-                <i class="fa-solid fa-arrow-right"></i>
+<i class="fa-solid fa-bars"></i></i>
             </button>
-        </nav> 
+        </nav>   
 
         <section class="detail-info">
             <div>
                 <% if (event_details.images && event_details.images[0]) { %>
                     <img src="<%= event_details.images[1].url %>">
                 <% } else { %>
-                    <p>No image available</p>
+                    <p>No image available</p><img src="./error.ejs">
                 <% } %>
+                <section class="links-container">
+                <% if (event_details._embedded && event_details._embedded.attractions && event_details._embedded.attractions[0] && event_details._embedded.attractions[0].externalLinks) { %>
+                    <% const links = event_details._embedded.attractions[0].externalLinks; %>
+                    <% const linkKeys = Object.keys(links); %>
+                    <% linkKeys.forEach(key => { %>
+                      <% links[key].forEach(link => { %>
+                        
+                        <a href="<%= link.url %>"><%= key %></a>
+                      <% }); %>
+                    <% }); %>
+                <% } else { %>
+                    <p>No external links available</p>
+                <% } %></section>
             </div>
         
             <article class="hiddenAnimation">
@@ -202,5 +215,6 @@
     <script src="client.js"></script>
     <script src="hamburger.js"></script>
     <script defer src="card.js"></script>
+    
 </body>
 </html>

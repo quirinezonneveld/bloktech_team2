@@ -103,7 +103,7 @@
               <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
                 <p><%= event.classifications[0].genre.name %></p>
               <% } else { %>
-                <p>Genre not available</p>
+                <p>Genre unknown</p>
               <% } %>
                
               <form action="/toggle_favorite" method="POST" class="favorite-form">
@@ -116,7 +116,7 @@
                   <% } %>
                 </button>
               </form>
-          <a href="<%= event.url %>">
+              <a href="/detail?event_id=<%= event.id %>">
             <h5><%= event.name %></h5>
             <% if (event.info) { %>
               <p><%= event.info %></p>

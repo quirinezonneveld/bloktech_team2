@@ -16,7 +16,7 @@
 
     <header>
         <nav class="container">
-            <ul>
+            <ul>    
 
                 <li class="nav-home">
                     <a class="button" href="home" data-type="nav home">
@@ -24,20 +24,18 @@
                     </a>
                 </li>
                 <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                        <!-- de action moet worden aangepast -->
+                    <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc."
-                            maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                    </form>
+                    </form>                    
                 </li>
 
             </ul>
             <section class="nav-block">
-
+              <button class="hamburger" id="hamburger-closing-button">              <i class="fa-solid fa-xmark"></i></button>
             <ul>
                 <li class="nav-all-events"><a href="all-events">All Events</a></li>
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
@@ -57,12 +55,12 @@
                     <% } %>
                   </a></li>
             </ul>
-
             </section>
+
             <button class="hamburger" id="hamburger">
-                <i class="fa-solid fa-arrow-right"></i>
+<i class="fa-solid fa-bars"></i></i>
             </button>
-        </nav>
+        </nav>  
     </header>
 
     <main class="container">
@@ -213,7 +211,7 @@
 
     </script>
 
-
+<script src="hamburger.js"></script>
 
 
 </body>
