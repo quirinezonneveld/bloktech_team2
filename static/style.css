@@ -780,7 +780,12 @@ footer span {
     margin: 0;
     border: .5px solid #D1D1D1;
 }
- 
+
+@media screen and (max-width: 790px){
+  .logInRegister hr{
+    width: 100%;
+  }
+}
 .form-container {
     display: none;
     margin-top: 2em;
@@ -1526,6 +1531,79 @@ h2 {
     margin: 1em;
     background-color: var(--detail-color-one);
     color: var(--button-color-text);
+  }
+
+  .deleteProfile input{
+    background-color: red;
+  }
+
+  @media (max-width: 520px) {
+    .welcomeProfile {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .welcomeProfile img {
+      width: 10em;
+      height: auto;
+    }
+  
+    .welcome-imageChange {
+      margin: 1em 0;
+      text-align: center;
+    }
+  
+    .profile-navigation {
+      flex-direction: column;
+    }
+  
+    .profile-navigation button {
+      font-size: 1.2em;
+    }
+  
+    .infoDisplay {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .profilePageMain .card-container {
+      flex-direction: column;
+      gap: 2em;
+    }
+  
+    .profilePageMain .card-container article {
+      width: 100%;
+      grid-template-columns: 1em 1fr 1em;
+      grid-template-rows: auto;
+    }
+  
+    .profilePageMain .card-container img {
+      height: auto;
+      border-radius: var(--card-radius);
+    }
+  
+    .profilePageMain .card-container a {
+      grid-area: auto;
+    }
+  
+    .profilePageMain .card-container a h5,
+    .profilePageMain .card-container a p {
+      grid-area: auto;
+      text-align: center;
+    }
+  
+    .profilePageMain .card-buttons {
+      justify-content: center;
+    }
+  
+    .profile_userInfo form {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .unlike-form button {
+      margin: 1em 0;
+    }
   }
 
   .update {
