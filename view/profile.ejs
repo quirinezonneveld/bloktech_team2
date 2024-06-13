@@ -1,52 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Profile</title>
     <link href="style.css" rel="stylesheet">
-</head>
-<body>
-    <header>
-    <nav>
-        <ul>    
-            <li>
-                <a class="active" href="home.ejs">
-                    <img src="assets/logo.png" alt="Logo">
-                    Naam
-                </a>
-            </li>
-            <li>
-                <button>
-                <img src="images/iconSearch2.png" alt="Search">
-                </button>
-                <input type="search" name="q" placeholder="Waar ben je naar op zoek?" maxlength="30" aria-label="Search through site content">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png+xml" href="assets/favicon.png">
 
-                <input type="search" id="site-search" name="q">
-                <button>Search</button>
-            </li>
-                <li><a href="all-events.ejs">All Events</a></li>
-                <li><a href="about-us.ejs">About Us</a></li>
-        </ul>
-        <ul>
-            <li><a href="/form">Sign In</a></li>
-            <li><a href="/profile">Profile</a></li>
-        </ul>
-    </nav>
-</header>
-    
-    <div class="profile">
-        <div class="profile_userInfo">
-            <form action="/upload-profile-picture" method="POST">
-                <input type="file" name="profileImage">
-                <input type="submit" value="Upload Photo">
-            </form>
-            <p>Welcome <%= name %> <%= surname %></p>
-            <p>Email: <%= email %></p>
+
+</head>
+
+<body class="profilePage">
+    <header>
+        <nav class="container">
+            <ul>    
+
+                <li class="nav-home">
+                    <a class="button" href="home" data-type="nav home">
+                        <img src="assets/logo-ticket+2.png" alt="Logo">
+                    </a>
+                </li>
+                <li class="nav-search-bar">
+                    <form id="search-form" action="/all-events" method="get">
+
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <button type="submit">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </form>                    
+                </li>
+
+            </ul>
+            <section class="nav-block">
+              <button class="hamburger" id="hamburger-closing-button">              
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <ul>
+                <li class="nav-all-events"><a href="all-events">All Events</a></li>
+                <li class="nav-about-us"><a href="about-us">About Us</a></li>
+            </ul>
+            <ul>
+                <% if (!isLoggedIn) { %>
+                    <li><a href="form" class="button" data-type="nav">Sign In
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </a></li>
+                <% } %>
+                
+                <li><a href="profile" class="button" data-type="nav">Profile
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
+                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
+                  </a></li>
+            </ul>
+            </section>
+
+            <button class="hamburger" id="hamburger">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </nav> 
+
+    </header>
+
+    <main class="container">
+        <div class="profile">
+            <div class="welcomeProfile">
+                <% if (profileImage) { %>
+                  <img src="<%= profileImage %>" alt="Profile Image">
+                <% } else { %>
+                  <img src="/assets/profile-default.jpg" alt="Default Profile Image">
+                <% } %>
+                <div class="welcome-imageChange">
+                  <h2 class="slideAnimation">Welcome <%= name %>!</h2>
+                  <div class="imageChanger">
+                    <button class="changeImage button" onclick="toggleImageChanger()">Change Image</button>
+                    <div class="imageChangerContent" style="display: none;">
+                      <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="profileImage">
+                        <input type="submit" value="Upload Photo">
+                      </form>
+                      <form action="/delete-profile-picture" method="POST" onsubmit="confirmDeletion(event)">
+                        <input type="submit" value="Delete Photo">
+                      </form>
+                      <button class="button" onclick="toggleImageChanger()">X</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+
+            <div class="profile-navigation hiddenAnimation">
+                <button id="profileButton" onclick="showProfile()">Profile</button>
+                <button id="favoritesButton" onclick="showFavorites()">Favorites</button>
+            </div>
+
+            <div class="profile_userInfo">
+                <div class="infoDisplay">
+                    <p>First name:</p>
+                    <p>
+                        <%= name %>
+                    </p>
+
+                </div>
+                <div class="infoDisplay">
+                    <p> Last name: </p>
+                    <p>
+                        <%= surname %>
+                    </p>
+                </div>
+                <div class="infoDisplay">
+                    <p>Email:</p>
+                    <p>
+                        <%= email %>
+                    </p>
+                </div>
+                <form action="/update" method="GET">
+                    <input type="submit" class="button" value="Change Profile">
+                </form>
+            </div>
         </div>
-    </div>
-    <form action="/signout" method="GET">
-        <input type="submit" value="Sign out">
-    </form>
+
+        <div class="favorite-events">
+            <% if (favoriteEvents && favoriteEvents.length> 0) { %>
+
+                <ul class="card-container">
+                    <% favoriteEvents.forEach(event=> { %>
+                        <li>
+                            <article class="event-template">
+                                <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                                <a href="<%= event.url %>">
+                                    <h5>
+                                        <%= event.name %>
+                                    </h5>
+                                    <p>
+                                        <%= event.info %>
+                                    </p>
+                                    <p>
+                                        <%= event.dates.start.dateTime %>
+                                    </p>
+                                </a>
+                            </article>
+                            <form action="/remove-favorite" method="POST" class="unlike-form">
+                                <input type="hidden" name="eventId" value="<%= event.id %>">
+                                <button type="submit" class="button">Remove</button>
+                            </form>
+
+                        </li>
+                        <% }); %>
+                </ul>
+                <% } else { %>
+                    <p class="no-favourites">No favorite events found.</p>
+                <% } %>
+        </div>
+        <div class="profile__buttons-container">
+            <form class="signOut" action="/signout" method="GET">
+                <input type="submit" class="button" value="Sign out">
+            </form>
+
+            <form class="deleteProfile" action="/delete_profile" method="POST">
+                <input type="submit" class="button" value="Delete Account">
+            </form>
+        </div>
+    </main>
+
+    <footer>
+        <section>
+            <div>
+                <h2>Find your event</h2>
+                <a href="all-events" class="button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+            </div>
+            <ul>
+                <li>
+                    <h6>Navigation</h6>
+                </li>
+                <li><a href="home">Home</a></li>
+                <li><a href="all-events">All Events</a></li>
+                <li><a href="about-us">About Us</a></li>
+                <li><a href="profile">Profile</a></li>
+            </ul>
+            <div>
+                <div>
+                    <h6>Contact</h6>
+                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                </div>
+                <div>
+                    <h6>Based in</h6>
+                    <p>Amsterdam, <br> The Netherlands</p>
+                </div>
+                <address>
+                    <ul>
+                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        </li>
+                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        </li>
+                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                    </ul>
+                </address>
+            </div>
+        </section>
+        <span>©2024 by Ticket+</span>
+    </footer>
+
+    <script src="client.js"></script>
+    <script src="hamburger.js"></script>
+    <script defer src="card.js"></script>
+    <!-- <script src="profile.js"></script> -->
+
+    <script src="showProfile.js"></script>
+    <script src="hamburger.js"></script>
 </body>
+
 </html>
