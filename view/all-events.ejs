@@ -35,15 +35,17 @@
           </form>
         </li>
 
-      </ul>
-      <section class="nav-block">
-        <button class="hamburger" id="hamburger-closing-button"> <i class="fa-solid fa-xmark"></i></button>
-        <ul>
-          <li class="nav-all-events"><a href="all-events">All Events</a></li>
-          <li class="nav-about-us"><a href="about-us">About Us</a></li>
-        </ul>
-        <ul>
-          <% if (!isLoggedIn) { %>
+
+    </ul>
+    <section class="nav-block">
+      <button class="hamburger" id="hamburger-closing-button">              <i class="fa-solid fa-xmark"></i></button>
+    <ul>
+        <li class="nav-all-events active"><a href="all-events">All Events</a></li>
+        <li class="nav-about-us"><a href="about-us">About Us</a></li>
+    </ul>
+    <ul>
+        <% if (!isLoggedIn) { %>
+
             <li><a href="form" class="button" data-type="nav">Sign In
                 <i class="fa-solid fa-arrow-right"></i>
               </a></li>
@@ -226,8 +228,10 @@
 
       <div>
         <div>
+
           <h6>Contact</h6>
           <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+
         </div>
 
         <div>
