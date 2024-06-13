@@ -90,55 +90,55 @@
 
     <main>
         <section class="assymetrical-container hiddenAnimation">
-            <div>
-                <h2 class="slideAnimation">Upcoming</h2>
-                <a href="/all-events">See all</a>
-            </div>
+          <div>
+              <h2 class="slideAnimation">Upcoming</h2>
+              <a href="/all-events">See all</a>
+          </div>
 
-  <ul id="card-container" class="card-container">
-        <% if (events && events.length) { %>
-            <% events.forEach(event => { %>
-        <li>
-          <article class="event-template">
-            <% if (event.images && event.images.length > 0) { %>
-                <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
-              <% } else { %>
-                <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img">
-              <% } %>
-              <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
-                <p><%= event.classifications[0].genre.name %></p>
-              <% } else { %>
-                <p>Genre unknown</p>
-              <% } %>
-               
-              <form action="/toggle_favorite" method="POST" class="favorite-form">
-                <input type="hidden" name="eventId" value="<%= event.id %>">
-                <button type="submit" class="like-button">
-                  <% if (favoriteEvents.includes(event.id)) { %>
-                    <i class="fa-solid fa-heart liked"></i>
-                  <% } else { %>
-                    <i class="fa-solid fa-heart"></i>
-                  <% } %>
-                </button>
-              </form>
-              <a href="/detail?event_id=<%= event.id %>">
-            <h5><%= event.name %></h5>
-            <% if (event.info) { %>
-              <p><%= event.info %></p>
-            <% } %>
-            <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
-              <p><%= event.dates.start.dateTime %></p>
-            <% } else { %>
-              <p>Date not available</p>
-            <% } %>
-          </a>
-          </article>
-        </li>
-        <% }) %>
-        <% } else { %>
-          <li>No events available.</li>
-        <% } %>
-    </ul>
+          <ul id="card-container" class="card-container">
+                <% if (events && events.length) { %>
+                    <% events.forEach(event => { %>
+                <li>
+                  <article class="event-template">
+                    <% if (event.images && event.images.length > 0) { %>
+                        <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                      <% } else { %>
+                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img">
+                      <% } %>
+                      <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
+                        <p><%= event.classifications[0].genre.name %></p>
+                      <% } else { %>
+                        <p>Genre unknown</p>
+                      <% } %>
+                      
+                      <form action="/toggle_favorite" method="POST" class="favorite-form">
+                        <input type="hidden" name="eventId" value="<%= event.id %>">
+                        <button type="submit" class="like-button">
+                          <% if (favoriteEvents.includes(event.id)) { %>
+                            <i class="fa-solid fa-heart liked"></i>
+                          <% } else { %>
+                            <i class="fa-solid fa-heart"></i>
+                          <% } %>
+                        </button>
+                      </form>
+                      <a href="/detail?event_id=<%= event.id %>">
+                    <h5><%= event.name %></h5>
+                    <% if (event.info) { %>
+                      <p><%= event.info %></p>
+                    <% } %>
+                    <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
+                      <p><%= event.dates.start.dateTime %></p>
+                    <% } else { %>
+                      <p>Date not available</p>
+                    <% } %>
+                  </a>
+                  </article>
+                </li>
+                <% }) %>
+                <% } else { %>
+                  <li>No events available.</li>
+                <% } %>
+            </ul>
 
         
           
@@ -219,11 +219,11 @@
 
         <section class="slider">
             <ul>
-                <li><img src="assets/ticket-1.png" alt="Ticket"></li>
-                <li><img src="assets/ticket-2.png" alt="Ticket"></li>
-                <li><img src="assets/ticket-3.png" alt="Ticket"></li>
-                <li><img src="assets/ticket-4.png" alt="Ticket"></li>
-                <li><img src="assets/ticket-1.png" alt="Ticket"></li>
+                <li><img src="assets/ticket-1.png" alt="Ticket Concert"></li>
+                <li><img src="assets/ticket-2.png" alt="Ticket Conference"></li>
+                <li><img src="assets/ticket-3.png" alt="Ticket Festival"></li>
+                <li><img src="assets/ticket-4.png" alt="Ticket Symposium"></li>
+                <li><img src="assets/ticket-1.png" alt="Ticket Concert"></li>
             </ul>
         <section>
 
