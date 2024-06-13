@@ -665,10 +665,10 @@ footer span {
     gap: 5%;
     margin: var(--desktop-margin);
 }
-/* .detail-info div img {
+.detail-info div img {
     width: 30em;
     object-fit: cover;
-} */
+}
 .detail-info div img, .join-event div img {
   border-radius: var(--card-radius);
 }
@@ -724,7 +724,7 @@ footer span {
   margin: var(--desktop-margin);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 975px) {
   .header-homepage div p {
     font-size: var(--font-size-body-small);
   }
