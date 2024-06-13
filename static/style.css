@@ -83,6 +83,7 @@ body {
 h1 {
   font-size: var(--font-size-h1);
   line-height: 1.1;
+  
   /* font-family:Georgia, 'Times New Roman', Times, serif; */
 }
 h2 {
@@ -831,6 +832,7 @@ footer span {
     align-items: center;
     flex-direction: column;
     margin-top:3em;
+    margin-bottom: 3em;
 }
 
  
@@ -854,6 +856,7 @@ footer span {
     border-radius: 5px;
     border: 2px lightgrey solid;
     font-size: 1em;
+    color: black;
 }
  
 .logInRegister input[type="submit"] {
@@ -863,9 +866,12 @@ footer span {
     color: var(--button-color-text);
     width: auto;
     border-radius: var(--button-radius);
+    }
  
+.logInRegister input[type="submit"]:hover{
+  background-color: var(--detail-color-one-hover);
 }
- 
+
 .logInRegister form span{
     display: flex;
     justify-content: end;
@@ -980,6 +986,11 @@ footer span {
     border-radius: 5px;
     align-self: flex-start; /* Align button to the top */
     flex: 0 0 auto; /* Prevent button from growing */
+    border-radius: var(--button-radius);
+}
+
+.filter-container button:hover{
+  background-color: var(--detail-color-one-hover);
 }
 
 @media (max-width: 768px) {
@@ -1185,6 +1196,7 @@ h2 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1000; /* high value to ensure it is on top */
   }
 
   #loader-filter img {
@@ -1305,6 +1317,20 @@ h2 {
     text-decoration: none;
     color: var(--button-color-text);
     border: none;
+}
+
+.imageChangerContent form input{
+  background-color: var(--detail-color-one);
+  padding: var(--button-padding);
+  border-radius: var(--button-radius);
+  text-decoration: none;
+  color: var(--button-color-text);
+  border: none; 
+  margin-bottom: .5em;
+}
+
+.imageChangerContent form input:hover{
+  background-color: var(--detail-color-one-hover);
 }
 
 
@@ -1498,6 +1524,13 @@ h2 {
     margin-bottom: 3em;
   }
 
+  @media screen and (max-width: 1000px){
+    .update {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
   .update div form{
     display: flex;
     flex-direction: column;
@@ -1517,6 +1550,11 @@ h2 {
     margin-top: 1em;
     color: white;
     width: auto;
+    border-radius: var(--button-radius);
+}
+
+.update div form [type="submit"]:hover{
+  background-color: var(--detail-color-one-hover);
 }
 
 .updatePage {
@@ -1581,6 +1619,7 @@ h2 {
 	opacity: 0;
 	transition: opacity 1100ms ease-in;
 }
+
 .slideAnimation {
 	transform: translateX(-10%);
 	transition: transform 800ms ease-in;
@@ -1588,7 +1627,7 @@ h2 {
 
 .show {
 	opacity: 1;
-	transform: translateX(0);
+	transform: translateX(0) !important;
 }
 
 
