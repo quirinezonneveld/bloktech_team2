@@ -170,20 +170,13 @@ header > a:focus {
     100% {opacity: 100;}
 }
 
-
-
 nav {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: space-between;
-  /* display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px; */
   width: 100%;
-  /* position: fixed; */
   z-index: 10;
-  /* border-bottom: 0.1em solid var(--font-color-two); */
 }
 nav ul {
   display: flex;
@@ -239,6 +232,18 @@ nav li:nth-of-type(2) button {
 }
 nav li:nth-of-type(2) button i {
   color: var(--font-color-one);
+}
+
+.nav-block.show {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 2;
+  right: 0;
+  top: 0;
+  padding: 1em;
+  max-width: min-content;
+  background-color: var(--background-color-two);
 }
 
 /* hamburger menu*/
@@ -356,7 +361,6 @@ footer span {
   gap: 3em;
 }
 
-
 /* upcoming */
 .assymetrical-container {
   padding-left: 8em;
@@ -427,8 +431,6 @@ footer span {
   padding: 0.3em 0.8em;
 }
 
-
-
 .card-container a {
   grid-area: 5 / 2 / 10 / 4;
   text-decoration: none;
@@ -446,7 +448,6 @@ footer span {
 .card-container a p:last-of-type {
   grid-area: 9 / 2 / 10 / 3;
   color: var(--font-color-two);
-  /* font-size: var(--font-size-body-small); */
 }
 
 .card-container a * {
@@ -454,8 +455,6 @@ footer span {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-
 
 /* like */
 .card-container .favorite-form {
@@ -479,10 +478,7 @@ footer span {
   cursor: pointer;
 }
 
-
-
 /* like animatie */
-
 .liked-heart::before {
   color: var(--detail-color-one);
   z-index: 10000;
@@ -533,8 +529,6 @@ footer span {
   }
 }
 
-
-
 /* card buttons */
 .card-buttons {
   display: flex;
@@ -570,8 +564,6 @@ footer span {
   animation: fadein 0.5s, fadeout 0.5s 3s;
 }
 
-
-
 /* quote */
 .quote {
   background-color: var(--background-color-two);
@@ -590,7 +582,6 @@ footer span {
   font-size: var(--font-size-quote);
   font-style: italic;
 }
-
 
 /* slider */
 @keyframes slideAnimatie {
@@ -665,9 +656,6 @@ footer span {
   }
 }
 
-
-
-
 /***************/
 /* detail page */
 /***************/
@@ -677,10 +665,10 @@ footer span {
     gap: 5%;
     margin: var(--desktop-margin);
 }
-/* .detail-info div img {
+.detail-info div img {
     width: 30em;
     object-fit: cover;
-} */
+}
 .detail-info div img, .join-event div img {
   border-radius: var(--card-radius);
 }
@@ -736,7 +724,7 @@ footer span {
   margin: var(--desktop-margin);
 }
 
-@media (max-width: 800px) {
+@media (max-width: 975px) {
   .header-homepage div p {
     font-size: var(--font-size-body-small);
   }
@@ -783,16 +771,10 @@ footer span {
   }
 }
 
-
-
-
-
-
-
+/*************************/
 /* login & register page */
 /*************************/
 
- 
 .logInRegister hr{
     width: 50%;
     margin: 0;
@@ -817,7 +799,6 @@ footer span {
 .buttons {
     display: flex;
     gap: 11em;
- 
 }
  
 .logInRegister span {
@@ -842,7 +823,6 @@ footer span {
     margin-bottom: 3em;
 }
 
- 
 .buttons button{
     border: none;
     background-color: transparent;
@@ -886,6 +866,67 @@ footer span {
     margin-top: -10px;
 }
 
+/*All events grid*/
+
+.card-grid {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-grid .card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18em, 1fr)); /* Aanpassen aan de inhoud, met minimale breedte van 18em */
+  gap: 1.5em; /* Aanpassen van de ruimte tussen de grid items */
+}
+
+.card-grid .card-container article {
+  background-color: var(--card-background-color);
+  width: 100%; /* Volledige breedte van de container nemen */
+  border-radius: var(--card-radius);
+  display: grid;
+  grid-template-columns: 1em 6em 1fr 2em 1em;
+  grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
+}
+
+/* Media query voor middelgrote schermen */
+@media screen and (min-width: 800px) and (max-width: 999px) {
+  .card-grid .card-container {
+    grid-template-columns: repeat(2, 1fr); /* Twee kolommen op middelgrote schermen */
+  }
+}
+
+/* Media query voor grotere schermen */
+@media screen and (min-width: 1000px) {
+  .card-grid .card-container {
+    grid-template-columns: repeat(3, 1fr); /* Drie kolommen op grotere schermen */
+  }
+}
+
+/* Media query voor zeer grote schermen */
+@media screen and (min-width: 1400px) {
+  .card-grid .card-container {
+    grid-template-columns: repeat(4, 1fr); /* Vier kolommen op zeer grote schermen */
+  }
+}
+
+@media screen and (max-width: 799px){
+  .allEvents .assymetrical-container {
+    padding: 0 var(--mobile-margin);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .allEvents .assymetrical-container div {
+    padding-right: 0;
+  }
+  
+}
+
+/*All events filter*/
+
 .filter-container form {
   background-color: grey;
   padding: 2em;
@@ -907,8 +948,6 @@ footer span {
   background-color: grey;
 }
 
-
-  
 @media (min-width: 1440px) {
   .container {
     padding: 0 11%;
@@ -927,30 +966,12 @@ footer span {
 
   .header-homepage div:last-of-type {
     display: none;
-    /* evt kleiner weergeven? */
-    /* max-height: 25em;
-          position: relative;
-          top: -6em;
-          left: 10%; */
   }
 
   .nav-block ul {
     flex-direction: column;
   }
 }
-
-.nav-block.show {
-  display: flex;
-  flex-direction: column;
-  position: absolute;
-  z-index: 2;
-  right: 0;
-  top: 0;
-  padding: 1em;
-  max-width: min-content;
-  background-color: var(--background-color-two);
-}
-
 
 .filter-container {
     display: flex;
@@ -1018,14 +1039,9 @@ footer span {
     }
 }
 
-
-.testTile{
-    background-color: grey;
-
-}
-
-
+/*****************/
 /*about us pagina*/
+/*****************/
 .About-us main{
     margin-bottom: 3em;
 }
@@ -1067,8 +1083,6 @@ h2 {
     margin-bottom: 1em;
 }
 
-
-
 /*accordeon functie*/
 .accordeonPlaatsing {
     display:flex;
@@ -1099,12 +1113,11 @@ h2 {
     border-bottom: 0.1em solid var(--card-background-color);
 }
 
-  
   .accordion.active, .accordion:hover {
     background-color: var(--detail-color-one);
     color: white;
   }
-  
+
   .panel {
     padding:18px;
     background-color: transparent;
@@ -1191,9 +1204,7 @@ h2 {
     }
   }
 
-
   /* Loading state */
-
   #loader-filter {
     border-radius: 1em;
     pointer-events: none;
@@ -1294,8 +1305,9 @@ h2 {
   border: none;
   text-decoration: none;
   color: var(--button-color-text);
-
 }
+
+/*profile page*/
 
 .profile {
   margin-top: 3em;
@@ -1314,7 +1326,6 @@ h2 {
   width: 15em;
   height: 100%;
 }
-
 
 .welcome-imageChange{
     margin:2em;
@@ -1343,8 +1354,6 @@ h2 {
   background-color: var(--detail-color-one-hover);
 }
 
-
-
 .profile_userInfo {
     background-color: var(--content-box-background);
     padding: 1em;
@@ -1367,14 +1376,9 @@ h2 {
     border-bottom: 1px solid #D1D1D1;
 }
 
-
-
-
 .profile h2 {
     margin: 20px 0;
 }
-
-
 
 .profile-navigation {
     display: flex;
@@ -1423,14 +1427,12 @@ h2 {
     border: none;    
 }
 
-
 .profilePageMain .card-container {
     display: flex;
     overflow-x: auto;
     gap: 5em;
     list-style-type: none;
     scroll-behavior: smooth;
-    /* scroll-snap-type: x mandatory; */
 }
   .profilePageMain .card-container li {
     scroll-snap-align: center;
@@ -1512,7 +1514,6 @@ h2 {
     background-color: var(--detail-color-one-hover);
   }
   
-
   .unlike-form{
     display:flex;
     justify-content: center;
@@ -1526,7 +1527,6 @@ h2 {
     background-color: var(--detail-color-one);
     color: var(--button-color-text);
   }
-
 
   .update {
     display:flex;
@@ -1644,60 +1644,3 @@ h2 {
 
 
 
-
-.card-grid {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.card-grid .card-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18em, 1fr)); /* Aanpassen aan de inhoud, met minimale breedte van 18em */
-  gap: 1.5em; /* Aanpassen van de ruimte tussen de grid items */
-}
-
-.card-grid .card-container article {
-  background-color: var(--card-background-color);
-  width: 100%; /* Volledige breedte van de container nemen */
-  border-radius: var(--card-radius);
-  display: grid;
-  grid-template-columns: 1em 6em 1fr 2em 1em;
-  grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
-}
-
-/* Media query voor middelgrote schermen */
-@media screen and (min-width: 800px) and (max-width: 999px) {
-  .card-grid .card-container {
-    grid-template-columns: repeat(2, 1fr); /* Twee kolommen op middelgrote schermen */
-  }
-}
-
-/* Media query voor grotere schermen */
-@media screen and (min-width: 1000px) {
-  .card-grid .card-container {
-    grid-template-columns: repeat(3, 1fr); /* Drie kolommen op grotere schermen */
-  }
-}
-
-/* Media query voor zeer grote schermen */
-@media screen and (min-width: 1400px) {
-  .card-grid .card-container {
-    grid-template-columns: repeat(4, 1fr); /* Vier kolommen op zeer grote schermen */
-  }
-}
-
-@media screen and (max-width: 799px){
-  .allEvents .assymetrical-container {
-    padding: 0 var(--mobile-margin);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .allEvents .assymetrical-container div {
-    padding-right: 0;
-  }
-  
-}
