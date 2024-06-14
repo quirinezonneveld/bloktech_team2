@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Change Data</title>
     <link href="style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png+xml" href="assets/favicon.png">
 </head>
 
 <body>
@@ -16,15 +17,14 @@
             <ul>    
 
                 <li class="nav-home">
-                    <a class="active" href="home">
+                    <a class="button" href="home" data-type="nav home">
                         <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
                 <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+                    <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -33,18 +33,21 @@
 
             </ul>
             <section class="nav-block">
+              <button class="hamburger" id="hamburger-closing-button">              
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             <ul>
                 <li class="nav-all-events"><a href="all-events">All Events</a></li>
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
                 <% if (!isLoggedIn) { %>
-                    <li class="nav-sign-in"><a href="form">Sign In
+                    <li><a href="form" class="button" data-type="nav">Sign In
                         <i class="fa-solid fa-arrow-right"></i>
                     </a></li>
                 <% } %>
                 
-                <li class="nav-profile"><a href="profile">Profile
+                <li><a href="profile" class="button" data-type="nav">Profile
                     <% if (profileImage.startsWith('data:image')) { %>
                       <img src="<%= profileImage %>" alt="Profile picture">
                     <% } else { %>
@@ -53,27 +56,28 @@
                   </a></li>
             </ul>
             </section>
+
             <button class="hamburger" id="hamburger">
-                <i class="fa-solid fa-arrow-right"></i>
+                <i class="fa-solid fa-bars"></i>
             </button>
         </nav> 
 
-
     </header>
-    <main class="updatePage">
-        <h1>Updating data</h1>
+    <main class="container">
+        <h1>Changing data</h1>
+        <a class="button" href="/profile"><i class="fa-solid fa-arrow-left"></i> Back to profile</a>
         <!-- VERANDEREN VAN NAAM FORMULIER -->
         <section class="update">
             <div class="changeName">
                 <h2>Change Name</h2>
                 <form action="/update-name" method="POST">
                     <input type="email" id="emailUpdate" name="emailUpdate" placeholder="Email *" required>
-                    <input type="text" id="fNameUpdate" name="fNameUpdate" placeholder="New first name">
-                    <input type="text" id="lNameUpdate" name="lNameUpdate" placeholder="New last name">
+                    <input type="text" id="fNameUpdate" name="fNameUpdate" placeholder="New first name *" required>
+                    <input type="text" id="lNameUpdate" name="lNameUpdate" placeholder="New last name *" required>
 
                     <p><span>*</span> fields are required</p>
 
-                    <input type="submit" value="Update Name">
+                    <input type="submit" value="Change Name">
                 </form>
             </div>
 
@@ -84,12 +88,11 @@
                     <input type="email" id="emailUpdatePw" name="emailUpdate" placeholder="Email *" required>
                     <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password *" required>
                     <input type="password" id="newPassword" name="newPassword" placeholder="New Password *" required>
-                    <input type="password" id="confirmNewPassword" name="confirmNewPassword"
-                        placeholder="Confirm New Password *" required>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm New Password *" required>
 
                     <p><span>*</span> fields are required</p>
 
-                    <input type="submit" value="Update Password">
+                    <input type="submit" value="Change Password">
                 </form>
             </div>
         </section>
@@ -98,7 +101,7 @@
         <section>
             <div>
                 <h2>Find your event</h2>
-                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+                <a href="all-events" class="button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
             </div>
 
             <ul>
@@ -132,6 +135,7 @@
         
         <span>©2024 by Ticket+</span>
     </footer>
+    <script src="hamburger.js"></script>
 </body>
 
 </html>

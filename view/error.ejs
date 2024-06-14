@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Error</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png+xml" href="assets/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
@@ -15,15 +16,14 @@
             <ul>    
 
                 <li class="nav-home">
-                    <a class="active" href="home">
+                    <a class="button" href="home" data-type="nav home">
                         <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
                 <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+                    <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -32,23 +32,36 @@
 
             </ul>
             <section class="nav-block">
+              <button class="hamburger" id="hamburger-closing-button">              
+                <i class="fa-solid fa-xmark"></i>
+              </button>
             <ul>
                 <li class="nav-all-events"><a href="all-events">All Events</a></li>
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
-                    <li class="nav-sign-in"><a href="form">Sign In
+                <% if (!isLoggedIn) { %>
+                    <li><a href="form" class="button" data-type="nav">Sign In
                         <i class="fa-solid fa-arrow-right"></i>
-                    </a></li>    
-                <li class="nav-profile"><a href="profile">Profile
+                    </a></li>
+                <% } %>
+                
+                <% if (isLoggedIn) { %>
+                <li><a href="profile" class="button" data-type="nav">Profile
+                    <% if (profileImage.startsWith('data:image')) { %>
+                      <img src="<%= profileImage %>" alt="Profile picture">
+                    <% } else { %>
                       <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                    <% } %>
                   </a></li>
+                <% } %> 
             </ul>
             </section>
+
             <button class="hamburger" id="hamburger">
-                <i class="fa-solid fa-arrow-right"></i>
+              <i class="fa-solid fa-bars"></i></i>
             </button>
-        </nav> 
+        </nav>  
     </header>
     <main class="error">
         <i class="fa-solid fa-bug"></i>
@@ -60,7 +73,7 @@
         <section>
             <div>
                 <h2>Find your event</h2>
-                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+                <a href="all-events" class="button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
             </div>
             <ul>
                 <li>
@@ -98,5 +111,6 @@
         window.history.back();
         }
     </script>
+    <script src="hamburger.js"></script>
 </body>
 </html>

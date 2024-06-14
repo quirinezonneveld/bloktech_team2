@@ -1,202 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="../style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>All Events</title>
+
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/png+xml" href="assets/favicon.png">
 
 </head>
+
+
 <body class="allEvents">
+  <header>
     <nav class="container">
-            <ul>    
+      <ul>
 
-                <li class="nav-home">
-                    <a class="active" href="home">
-                        <img src="assets/logo-ticket+2.png" alt="Logo">
-                    </a>
-                </li>
-                <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+        <li class="nav-home">
+          <a class="button" href="home" data-type="nav home">
+            <img src="assets/logo-ticket+2.png" alt="Logo">
+          </a>
+        </li>
+        <li class="nav-search-bar">
+          <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
-                        <button type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
-                    </form>                    
-                </li>
+            <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc."
+              maxlength="20" aria-label="Search through site content">
+            <button type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+        </li>
 
-            </ul>
-            <section class="nav-block">
-            <ul>
-                <li class="nav-all-events"><a href="all-events">All Events</a></li>
-                <li class="nav-about-us"><a href="about-us">About Us</a></li>
-            </ul>
-            <ul>
-                <% if (!isLoggedIn) { %>
-                    <li class="nav-sign-in"><a href="form">Sign In
-                        <i class="fa-solid fa-arrow-right"></i>
-                    </a></li>
-                <% } %>
-                
-                <li class="nav-profile"><a href="profile">Profile
+
+    </ul>
+    <section class="nav-block">
+      <button class="hamburger" id="hamburger-closing-button">              <i class="fa-solid fa-xmark"></i></button>
+    <ul>
+        <li class="nav-all-events active"><a href="all-events">All Events</a></li>
+        <li class="nav-about-us"><a href="about-us">About Us</a></li>
+    </ul>
+    <ul>
+        <% if (!isLoggedIn) { %>
+
+            <li><a href="form" class="button" data-type="nav">Sign In
+                <i class="fa-solid fa-arrow-right"></i>
+              </a></li>
+            <% } %>
+
+              <% if (isLoggedIn) { %>
+                <li><a href="profile" class="button" data-type="nav">Profile
                     <% if (profileImage.startsWith('data:image')) { %>
                       <img src="<%= profileImage %>" alt="Profile picture">
-                    <% } else { %>
-                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                    <% } %>
+                      <% } else { %>
+                        <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                        <% } %>
                   </a></li>
-            </ul>
-            </section>
-            <button class="hamburger" id="hamburger">
-                <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </nav> 
-    <section>
-    <h1>All events</h1>
+                <% } %>
+        </ul>
+      </section>
 
-    <div id="loaderDiv"></div>
+      <button class="hamburger" id="hamburger">
+        <i class="fa-solid fa-bars"></i></i>
+      </button>
+    </nav>
+  </header>
+  <main>
+    <section class="container">
+      <h1 class="slideAnimation">All events</h1>
+      <div id="loader-filter">
+        <div class="loader-image"></div>
+        <div class="loader-image-2"></div>
+        <img src="assets/logo-loader.png" alt="Loading">
+      </div>
 
-    <div class="filterDiv">
-        <form action="/submit" method="post">
-            <!-- Datum invoerveld -->
-            <input type="date" id="datum" name="datum">
-    
-            <!-- Segment dropdown -->
-            <select id="segment" name="segment">
-                <option value="" disabled selected>Segment</option>
-                <option value="segment1">Segment 1</option>
-                <option value="segment2">Segment 2</option>
-                <option value="segment3">Segment 3</option>
-            </select>
-    
-            <!-- Genre dropdown -->
-            <select id="genre" name="genre">
-                <option value="" disabled selected>Genre</option>
-                <option value="action">Actie</option>
-                <option value="comedy">Komedie</option>
-                <option value="drama">Drama</option>
-                <option value="horror">Horror</option>
-                <option value="sci-fi">Science Fiction</option>
-            </select>
-    
-            <!-- Regio dropdown -->
-            <select id="regio" name="regio">
-                <option value="" disabled selected>Regio</option>
-                <option value="north">Noord</option>
-                <option value="south">Zuid</option>
-                <option value="east">Oost</option>
-                <option value="west">West</option>
-            </select>
-    
-            <!-- Prijs dropdown -->
-            <select id="price" name="price">
-                <option value="" disabled selected>Price</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
-    
-            <button id="submitButton" type="submit" onclick="handleSubmit(event)">Verzenden</button>
 
+
+
+      <div class="filter-container">
+        <form id="filter-form" onsubmit="handleSubmitFilter(event)">
+          <!-- Datum invoerveld -->
+          <input type="date" id="datum" name="datum" />
+
+          <!-- Segment dropdown -->
+          <select id="classificationName" name="classificationName">
+            <option value="" disabled selected>Segment</option>
+            <option value="Music">Music</option>
+            <option value="Sports">Sports</option>
+            <option value="Arts & Theatre">Arts & Theatre</option>
+            <option value="Film">Film</option>
+            <option value="Miscellaneous">Miscellaneous</option>
+          </select>
+
+          <select id="countryCode" name="countryCode">
+            <option value="" disabled selected>Country</option>
+            <option value="us">US</option>
+            <option value="at">Austria</option>
+            <option value="be">Belgium</option>
+            <option value="de">Germany</option>
+            <option value="nl">Netherlands</option>
+          </select>
+
+          <!-- Genre dropdown -->
+          <select id="genre" name="genre">
+            <option value="" disabled selected>Genre</option>
+            <option value="action">Actie</option>
+            <option value="comedy">Komedie</option>
+            <option value="drama">Drama</option>
+            <option value="horror">Horror</option>
+            <option value="sci-fi">Science Fiction</option>
+          </select>
+
+          <!-- Regio dropdown -->
+          <!-- <select id="regio" name="regio">
+            <option value="" disabled selected>Regio</option>
+            <option value="north">Noord</option>
+            <option value="south">Zuid</option>
+            <option value="east">Oost</option>
+            <option value="west">West</option>
+          </select> -->
+
+          <!-- Prijs dropdown -->
+          <select id="price" name="price">
+            <option value="" disabled selected>Price</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+
+          <button id="submit-filter-button" type="submit">
+            Send
+          </button>
         </form>
-    </div>
+      </div>
+    </section>
 
-    <ul class="card">
-        <li>
-            <article>
-                <img src="assets/card-default.jpg" alt="Event photo">
-                <p>Concert</p>
-                <button>
-                    <i class="fa-solid fa-heart"></i>
-                </button>
-                <a href="detail.ejs">
-                    <h5>Naam artiest</h5>
-                    <p>Informatie over event en artiest...</p>
-                    <p>date</p>
-                </a>
-            </article>
-        </li>
+    <section class="assymetrical-container">
+
+
+      <div class="card-grid">
+        <ul id="card-container" class="card-container hiddenAnimation">
+
+          <% if (events && events.length) { %>
+            <% events.forEach(event=> { %>
+              <li>
+                <article class="event-template">
+                  <% if (event.images && event.images.length> 0) { %>
+                    <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                    <% } else { %>
+                      <img
+                        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ"
+                        alt="Placeholder image" data-src="event-img">
+                      <% } %>
+                        <% if (event.classifications && event.classifications.length> 0 &&
+                          event.classifications[0].genre) { %>
+                          <p>
+                            <%= event.classifications[0].genre.name %>
+                          </p>
+                          <% } else { %>
+                            <p>Genre not available</p>
+                            <% } %>
+
+                              <form action="/toggle_favorite" method="POST" class="favorite-form">
+                                <input type="hidden" name="eventId" value="<%= event.id %>">
+                                <button type="submit" class="like-button">
+                                  <% if (favoriteEvents.includes(event.id)) { %>
+                                    <i class="fa-solid fa-heart liked"></i>
+                                    <% } else { %>
+                                      <i class="fa-solid fa-heart"></i>
+                                      <% } %>
+                                </button>
+                              </form>
+                              <a href="<%= event.url %>">
+                                <h5>
+                                  <%= event.name %>
+                                </h5>
+                                <% if (event.info) { %>
+                                  <p>
+                                    <%= event.info %>
+                                  </p>
+                                  <% } %>
+                                    <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
+                                      <p>
+                                        <%= event.dates.start.dateTime %>
+                                      </p>
+                                      <% } else { %>
+                                        <img
+                                          src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ"
+                                          alt="Placeholder image" data-src="event-img">
+                                        <% } %>
+
+
+
+                              </a>
+                </article>
+              </li>
+              <% }) %>
+                <% } else { %>
+                  <li>No events available.</li>
+                  <% } %>
         </ul>
 
-</section>
-    
-    
+    </section>
 
-    <footer>
-        <section>
-            <div>
-                <h2>Find your event</h2>
-                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
-            </div>
+    <img class="hiddenVisibility liked-popup" src="assets/liked-popup.png" alt="Event added to your favorites">
 
-            <ul>
-                <li><h6>Navigation</h6></li>
-                <li><a href="home">Home</a></li>
-                <li><a href="all-events">All Events</a></li>
-                <li><a href="about-us">About Us</a></li>
-                <li><a href="profile">Profile</a></li>
-            </ul>
+  </main>
+  <footer>
+    <section>
+      <div>
+        <h2>Find your event</h2>
+        <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+      </div>
 
-            <div>
-                <div>
-                    <h6>Contact</h6>
-                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
-                </div>
+      <ul>
+        <li>
+          <h6>Navigation</h6>
+        </li>
+        <li><a href="home">Home</a></li>
+        <li><a href="all-events">All Events</a></li>
+        <li><a href="about-us">About Us</a></li>
+        <li><a href="profile">Profile</a></li>
+      </ul>
 
-                <div>
-                    <h6>Based in</h6>
-                    <p>Amsterdam, <br> The Netherlands</p>
-                </div>
+      <div>
+        <div>
 
-                <address>
-                    <ul>
-                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
-                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
-                    </ul>
-                </address>
-            </div>
-        </section>
-        
-        <span>©2024 by Ticket+</span>
-    </footer>
-    
-    <script>
+          <h6>Contact</h6>
+          <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
 
-function handleSubmit(event) {
-    event.preventDefault(); // Voorkom standaard form submit gedrag
+        </div>
 
-    const submitButton = document.getElementById('submitButton');
-    const loaderDiv = document.getElementById('loaderDiv');
-    
-    submitButton.classList.add("loading");
-    loaderDiv.classList.add("loading"); // Voeg loading class toe aan loader
-    submitButton.disabled = true;
-    submitButton.innerText = "Verzenden..."; // Verander de tekst van de knop
+        <div>
+          <h6>Based in</h6>
+          <p>
+            Amsterdam, <br />
+            The Netherlands
+          </p>
+        </div>
 
-    // Voer hier je logica uit voor het verzenden van het formulier, bijvoorbeeld een fetch-aanroep
-    setTimeout(() => {
-        console.log("Formulier verzonden!");
-        // Hier zou je eventueel de submit van het formulier kunnen forceren:
-        // event.target.submit();
-        
-        // Verwijder loading state nadat logica is uitgevoerd
-        submitButton.classList.remove("loading");
-        loaderDiv.classList.remove("loading");
-        submitButton.innerText = "Verzenden"; // Herstel de tekst van de knop
-        submitButton.disabled = false;
+        <address>
+          <ul>
+            <li>
+              <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+            </li>
+            <li>
+              <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+            </li>
+            <li>
+              <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+            </li>
+          </ul>
+        </address>
+      </div>
+    </section>
 
-        // Voer hier acties uit om naar een andere pagina te gaan of andere bewerkingen uit te voeren
-    }, 2000); // Voeg een vertraging van 2000 milliseconden (2 seconden) toe
-}
+    <span>©2024 by Ticket+</span>
+  </footer>
 
 
-</script>
 
+
+  <script src="client.js"></script>
+  <script src="filterButton.js"></script>
+  <script src="hamburger.js"></script>
+  <script src="card.js"></script>
 </body>
 
 </html>

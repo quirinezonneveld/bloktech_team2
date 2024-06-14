@@ -8,6 +8,7 @@
     <link href="style.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="icon" type="image/png+xml" href="assets/favicon.png">
 
 
 </head>
@@ -15,19 +16,17 @@
 <body class="profilePage">
     <header>
         <nav class="container">
-
-            <ul>
+            <ul>    
 
                 <li class="nav-home">
-                    <a class="active" href="home">
+                    <a class="button" href="home" data-type="nav home">
                         <img src="assets/logo-ticket+2.png" alt="Logo">
                     </a>
                 </li>
                 <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
+                    <form id="search-form" action="/all-events" method="get">
 
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
@@ -36,18 +35,21 @@
 
             </ul>
             <section class="nav-block">
+              <button class="hamburger" id="hamburger-closing-button">              
+                <i class="fa-solid fa-xmark"></i>
+            </button>
             <ul>
                 <li class="nav-all-events"><a href="all-events">All Events</a></li>
                 <li class="nav-about-us"><a href="about-us">About Us</a></li>
             </ul>
             <ul>
                 <% if (!isLoggedIn) { %>
-                    <li class="nav-sign-in"><a href="form">Sign In
+                    <li><a href="form" class="button" data-type="nav">Sign In
                         <i class="fa-solid fa-arrow-right"></i>
                     </a></li>
                 <% } %>
                 
-                <li class="nav-profile"><a href="profile">Profile
+                <li><a href="profile" class="button" data-type="nav">Profile
                     <% if (profileImage.startsWith('data:image')) { %>
                       <img src="<%= profileImage %>" alt="Profile picture">
                     <% } else { %>
@@ -56,44 +58,42 @@
                   </a></li>
             </ul>
             </section>
+
             <button class="hamburger" id="hamburger">
-                <i class="fa-solid fa-arrow-right"></i>
+                <i class="fa-solid fa-bars"></i>
             </button>
         </nav> 
 
     </header>
 
-    <main class="profilePageMain">
+    <main class="container">
         <div class="profile">
             <div class="welcomeProfile">
                 <% if (profileImage) { %>
+                  <img src="<%= profileImage %>" alt="Profile Image">
+                <% } else { %>
+                  <img src="/assets/profile-default.jpg" alt="Default Profile Image">
+                <% } %>
+                <div class="welcome-imageChange">
+                  <h2 class="slideAnimation">Welcome <%= name %>!</h2>
+                  <div class="imageChanger">
+                    <button class="changeImage button" onclick="toggleImageChanger()">Change Image</button>
+                    <div class="imageChangerContent" style="display: none;">
+                      <form action="/upload-profile-picture" method="POST" enctype="multipart/form-data">
+                        <input type="file" name="profileImage">
+                        <input type="submit" value="Upload Photo">
+                      </form>
+                      <form action="/delete-profile-picture" method="POST" onsubmit="confirmDeletion(event)">
+                        <input type="submit" value="Delete Photo">
+                      </form>
+                      <button class="button" onclick="toggleImageChanger()">X</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
 
-                    <img src="<%= profileImage %>" alt="Profile Image">
-
-                    <% } else { %>
-                        <img src="/assets/profile-default.jpg" alt="Default Profile Image">
-                        <% } %>
-                            <div class="welcome-imageChange">
-                                <h2>Welcome <%= name %>!
-                                </h2>
-                                <div class="imageChanger">
-                                    <button class="changeImage" onclick="toggleImageChanger()">Change Image</button>
-                                    <div class="imageChangerContent" style="display: none;">
-                                        <form action="/upload-profile-picture" method="POST"
-                                            enctype="multipart/form-data">
-                                            <input type="file" name="profileImage">
-                                            <input type="submit" value="Upload Photo">
-                                        </form>
-                                        <form action="/delete-profile-picture" method="POST" onsubmit="confirmDeletion(event)">
-                                            <input type="submit" value="Delete Photo">
-                                        </form>
-                                        <button class="cancel" onclick="toggleImageChanger()">X</button>
-                                    </div>
-                                </div>
-                            </div>
-            </div>
-
-            <div class="profile-navigation">
+            <div class="profile-navigation hiddenAnimation">
                 <button id="profileButton" onclick="showProfile()">Profile</button>
                 <button id="favoritesButton" onclick="showFavorites()">Favorites</button>
             </div>
@@ -119,7 +119,7 @@
                     </p>
                 </div>
                 <form action="/update" method="GET">
-                    <input type="submit" value="Update Profile">
+                    <input type="submit" class="button" value="Change Profile">
                 </form>
             </div>
         </div>
@@ -144,29 +144,34 @@
                                     </p>
                                 </a>
                             </article>
-                            <form action="/unlike" method="POST" class="unlike-form">
+                            <form action="/remove-favorite" method="POST" class="unlike-form">
                                 <input type="hidden" name="eventId" value="<%= event.id %>">
-                                <button type="submit" class="remove-favorite-button">Remove</button>
+                                <button type="submit" class="button">Remove</button>
                             </form>
 
                         </li>
                         <% }); %>
                 </ul>
                 <% } else { %>
-                    <p>No favorite events found.</p>
+                    <p class="no-favourites">No favorite events found.</p>
                 <% } %>
         </div>
+        <div class="profile__buttons-container">
+            <form class="signOut" action="/signout" method="GET">
+                <input type="submit" class="button" value="Sign out">
+            </form>
 
-        <form class="signOut" action="/signout" method="GET">
-            <input type="submit" value="Sign out">
-        </form>
+            <form class="deleteProfile" action="/delete_profile" method="POST">
+                <input type="submit" class="button" value="Delete Account">
+            </form>
+        </div>
     </main>
 
     <footer>
         <section>
             <div>
                 <h2>Find your event</h2>
-                <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+                <a href="all-events" class="button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
             </div>
             <ul>
                 <li>
@@ -201,38 +206,12 @@
     </footer>
 
     <script src="client.js"></script>
-    <script src="profile.js"></script>
+    <script src="hamburger.js"></script>
+    <script defer src="card.js"></script>
+    <!-- <script src="profile.js"></script> -->
 
-    <script>
-        function showProfile() {
-            document.querySelector('.profile_userInfo').style.display = 'block';
-            document.querySelector('.favorite-events').style.display = 'none';
-            document.getElementById('profileButton').classList.add('active');
-            document.getElementById('favoritesButton').classList.remove('active');
-        }
-
-        function showFavorites() {
-            document.querySelector('.profile_userInfo').style.display = 'none';
-            document.querySelector('.favorite-events').style.display = 'block';
-            document.getElementById('profileButton').classList.remove('active');
-            document.getElementById('favoritesButton').classList.add('active');
-        }
-
-        function toggleImageChanger() {
-            const changerContent = document.querySelector('.imageChangerContent');
-            const changeButton = document.querySelector('.changeImage');
-            if (changerContent.style.display === 'none') {
-                changerContent.style.display = 'block';
-                changeButton.style.display = 'none';
-            } else {
-                changerContent.style.display = 'none';
-                changeButton.style.display = 'block';
-            }
-        }
-
-        // Default to showing the profile on page load
-        showProfile();
-    </script>
+    <script src="showProfile.js"></script>
+    <script src="hamburger.js"></script>
 </body>
 
 </html>

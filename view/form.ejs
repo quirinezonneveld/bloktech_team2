@@ -1,161 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign in</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="icon" type="image/png+xml" href="assets/favicon.png">
+  </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-</head>
-
-<body class="login-register-page">
-
-
+  <body>
     <header>
-        <nav class="container">
-            <ul>    
+      <nav class="container">
+        <ul>
+          <li class="nav-home">
+            <a class="button" href="home" data-type="nav home">
+              <img src="assets/logo-ticket+2.png" alt="Logo" />
+            </a>
+          </li>
+          <li class="nav-search-bar">
+            <form id="search-form" action="/all-events" method="get">
 
-                <li class="nav-home">
-                    <a class="active" href="home">
-                        <img src="assets/logo-ticket+2.png" alt="Logo">
-                    </a>
-                </li>
-                <li class="nav-search-bar">
-                    <form action="your-action-url" method="get">
-                    <!-- de action moet worden aangepast -->
-
-                        <input type="search" id="site-search" name="q" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
+                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
                         <button type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </button>
-                    </form>                    
-                </li>
-
-            </ul>
-            <section class="nav-block">
-            <ul>
-                <li class="nav-all-events"><a href="all-events">All Events</a></li>
-                <li class="nav-about-us"><a href="about-us">About Us</a></li>
-            </ul>
-            <ul>
-                <li class="nav-sign-in"><a href="form">Sign In
-                    <i class="fa-solid fa-arrow-right"></i>
-                </a></li>
-                <li class="nav-profile"><a href="profile">Profile
-                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
-                </a></li>
-            </ul>
-            </section>
-            <button class="hamburger" id="hamburger">
+                    </form>    
+          </li>
+        </ul>
+        <section class="nav-block">
+          <button class="hamburger" id="hamburger-closing-button">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <ul>
+            <li class="nav-all-events"><a href="all-events">All Events</a></li>
+            <li class="nav-about-us"><a href="about-us">About Us</a></li>
+          </ul>
+          <ul>
+            <% if (!isLoggedIn) { %>
+            <li>
+              <a href="form" class="button" data-type="nav"
+                >Sign In
                 <i class="fa-solid fa-arrow-right"></i>
-            </button>
-        </nav> 
+              </a>
+            </li>
+            <% } %>
+          </ul>
+        </section>
 
+        <button class="hamburger" id="hamburger">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+      </nav>
     </header>
 
-
-<div class="logInRegister">
-    <div class="buttons">
-        <button id="loginBtn">Inloggen</button>
-        <button id="registerBtn">Registreren</button>
-    </div>
-    <hr>
-    <!-- SIGN UP FORM -->
-    <form id="registerForm" class="form-container" action="/registry" method="post">
+    <div class="logInRegister">
+      <div class="buttons">
+        <button id="loginBtn">Sign in</button>
+        <button id="registerBtn">Register</button>
+      </div>
+      <hr />
+      <!-- SIGN UP FORM -->
+      <form
+        id="registerForm"
+        class="form-container"
+        action="/registry"
+        method="post"
+      >
         <span>*</span>
-        <input id="fName" type="text" name="fName" placeholder="First name" required>
+        <input
+          id="fName"
+          type="text"
+          name="fName"
+          placeholder="First name"
+          required
+        />
 
         <span>*</span>
-        <input id="lName" type="text" name="lName" placeholder="Last name">
+        <input id="lName" type="text" name="lName" placeholder="Last name" />
 
         <span>*</span>
-        <input id="emailRegister" type="email" name="emailRegister" placeholder="E-mail" required>
+        <input
+          id="emailRegister"
+          type="email"
+          name="emailRegister"
+          placeholder="E-mail"
+          required
+        />
 
         <span>*</span>
-        <input id="passwordRegister" type="password" name="passwordRegister" placeholder="Password" required>
+        <input
+          id="passwordRegister"
+          type="password"
+          name="passwordRegister"
+          placeholder="Password"
+          required
+        />
+
+        <span>*</span>
+        <input
+          type="password"
+          id="confirmRegisterPassword"
+          name="confirmRegisterPassword"
+          placeholder="Confirm Password *"
+          required
+        />
 
         <p>* Fields are required</p>
 
-        <input type="submit" value="Registreren">
+        <input type="submit" value="Register" />
+      </form>
 
+      <!-- SIGN IN FORM -->
+      <form
+        id="loginForm"
+        class="form-container"
+        action="/signin"
+        method="post"
+      >
+        <input
+          id="emailSignin"
+          type="email"
+          name="emailSignin"
+          placeholder="E-mail"
+          required
+        />
 
-    </form>
+        <input
+          id="passwordSignin"
+          type="password"
+          name="passwordSignin"
+          placeholder="Password"
+          required
+        />
 
+        <input type="submit" value="Sign in" />
+      </form>
+    </div>
 
-    <!-- SIGN IN FORM -->
-    <form id="loginForm" class="form-container" action="/signin" method="post">
-
-        <input id="emailSignin" type="email" name="emailSignin" placeholder="E-mail" required>
-
-        <input id="passwordSignin" type="password" name="passwordSignin" placeholder="Password" required>
-
-        <input type="submit" value="Inloggen">
-    </form>
-</div>
-    <script>
-        document.getElementById('loginBtn').addEventListener('click', function () {
-            document.getElementById('loginForm').classList.add('active');
-            document.getElementById('registerForm').classList.remove('active');
-            document.getElementById('loginBtn').classList.add('active');
-            document.getElementById('registerBtn').classList.remove('active');
-        });
-
-        document.getElementById('registerBtn').addEventListener('click', function () {
-            document.getElementById('registerForm').classList.add('active');
-            document.getElementById('loginForm').classList.remove('active');
-            document.getElementById('registerBtn').classList.add('active');
-            document.getElementById('loginBtn').classList.remove('active');
-        });
-
-        // By default, show the login form and set login button as active
-        document.getElementById('loginForm').classList.add('active');
-        document.getElementById('loginBtn').classList.add('active');
-    </script>
-
-
-    
-<footer>
-    <section>
+    <footer>
+      <section>
         <div>
-            <h2>Find your event</h2>
-            <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+          <h2>Find your event</h2>
+          <a href="all-events" class="button"
+            ><i class="fa-solid fa-magnifying-glass"></i>Search Event</a
+          >
         </div>
 
         <ul>
-            <li><h6>Navigation</h6></li>
-            <li><a href="home">Home</a></li>
-            <li><a href="all-events">All Events</a></li>
-            <li><a href="about-us">About Us</a></li>
-            <li><a href="profile">Profile</a></li>
+          <li><h6>Navigation</h6></li>
+          <li><a href="home">Home</a></li>
+          <li><a href="all-events">All Events</a></li>
+          <li><a href="about-us">About Us</a></li>
+          <li><a href="profile">Profile</a></li>
         </ul>
 
         <div>
-            <div>
-                <h6>Contact</h6>
-                <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
-            </div>
+          <div>
+            <h6>Contact</h6>
+            <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+          </div>
 
-            <div>
-                <h6>Based in</h6>
-                <p>Amsterdam, <br> The Netherlands</p>
-            </div>
+          <div>
+            <h6>Based in</h6>
+            <p>
+              Amsterdam, <br />
+              The Netherlands
+            </p>
+          </div>
 
-            <address>
-                <ul>
-                    <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-                    <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
-                    <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
-                </ul>
-            </address>
+          <address>
+            <ul>
+              <li>
+                <a href="https://instagram.com" target="_blank"
+                  ><i class="fa-brands fa-instagram"></i
+                ></a>
+              </li>
+              <li>
+                <a href="https://facebook.com" target="_blank"
+                  ><i class="fa-brands fa-facebook"></i
+                ></a>
+              </li>
+              <li>
+                <a href="https://youtube.com" target="_blank"
+                  ><i class="fa-brands fa-youtube"></i
+                ></a>
+              </li>
+            </ul>
+          </address>
         </div>
-    </section>
-    
-    <span>©2024 by Ticket+</span>
-</footer>
+      </section>
 
-</body>
+      <span>©2024 by Ticket+</span>
+    </footer>
+    <script src="hamburger.js"></script>
+    <script src="showLogin.js"></script>
 
+  </body>
 </html>
