@@ -846,7 +846,7 @@ footer span {
     color: black;
 }
  
-.logInRegister input[type="submit"] {
+.logInRegister input[type='submit'] {
     background-color: var(--detail-color-one);
     border: none;
     margin-top: 1em;
@@ -855,7 +855,7 @@ footer span {
     border-radius: var(--button-radius);
     }
  
-.logInRegister input[type="submit"]:hover{
+.logInRegister input[type='submit']:hover{
   background-color: var(--detail-color-one-hover);
 }
 
@@ -1239,11 +1239,13 @@ h2 {
   }
 
   .loader-image {
-    background-image: url("https://s1.ticketm.net/dam/a/e8c/5265b9d2-a06c-4dc8-a432-a8dd9d042e8c_SOURCE");
+    background-image: url('https://s1.ticketm.net/dam/a/e8c/5265b9d2-a06c-4dc8-a432-a8dd9d042e8c_SOURCE');
   }
 
   .loader-image-2 {
+
     background-image: url("https://s1.ticketm.net/dam/a/b37/f62cde9b-e0b9-4791-8d0b-929f42b7bb37_1325001_RETINA_LANDSCAPE_16_9.jpg"); 
+
   }
 
   @keyframes move {
@@ -1411,7 +1413,7 @@ h2 {
   font-weight: bold;
 }
 
-.signOut [type="submit"]{
+.signOut [type='submit']{
     background-color: var(--detail-color-one);
     padding: var(--button-padding);
     border-radius: var(--button-radius);
@@ -1620,7 +1622,7 @@ h2 {
     margin: .5em;
 }
 
-.update div form [type="submit"]{
+.update div form [type='submit']{
     background-color: #FF6000;
     border: none;
     margin-top: 1em;
@@ -1629,7 +1631,7 @@ h2 {
     border-radius: var(--button-radius);
 }
 
-.update div form [type="submit"]:hover{
+.update div form [type='submit']:hover{
   background-color: var(--detail-color-one-hover);
 }
 
@@ -1651,7 +1653,7 @@ h2 {
   cursor: pointer;
 }
 
-.button[data-type~="nav"] {
+.button[data-type~='nav'] {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1663,7 +1665,7 @@ h2 {
   color: var(--button-color-text);
 }
 
-.button[data-type="nav"]:not([data-type~="home"]) img {
+.button[data-type='nav']:not([data-type~='home']) img {
   border-radius: 100em;
   width: 1.5em;
 }

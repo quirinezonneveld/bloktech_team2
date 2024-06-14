@@ -1,85 +1,86 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Detail</title>
-    <link rel="icon" type="image/png+xml" href="assets/favicon.png">
-    <link href="style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel='icon' type='image/png+xml' href='assets/favicon.png'>
+    <link href='style.css' rel='stylesheet'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap' rel='stylesheet'>
     
 </head>
 <body>
     <header>
 
-        <a href="#main-content">Skip to main content</a>
+        <a href='#main-content'>Skip to main content</a>
 
-        <nav class="container">
+        <nav class='container'>
             <ul>    
 
-                <li class="nav-home">
-                    <a class="button" href="home" data-type="nav home">
-                        <img src="assets/logo-ticket+2.png" alt="Logo">
+                <li class='nav-home'>
+                    <a class='button' href='home' data-type='nav home'>
+                        <img src='assets/logo-ticket+2.png' alt='Logo'>
                     </a>
                 </li>
-                <li class="nav-search-bar">
-                    <form id="search-form" action="/all-events" method="get">
+                <li class='nav-search-bar'>
+                    <form id='search-form' action='/all-events' method='get'>
 
-                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
-                        <button type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type='search' id='site-search' name='keyword' placeholder='Search: event, artist, date etc.' maxlength='20' aria-label='Search through site content'>
+                        <button type='submit'>
+                            <i class='fa-solid fa-magnifying-glass'></i>
                         </button>
                     </form>                    
                 </li>
 
             </ul>
-            <section class="nav-block">
-              <button class="hamburger" id="hamburger-closing-button">              <i class="fa-solid fa-xmark"></i></button>
+            <section class='nav-block'>
+              <button class='hamburger' id='hamburger-closing-button'>              <i class='fa-solid fa-xmark'></i></button>
             <ul>
-                <li class="nav-all-events"><a href="all-events">All Events</a></li>
-                <li class="nav-about-us"><a href="about-us">About Us</a></li>
+                <li class='nav-all-events'><a href='all-events'>All Events</a></li>
+                <li class='nav-about-us'><a href='about-us'>About Us</a></li>
             </ul>
             <ul>
                 <% if (!isLoggedIn) { %>
-                    <li><a href="form" class="button" data-type="nav">Sign In
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <li><a href='form' class='button' data-type='nav'>Sign In
+                        <i class='fa-solid fa-arrow-right'></i>
                     </a></li>
                 <% } %>
                 
                 <% if (isLoggedIn) { %>
-                    <li><a href="profile" class="button" data-type="nav">Profile
+                    <li><a href='profile' class='button' data-type='nav'>Profile
                         <% if (profileImage.startsWith('data:image')) { %>
-                          <img src="<%= profileImage %>" alt="Profile picture">
+                          <img src='<%= profileImage %>' alt='Profile picture'>
                         <% } else { %>
-                          <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                          <img src='assets/profile-default.jpg' alt='Default Profile picture'>
                         <% } %>
                       </a></li>
                 <% } %>
             </ul>
             </section>
 
-            <button class="hamburger" id="hamburger">
-<i class="fa-solid fa-bars"></i></i>
+
+            <button class='hamburger' id='hamburger'>
+                <i class='fa-solid fa-bars'></i>
             </button>
         </nav>   
 
-        <section class="detail-info">
-            <div class="hiddenAnimation">
+        <section class='detail-info'>
+            <div class='hiddenAnimation'>
                 <% if (event_details.images && event_details.images[0]) { %>
-                    <img src="<%= event_details.images[1].url %>">
+                    <img src='<%= event_details.images[1].url %>'>
                 <% } else { %>
-                    <p>No image available</p><img src="./error.ejs">
+                    <p>No image available</p><img src='./error.ejs'>
                 <% } %>
-                <section class="links-container">
+                <section class='links-container'>
                 <% if (event_details._embedded && event_details._embedded.attractions && event_details._embedded.attractions[0] && event_details._embedded.attractions[0].externalLinks) { %>
                     <% const links = event_details._embedded.attractions[0].externalLinks; %>
                     <% const linkKeys = Object.keys(links); %>
                     <% linkKeys.forEach(key => { %>
                       <% links[key].forEach(link => { %>
                         
-                        <a href="<%= link.url %>"><%= key %></a>
+                        <a href='<%= link.url %>'><%= key %></a>
                       <% }); %>
                     <% }); %>
                 <% } else { %>
@@ -87,12 +88,12 @@
                 <% } %></section>
             </div>
         
-            <article class="hiddenAnimation">
-                <h1 class="slideAnimation"><%= event_details.name || 'No name available' %></h1>
+            <article class='hiddenAnimation'>
+                <h1 class='slideAnimation'><%= event_details.name || 'No name available' %></h1>
                 <p><%= event_details.dates && event_details.dates.start ? event_details.dates.start.localDate : 'No date available' %></p>
                 <p><%= event_details.info || 'No information available' %></p>
         
-                <ul class="hiddenAnimation">
+                <ul class='hiddenAnimation'>
                     <li>
                         <p>Status: <%= event_details.dates && event_details.dates.status ? event_details.dates.status.code : 'No status available' %></p>
                     </li>
@@ -110,7 +111,7 @@
                     </li>
                     <li>
                         <% if (event_details.url) { %>
-                            <a href="<%= event_details.url %>">Get tickets</a>
+                            <a href='<%= event_details.url %>'>Get tickets</a>
                         <% } else { %>
                             <p>No ticket link available</p>
                         <% } %>
@@ -120,15 +121,15 @@
         </section>
     </header>
     <main>
-        <section class="join-event">
-            <h2 class="slideAnimation">Decide to join the event</h2>
-            <p class="hiddenAnimation">Be part of an amazing experience. Discover, engage, and enjoy the best moments with us. Don&#39;t miss out!</p>
+        <section class='join-event'>
+            <h2 class='slideAnimation'>Decide to join the event</h2>
+            <p class='hiddenAnimation'>Be part of an amazing experience. Discover, engage, and enjoy the best moments with us. Don&#39;t miss out!</p>
 
-            <div class="hiddenAnimation">
-                <img src="assets/detail-concert.jpeg">
+            <div class='hiddenAnimation'>
+                <img src='assets/detail-concert.jpeg'>
 
                 <% if (event_details.url) { %>
-                    <a href="<%= event_details.url %>">Get tickets</a>
+                    <a href='<%= event_details.url %>'>Get tickets</a>
                 <% } else { %>
                     <p>No ticket link available</p>
                 <% } %>
@@ -136,25 +137,25 @@
 
         </section>
 
-        <section class="detail-faq">
-        <h2 class="slideAnimation">FAQ</h2>
-            <div class="accordeonPlaatsing hiddenAnimation"> 
-                <div class="accordeon">
-                    <button class="accordion">Zijn mijn favoriete evenementen privé?</button>
-                    <div class="panel">
+        <section class='detail-faq'>
+        <h2 class='slideAnimation'>FAQ</h2>
+            <div class='accordeonPlaatsing hiddenAnimation'> 
+                <div class='accordeon'>
+                    <button class='accordion'>Zijn mijn favoriete evenementen privé?</button>
+                    <div class='panel'>
                         <p>Ja, jouw favorietenlijst is privé en alleen jij hebt toegang tot deze informatie. We delen
                             jouw favoriete evenementen niet met anderen.</p>
                     </div>
 
-                    <button class="accordion">Hoe kan ik een evenement aan mijn favorieten toevoegen?</button>
-                    <div class="panel">
-                        <p>Het is heel eenvoudig! Wanneer je een evenement bekijkt, zoek dan naar de "Toevoegen aan
-                            Favorieten" knop naast de eventinformatie. Klik erop en het evenement wordt aan jouw
+                    <button class='accordion'>Hoe kan ik een evenement aan mijn favorieten toevoegen?</button>
+                    <div class='panel'>
+                        <p>Het is heel eenvoudig! Wanneer je een evenement bekijkt, zoek dan naar de 'Toevoegen aan
+                            Favorieten' knop naast de eventinformatie. Klik erop en het evenement wordt aan jouw
                             favorietenlijst toegevoegd.</p>
                     </div>
 
-                    <button class="accordion">Hoe vaak wordt de evenementenkalender bijgewerkt?</button>
-                    <div class="panel">
+                    <button class='accordion'>Hoe vaak wordt de evenementenkalender bijgewerkt?</button>
+                    <div class='panel'>
                         <p>We begrijpen hoe belangrijk het is om altijd up-to-date te blijven! Daarom streven we ernaar
                             onze evenementenkalender zo snel mogelijk bij te werken zodra nieuwe informatie beschikbaar
                             is. Ons team zet zich in om ervoor te zorgen dat je altijd de meest nauwkeurige en actuele
@@ -164,8 +165,8 @@
             </div>
         </section>
 
-        <div class="info-nav">
-            <img src="assets/iconCheck2.svg" alt="check">
+        <div class='info-nav'>
+            <img src='assets/iconCheck2.svg' alt='check'>
             <p></p>
         </div>
     </main>
@@ -174,21 +175,21 @@
         <section>
             <div>
                 <h2>Find your event</h2>
-                <a href="all-events" class="button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+                <a href='all-events' class='button'><i class='fa-solid fa-magnifying-glass'></i>Search Event</a>
             </div>
 
             <ul>
                 <li><h6>Navigation</h6></li>
-                <li><a href="home">Home</a></li>
-                <li><a href="all-events">All Events</a></li>
-                <li><a href="about-us">About Us</a></li>
-                <li><a href="profile">Profile</a></li>
+                <li><a href='home'>Home</a></li>
+                <li><a href='all-events'>All Events</a></li>
+                <li><a href='about-us'>About Us</a></li>
+                <li><a href='profile'>Profile</a></li>
             </ul>
 
             <div>
                 <div>
                     <h6>Contact</h6>
-                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                    <a href='mailto:ticket@ticketplus.com'>ticket@ticketplus.com</a>
                 </div>
 
                 <div>
@@ -198,9 +199,9 @@
 
                 <address>
                     <ul>
-                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a></li>
-                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                        <li><a href='https://instagram.com' target='_blank'><i class='fa-brands fa-instagram'></i></a></li>
+                        <li><a href='https://facebook.com' target='_blank'><i class='fa-brands fa-facebook'></i></a></li>
+                        <li><a href='https://youtube.com' target='_blank'><i class='fa-brands fa-youtube'></i></a></li>
                     </ul>
                 </address>
             </div>
@@ -210,9 +211,9 @@
     </footer>
 
 
-    <script src="client.js"></script>
-    <script src="hamburger.js"></script>
-    <script defer src="card.js"></script>
+    <script src='client.js'></script>
+    <script src='hamburger.js'></script>
+    <script defer src='card.js'></script>
     
 </body>
 </html>

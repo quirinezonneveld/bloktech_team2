@@ -1,81 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset='UTF-8' />
+  <meta name='viewport' content='width=device-width, initial-scale=1.0' />
   <title>All Events</title>
 
-  <link rel="stylesheet" href="../style.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="icon" type="image/png+xml" href="assets/favicon.png">
+  <link rel='stylesheet' href='../style.css' />
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'>
+  <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap' rel='stylesheet'>
+  <link rel='icon' type='image/png+xml' href='assets/favicon.png'>
 
 </head>
 
 
-<body class="allEvents">
+<body class='allEvents'>
   <header>
-    <nav class="container">
+    <nav class='container'>
       <ul>
 
-        <li class="nav-home">
-          <a class="button" href="home" data-type="nav home">
-            <img src="assets/logo-ticket+2.png" alt="Logo">
+        <li class='nav-home'>
+          <a class='button' href='home' data-type='nav home'>
+            <img src='assets/logo-ticket+2.png' alt='Logo'>
           </a>
         </li>
-        <li class="nav-search-bar">
-          <form id="search-form" action="/all-events" method="get">
+        <li class='nav-search-bar'>
+          <form id='search-form' action='/all-events' method='get'>
 
-            <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc."
-              maxlength="20" aria-label="Search through site content">
-            <button type="submit">
-              <i class="fa-solid fa-magnifying-glass"></i>
+            <input type='search' id='site-search' name='keyword' placeholder='Search: event, artist, date etc.'
+              maxlength='20' aria-label='Search through site content'>
+            <button type='submit'>
+              <i class='fa-solid fa-magnifying-glass'></i>
             </button>
           </form>
         </li>
 
 
     </ul>
-    <section class="nav-block">
-      <button class="hamburger" id="hamburger-closing-button">              <i class="fa-solid fa-xmark"></i></button>
+    <section class='nav-block'>
+      <button class='hamburger' id='hamburger-closing-button'>              <i class='fa-solid fa-xmark'></i></button>
     <ul>
-        <li class="nav-all-events active"><a href="all-events">All Events</a></li>
-        <li class="nav-about-us"><a href="about-us">About Us</a></li>
+        <li class='nav-all-events active'><a href='all-events'>All Events</a></li>
+        <li class='nav-about-us'><a href='about-us'>About Us</a></li>
     </ul>
     <ul>
         <% if (!isLoggedIn) { %>
 
-            <li><a href="form" class="button" data-type="nav">Sign In
-                <i class="fa-solid fa-arrow-right"></i>
+            <li><a href='form' class='button' data-type='nav'>Sign In
+                <i class='fa-solid fa-arrow-right'></i>
               </a></li>
             <% } %>
 
               <% if (isLoggedIn) { %>
-                <li><a href="profile" class="button" data-type="nav">Profile
+                <li><a href='profile' class='button' data-type='nav'>Profile
                     <% if (profileImage.startsWith('data:image')) { %>
-                      <img src="<%= profileImage %>" alt="Profile picture">
+                      <img src='<%= profileImage %>' alt='Profile picture'>
                       <% } else { %>
-                        <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                        <img src='assets/profile-default.jpg' alt='Default Profile picture'>
                         <% } %>
                   </a></li>
                 <% } %>
         </ul>
       </section>
 
-      <button class="hamburger" id="hamburger">
-        <i class="fa-solid fa-bars"></i></i>
+      <button class='hamburger' id='hamburger'>
+        <i class='fa-solid fa-bars'></i></i>
       </button>
     </nav>
   </header>
   <main>
-    <section class="container">
-      <h1 class="slideAnimation">All events</h1>
-      <div id="loader-filter">
-        <div class="loader-image"></div>
-        <div class="loader-image-2"></div>
-        <img src="assets/logo-loader.png" alt="Loading">
+    <section class='container'>
+      <h1 class='slideAnimation'>All events</h1>
+      <div id='loader-filter'>
+        <div class='loader-image'></div>
+        <div class='loader-image-2'></div>
+        <img src='assets/logo-loader.png' alt='Loading'>
       </div>
+
 
 
 
@@ -91,16 +92,18 @@
             <option value="Arts & Theatre">Arts & Theatre</option>
             <option value="Film">Film</option>
             <option value="Miscellaneous">Miscellaneous</option>
+
           </select>
 
-          <select id="countryCode" name="countryCode">
-            <option value="" disabled selected>Country</option>
-            <option value="us">US</option>
-            <option value="at">Austria</option>
-            <option value="be">Belgium</option>
-            <option value="de">Germany</option>
-            <option value="nl">Netherlands</option>
+          <select id='countryCode' name='countryCode'>
+            <option value=' disabled selected>Country</option>
+            <option value='us'>US</option>
+            <option value='at'>Austria</option>
+            <option value='be'>Belgium</option>
+            <option value='de'>Germany</option>
+            <option value='nl'>Netherlands</option>
           </select>
+
 
           <select id="genre" name="genre">
             <option value="" disabled selected>Genre</option>
@@ -116,31 +119,32 @@
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
+
           </select>
 
-          <button id="submit-filter-button" type="submit">
+          <button id='submit-filter-button' type='submit'>
             Send
           </button>
         </form>
       </div>
     </section>
 
-    <section class="assymetrical-container">
+    <section class='assymetrical-container'>
 
 
-      <div class="card-grid">
-        <ul id="card-container" class="card-container hiddenAnimation">
+      <div class='card-grid'>
+        <ul id='card-container' class='card-container hiddenAnimation'>
 
           <% if (events && events.length) { %>
             <% events.forEach(event=> { %>
               <li>
-                <article class="event-template">
+                <article class='event-template'>
                   <% if (event.images && event.images.length> 0) { %>
-                    <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img">
+                    <img src='<%= event.images[0].url %>' alt='Event photo' data-src='event-img'>
                     <% } else { %>
                       <img
-                        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ"
-                        alt="Placeholder image" data-src="event-img">
+                        src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ'
+                        alt='Placeholder image' data-src='event-img'>
                       <% } %>
                         <% if (event.classifications && event.classifications.length> 0 &&
                           event.classifications[0].genre) { %>
@@ -151,17 +155,17 @@
                             <p>Genre not available</p>
                             <% } %>
 
-                              <form action="/toggle_favorite" method="POST" class="favorite-form">
-                                <input type="hidden" name="eventId" value="<%= event.id %>">
-                                <button type="submit" class="like-button">
+                              <form action='/toggle_favorite' method='POST' class='favorite-form'>
+                                <input type='hidden' name='eventId' value='<%= event.id %>'>
+                                <button type='submit' class='like-button'>
                                   <% if (favoriteEvents.includes(event.id)) { %>
-                                    <i class="fa-solid fa-heart liked"></i>
+                                    <i class='fa-solid fa-heart liked'></i>
                                     <% } else { %>
-                                      <i class="fa-solid fa-heart"></i>
+                                      <i class='fa-solid fa-heart'></i>
                                       <% } %>
                                 </button>
                               </form>
-                              <a href="<%= event.url %>">
+                              <a href='<%= event.url %>'>
                                 <h5>
                                   <%= event.name %>
                                 </h5>
@@ -176,8 +180,8 @@
                                       </p>
                                       <% } else { %>
                                         <img
-                                          src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ"
-                                          alt="Placeholder image" data-src="event-img">
+                                          src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ'
+                                          alt='Placeholder image' data-src='event-img'>
                                         <% } %>
 
 
@@ -193,31 +197,32 @@
 
     </section>
 
-    <img class="hiddenVisibility liked-popup" src="assets/liked-popup.png" alt="Event added to your favorites">
+    <img class='hiddenVisibility liked-popup' src='assets/liked-popup.png' alt='Event added to your favorites'>
 
   </main>
   <footer>
     <section>
       <div>
         <h2>Find your event</h2>
-        <a href="all-events" class="cta-button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+        <a href='all-events' class='cta-button'><i class='fa-solid fa-magnifying-glass'></i>Search Event</a>
+
       </div>
 
       <ul>
         <li>
           <h6>Navigation</h6>
         </li>
-        <li><a href="home">Home</a></li>
-        <li><a href="all-events">All Events</a></li>
-        <li><a href="about-us">About Us</a></li>
-        <li><a href="profile">Profile</a></li>
+        <li><a href='home'>Home</a></li>
+        <li><a href='all-events'>All Events</a></li>
+        <li><a href='about-us'>About Us</a></li>
+        <li><a href='profile'>Profile</a></li>
       </ul>
 
       <div>
         <div>
 
           <h6>Contact</h6>
-          <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+          <a href='mailto:ticket@ticketplus.com'>ticket@ticketplus.com</a>
 
         </div>
 
@@ -232,13 +237,13 @@
         <address>
           <ul>
             <li>
-              <a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+              <a href='https://instagram.com' target='_blank'><i class='fa-brands fa-instagram'></i></a>
             </li>
             <li>
-              <a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+              <a href='https://facebook.com' target='_blank'><i class='fa-brands fa-facebook'></i></a>
             </li>
             <li>
-              <a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a>
+              <a href='https://youtube.com' target='_blank'><i class='fa-brands fa-youtube'></i></a>
             </li>
           </ul>
         </address>
@@ -251,10 +256,10 @@
 
 
 
-  <script src="client.js"></script>
-  <script src="filterButton.js"></script>
-  <script src="hamburger.js"></script>
-  <script src="card.js"></script>
+  <script src='client.js'></script>
+  <script src='filterButton.js'></script>
+  <script src='hamburger.js'></script>
+  <script src='card.js'></script>
 </body>
 
 </html>

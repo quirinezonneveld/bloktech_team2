@@ -1,93 +1,93 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <title>Error</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png+xml" href="assets/favicon.png">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel='stylesheet' href='style.css'>
+    <link rel='icon' type='image/png+xml' href='assets/favicon.png'>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap' rel='stylesheet'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css'>
 
 </head>
 <body>
     <header>
-        <nav class="container">
+        <nav class='container'>
             <ul>    
 
-                <li class="nav-home">
-                    <a class="button" href="home" data-type="nav home">
-                        <img src="assets/logo-ticket+2.png" alt="Logo">
+                <li class='nav-home'>
+                    <a class='button' href='home' data-type='nav home'>
+                        <img src='assets/logo-ticket+2.png' alt='Logo'>
                     </a>
                 </li>
-                <li class="nav-search-bar">
-                    <form id="search-form" action="/all-events" method="get">
+                <li class='nav-search-bar'>
+                    <form id='search-form' action='/all-events' method='get'>
 
-                        <input type="search" id="site-search" name="keyword" placeholder="Search: event, artist, date etc." maxlength="20" aria-label="Search through site content">
-                        <button type="submit">
-                            <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type='search' id='site-search' name='keyword' placeholder='Search: event, artist, date etc.' maxlength='20' aria-label='Search through site content'>
+                        <button type='submit'>
+                            <i class='fa-solid fa-magnifying-glass'></i>
                         </button>
                     </form>                    
                 </li>
 
             </ul>
-            <section class="nav-block">
-              <button class="hamburger" id="hamburger-closing-button">              
-                <i class="fa-solid fa-xmark"></i>
+            <section class='nav-block'>
+              <button class='hamburger' id='hamburger-closing-button'>              
+                <i class='fa-solid fa-xmark'></i>
               </button>
             <ul>
-                <li class="nav-all-events"><a href="all-events">All Events</a></li>
-                <li class="nav-about-us"><a href="about-us">About Us</a></li>
+                <li class='nav-all-events'><a href='all-events'>All Events</a></li>
+                <li class='nav-about-us'><a href='about-us'>About Us</a></li>
             </ul>
             <ul>
                 <% if (!isLoggedIn) { %>
-                    <li><a href="form" class="button" data-type="nav">Sign In
-                        <i class="fa-solid fa-arrow-right"></i>
+                    <li><a href='form' class='button' data-type='nav'>Sign In
+                        <i class='fa-solid fa-arrow-right'></i>
                     </a></li>
                 <% } %>
                 
                 <% if (isLoggedIn) { %>
-                <li><a href="profile" class="button" data-type="nav">Profile
+                <li><a href='profile' class='button' data-type='nav'>Profile
                     <% if (profileImage.startsWith('data:image')) { %>
-                      <img src="<%= profileImage %>" alt="Profile picture">
+                      <img src='<%= profileImage %>' alt='Profile picture'>
                     <% } else { %>
-                      <img src="assets/profile-default.jpg" alt="Default Profile picture">
+                      <img src='assets/profile-default.jpg' alt='Default Profile picture'>
                     <% } %>
                   </a></li>
                 <% } %> 
             </ul>
             </section>
 
-            <button class="hamburger" id="hamburger">
-              <i class="fa-solid fa-bars"></i></i>
+            <button class='hamburger' id='hamburger'>
+              <i class='fa-solid fa-bars'></i></i>
             </button>
         </nav>  
     </header>
-    <main class="error">
-        <i class="fa-solid fa-bug"></i>
+    <main class='error'>
+        <i class='fa-solid fa-bug'></i>
         <h1><%= errorCode %> Error</h1>
         <p><%= errorMessage %></p>
-        <button class="button" onclick="goBack()">Go Back</button>
+        <button class='button' onclick='goBack()'>Go Back</button>
     </main>
     <footer>
         <section>
             <div>
                 <h2>Find your event</h2>
-                <a href="all-events" class="button"><i class="fa-solid fa-magnifying-glass"></i>Search Event</a>
+                <a href='all-events' class='button'><i class='fa-solid fa-magnifying-glass'></i>Search Event</a>
             </div>
             <ul>
                 <li>
                     <h6>Navigation</h6>
                 </li>
-                <li><a href="home">Home</a></li>
-                <li><a href="all-events">All Events</a></li>
-                <li><a href="about-us">About Us</a></li>
-                <li><a href="profile">Profile</a></li>
+                <li><a href='home'>Home</a></li>
+                <li><a href='all-events'>All Events</a></li>
+                <li><a href='about-us'>About Us</a></li>
+                <li><a href='profile'>Profile</a></li>
             </ul>
             <div>
                 <div>
                     <h6>Contact</h6>
-                    <a href="mailto:ticket@ticketplus.com">ticket@ticketplus.com</a>
+                    <a href='mailto:ticket@ticketplus.com'>ticket@ticketplus.com</a>
                 </div>
                 <div>
                     <h6>Based in</h6>
@@ -95,11 +95,11 @@
                 </div>
                 <address>
                     <ul>
-                        <li><a href="https://instagram.com" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                        <li><a href='https://instagram.com' target='_blank'><i class='fa-brands fa-instagram'></i></a>
                         </li>
-                        <li><a href="https://facebook.com" target="_blank"><i class="fa-brands fa-facebook"></i></a>
+                        <li><a href='https://facebook.com' target='_blank'><i class='fa-brands fa-facebook'></i></a>
                         </li>
-                        <li><a href="https://youtube.com" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                        <li><a href='https://youtube.com' target='_blank'><i class='fa-brands fa-youtube'></i></a></li>
                     </ul>
                 </address>
             </div>
@@ -111,6 +111,6 @@
         window.history.back();
         }
     </script>
-    <script src="hamburger.js"></script>
+    <script src='hamburger.js'></script>
 </body>
 </html>
