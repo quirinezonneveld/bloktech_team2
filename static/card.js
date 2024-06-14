@@ -106,8 +106,8 @@ elementsToObserve.forEach((element) => {
 })
 
 
-// faq
 
+// faq
 var acc = document.getElementsByClassName('accordion')
 var i
 
