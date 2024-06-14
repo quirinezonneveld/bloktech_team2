@@ -80,19 +80,19 @@
 
 
 
-      <div class='filter-container'>
-        <form id='filter-form' onsubmit='handleSubmitFilter(event)'>
-          <!-- Datum invoerveld -->
-          <input type='date' id='datum' name='datum' />
 
-          <!-- Segment dropdown -->
-          <select id='classificationName' name='classificationName'>
-            <option value=' disabled selected>Segment</option>
-            <option value='Music'>Music</option>
-            <option value='Sports'>Sports</option>
-            <option value='Arts & Theatre'>Arts & Theatre</option>
-            <option value='Film'>Film</option>
-            <option value='Miscellaneous'>Miscellaneous</option>
+      <div class="filter-container">
+        <form id="filter-form" onsubmit="handleSubmitFilter(event)">
+          <input type="date" id="datum" name="datum" />
+
+          <select id="classificationName" name="classificationName">
+            <option value="" disabled selected>Segment</option>
+            <option value="Music">Music</option>
+            <option value="Sports">Sports</option>
+            <option value="Arts & Theatre">Arts & Theatre</option>
+            <option value="Film">Film</option>
+            <option value="Miscellaneous">Miscellaneous</option>
+
           </select>
 
           <select id='countryCode' name='countryCode'>
@@ -104,31 +104,22 @@
             <option value='nl'>Netherlands</option>
           </select>
 
-          <!-- Genre dropdown -->
-          <select id='genre' name='genre'>
-            <option value=' disabled selected>Genre</option>
-            <option value='action'>Actie</option>
-            <option value='comedy'>Komedie</option>
-            <option value='drama'>Drama</option>
-            <option value='horror'>Horror</option>
-            <option value='sci-fi'>Science Fiction</option>
+
+          <select id="genre" name="genre">
+            <option value="" disabled selected>Genre</option>
+            <option value="action">Actie</option>
+            <option value="comedy">Komedie</option>
+            <option value="drama">Drama</option>
+            <option value="horror">Horror</option>
+            <option value="sci-fi">Science Fiction</option>
           </select>
 
-          <!-- Regio dropdown -->
-          <!-- <select id='regio' name='regio'>
-            <option value=' disabled selected>Regio</option>
-            <option value='north'>Noord</option>
-            <option value='south'>Zuid</option>
-            <option value='east'>Oost</option>
-            <option value='west'>West</option>
-          </select> -->
+          <select id="price" name="price">
+            <option value="" disabled selected>Price</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
 
-          <!-- Prijs dropdown -->
-          <select id='price' name='price'>
-            <option value=' disabled selected>Price</option>
-            <option value='low'>Low</option>
-            <option value='medium'>Medium</option>
-            <option value='high'>High</option>
           </select>
 
           <button id='submit-filter-button' type='submit'>

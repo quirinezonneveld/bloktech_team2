@@ -83,7 +83,6 @@ body {
 h1 {
   font-size: var(--font-size-h1);
   line-height: 1.1;
-  
   /* font-family:Georgia, 'Times New Roman', Times, serif; */
 }
 h2 {
@@ -137,8 +136,6 @@ header > a:focus {
 .container {
   padding: 0 5em;
 }
-
-
 
 /************/
 /* navigatie */
@@ -254,7 +251,6 @@ nav li:nth-of-type(2) button i {
   background-color: transparent;
 }
 
-/* class active in html op pagina zetten waarop je je bevind  */
 .active {
   font-weight: 700;
 }
@@ -389,7 +385,6 @@ footer span {
   gap: 5em;
   list-style-type: none;
   scroll-behavior: smooth;
-  /* scroll-snap-type: x mandatory; */
 }
 .card-container li {
   scroll-snap-align: center;
@@ -557,9 +552,9 @@ footer span {
 .liked-popup {
   width: 30em;
   position: fixed;
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%); /* Adjust the centering */
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%);
   z-index: 1000;
   animation: fadein 0.5s, fadeout 0.5s 3s;
 }
@@ -872,7 +867,6 @@ footer span {
 }
 
 /*All events grid*/
-
 .card-grid {
   width: 100%;
   display: flex;
@@ -882,37 +876,34 @@ footer span {
 
 .card-grid .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(18em, 1fr)); /* Aanpassen aan de inhoud, met minimale breedte van 18em */
-  gap: 1.5em; /* Aanpassen van de ruimte tussen de grid items */
+  grid-template-columns: repeat(auto-fit, minmax(18em, 1fr)); 
+  gap: 1.5em; 
 }
 
 .card-grid .card-container article {
   background-color: var(--card-background-color);
-  width: 100%; /* Volledige breedte van de container nemen */
+  width: 100%;
   border-radius: var(--card-radius);
   display: grid;
   grid-template-columns: 1em 6em 1fr 2em 1em;
   grid-template-rows: 1em 2em 9em 1em 1em 1em 2em 1em 1em 1em;
 }
 
-/* Media query voor middelgrote schermen */
 @media screen and (min-width: 800px) and (max-width: 999px) {
   .card-grid .card-container {
-    grid-template-columns: repeat(2, 1fr); /* Twee kolommen op middelgrote schermen */
+    grid-template-columns: repeat(2, 1fr); 
   }
 }
 
-/* Media query voor grotere schermen */
 @media screen and (min-width: 1000px) {
   .card-grid .card-container {
-    grid-template-columns: repeat(3, 1fr); /* Drie kolommen op grotere schermen */
+    grid-template-columns: repeat(3, 1fr); 
   }
 }
 
-/* Media query voor zeer grote schermen */
 @media screen and (min-width: 1400px) {
   .card-grid .card-container {
-    grid-template-columns: repeat(4, 1fr); /* Vier kolommen op zeer grote schermen */
+    grid-template-columns: repeat(4, 1fr); 
   }
 }
 
@@ -927,11 +918,9 @@ footer span {
   .allEvents .assymetrical-container div {
     padding-right: 0;
   }
-  
 }
 
 /*All events filter*/
-
 .filter-container form {
   background-color: grey;
   padding: 2em;
@@ -982,7 +971,7 @@ footer span {
     display: flex;
     justify-content: center;
     padding: 1em;
-    gap: 1em; /* Ruimte tussen form en button */
+    gap: 1em; 
     margin-top: 2em;
     margin-bottom: 2em;
 }
@@ -995,8 +984,8 @@ footer span {
     flex-wrap: wrap;
     gap: 1em;
     justify-content: space-around;
-    width: 80%; /* Maak de form smaller */
-    max-width: 800px; /* Pas de maximale breedte aan */
+    width: 80%;
+    max-width: 800px; 
     box-sizing: border-box;
 }
 
@@ -1006,7 +995,7 @@ footer span {
     border-radius: 5px;
     border: 2px lightgrey solid;
     font-size: 1em;
-    flex: 1 1 200px; /* Flex-grow, flex-shrink, flex-basis */
+    flex: 1 1 200px;
     box-sizing: border-box;
 }
 
@@ -1017,8 +1006,8 @@ footer span {
     padding: 1.1em;
     font-size: 1em;
     border-radius: 5px;
-    align-self: flex-start; /* Align button to the top */
-    flex: 0 0 auto; /* Prevent button from growing */
+    align-self: flex-start;
+    flex: 0 0 auto;
     border-radius: var(--button-radius);
 }
 
@@ -1036,11 +1025,11 @@ footer span {
     }
     
     .filter-container form {
-        width: 100%; /* Full width on small screens */
+        width: 100%;
     }
     
     .filter-container button {
-        align-self: stretch; /* Full width button on small screens */
+        align-self: stretch;
     }
 }
 
@@ -1222,16 +1211,16 @@ h2 {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    z-index: 1000; /* high value to ensure it is on top */
+    z-index: 1000; 
   }
 
   #loader-filter img {
-    position: absolute; /* Absoluut positioneren */
-    top: calc(50% + 5em); /* Plaats het verticaal in het midden met een extra 5 em naar beneden */
-    left: 50%; /* Plaats het horizontaal in het midden */
-    transform: translate(-50%, -50%); /* Correctie om het exact in het midden te plaatsen */
-    width: 20em; /* Pas de breedte aan */
-    height: auto; /* Houd de aspect ratio */
+    position: absolute; 
+    top: calc(50% + 5em);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20em;
+    height: auto;
   }
   
 
@@ -1254,7 +1243,9 @@ h2 {
   }
 
   .loader-image-2 {
-    background-image: url('https://s1.ticketm.net/dam/a/b37/f62cde9b-e0b9-4791-8d0b-929f42b7bb37_1325001_RETINA_LANDSCAPE_16_9.jpg'); /* Pas de link aan naar de tweede afbeelding */
+
+    background-image: url("https://s1.ticketm.net/dam/a/b37/f62cde9b-e0b9-4791-8d0b-929f42b7bb37_1325001_RETINA_LANDSCAPE_16_9.jpg"); 
+
   }
 
   @keyframes move {
@@ -1273,7 +1264,7 @@ h2 {
   }
 
   .move-delay {
-    animation: move 1s linear forwards 1s; /* Start na 1 seconde */
+    animation: move 1s linear forwards 1s;
   }
 
   #loader-filter.loading {
@@ -1313,7 +1304,6 @@ h2 {
 }
 
 /*profile page*/
-
 .profile {
   margin-top: 3em;
 }
@@ -1697,10 +1687,7 @@ h2 {
   margin: 1em 0;
 }
 
-
-
 /* styling */
-
 .hiddenVisibility {
   visibility: hidden;
 }
