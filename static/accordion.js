@@ -1,25 +1,25 @@
-var acc = document.getElementsByClassName("accordion");
+var acc = document.getElementsByClassName('accordion');
         var i;
 
         for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active");
+            acc[i].addEventListener('click', function () {
+                this.classList.toggle('active');
                 var panel = this.nextElementSibling;
-                if (panel.style.display === "block") {
-                    panel.style.display = "none";
+                if (panel.style.display === 'block') {
+                    panel.style.display = 'none';
                 } else {
-                    panel.style.display = "block";
+                    panel.style.display = 'block';
                 }
             });
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener('DOMContentLoaded', () => {
             const loaderDiv = document.getElementById('loaderDiv');
             const loadButton = document.getElementById('loadButton');
             const dataDiv = document.getElementById('data');
 
             async function fetchData(url) {
-                loaderDiv.classList.add("loading");
+                loaderDiv.classList.add('loading');
                 try {
                     await new Promise((resolve) => setTimeout(resolve, 3000)); // Simuleer een vertraging
 
@@ -36,7 +36,7 @@ var acc = document.getElementsByClassName("accordion");
                     dataDiv.innerHTML = `<p>Error: ${error.message}</p>`;
                     console.error('Error:', error);
                 } finally {
-                    loaderDiv.classList.remove("loading");
+                    loaderDiv.classList.remove('loading');
                 }
             }
 
