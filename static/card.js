@@ -125,7 +125,6 @@ for (i = 0; i < acc.length; i++) {
 
 document.addEventListener('DOMContentLoaded', () => {
     const loaderDiv = document.getElementById('loaderDiv')
-    const loadButton = document.getElementById('loadButton')
     const dataDiv = document.getElementById('data')
 
     async function fetchData(url) {
@@ -150,7 +149,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    loadButton.addEventListener('click', () => {
-        fetchData('/home') // Pas de URL aan naar jouw endpoint
-    })
 })

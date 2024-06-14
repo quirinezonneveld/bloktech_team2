@@ -15,7 +15,6 @@ var acc = document.getElementsByClassName('accordion')
 
         document.addEventListener('DOMContentLoaded', () => {
             const loaderDiv = document.getElementById('loaderDiv')
-            const loadButton = document.getElementById('loadButton')
             const dataDiv = document.getElementById('data')
 
             async function fetchData(url) {
@@ -39,8 +38,4 @@ var acc = document.getElementsByClassName('accordion')
                     loaderDiv.classList.remove('loading')
                 }
             }
-
-            loadButton.addEventListener('click', () => {
-                fetchData('/home') // Pas de URL aan naar jouw endpoint
-            })
         })
