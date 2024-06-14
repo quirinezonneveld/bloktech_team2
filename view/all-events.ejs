@@ -140,11 +140,13 @@
               <li>
                 <article class='event-template'>
                   <% if (event.images && event.images.length> 0) { %>
-                    <img src='<%= event.images[0].url %>' alt='Event photo' data-src='event-img'>
+
+                    <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img" loading="lazy" >
                     <% } else { %>
                       <img
-                        src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ'
-                        alt='Placeholder image' data-src='event-img'>
+                        src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ"
+                        alt="Placeholder image" data-src="event-img" loading="lazy" >
+
                       <% } %>
                         <% if (event.classifications && event.classifications.length> 0 &&
                           event.classifications[0].genre) { %>
@@ -165,7 +167,9 @@
                                       <% } %>
                                 </button>
                               </form>
-                              <a href='<%= event.url %>'>
+
+                              <a href="/detail?event_id=<%= event.id %>">
+
                                 <h5>
                                   <%= event.name %>
                                 </h5>
@@ -179,9 +183,11 @@
                                         <%= event.dates.start.dateTime %>
                                       </p>
                                       <% } else { %>
-                                        <img
-                                          src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ'
-                                          alt='Placeholder image' data-src='event-img'>
+
+                                        <img loading="lazy"
+                                          src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ"
+                                          alt="Placeholder image" data-src="event-img">
+
                                         <% } %>
 
 

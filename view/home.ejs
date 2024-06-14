@@ -89,57 +89,60 @@
     </header>
 
     <main>
-        <section class='assymetrical-container hiddenAnimation'>
-            <div>
-                <h2 class='slideAnimation'>Upcoming</h2>
-                <a href='/all-events'>See all</a>
-            </div>
 
-  <ul id='card-container' class='card-container'>
-        <% if (events && events.length) { %>
-            <% events.forEach(event => { %>
-        <li>
-          <article class='event-template'>
-            <% if (event.images && event.images.length > 0) { %>
-                <img src='<%= event.images[0].url %>' alt='Event photo' data-src='event-img'>
-              <% } else { %>
-                <img src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ' alt='Placeholder image' data-src='event-img'>
-              <% } %>
-              <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
-                <p><%= event.classifications[0].genre.name %></p>
-              <% } else { %>
-                <p>Genre unknown</p>
-              <% } %>
-               
-              <form action='/toggle_favorite' method='POST' class='favorite-form'>
-                <input type='hidden' name='eventId' value='<%= event.id %>'>
-                <button type='submit' class='like-button'>
-                  <% if (favoriteEvents.includes(event.id)) { %>
-                    <i class='fa-solid fa-heart liked'></i>
-                  <% } else { %>
-                    <i class='fa-solid fa-heart'></i>
-                  <% } %>
-                </button>
-              </form>
-              <a href='/detail?event_id=<%= event.id %>'>
-            <h5><%= event.name %></h5>
-            <% if (event.info) { %>
-              <p><%= event.info %></p>
-            <% } %>
-            <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
-              <p><%= event.dates.start.dateTime %></p>
-            <% } else { %>
-              <p>Date not available</p>
-            <% } %>
-          </a>
-          </article>
-        </li>
-        <% }) %>
-        <% } else { %>
-          <li>No events available.</li>
-        <% } %>
-    </ul>
+        <section class="assymetrical-container hiddenAnimation">
+          <div>
+              <h2 class="slideAnimation">Upcoming</h2>
+              <a href="/all-events">See all</a>
+          </div>
 
+          <ul id="card-container" class="card-container">
+                <% if (events && events.length) { %>
+                    <% events.forEach(event => { %>
+                <li>
+                  <article class="event-template">
+                    <% if (event.images && event.images.length > 0) { %>
+                        <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img" loading="lazy">
+                      <% } else { %>
+                        <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img" loading="lazy">
+                      <% } %>
+                      <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
+                        <p><%= event.classifications[0].genre.name %></p>
+                      <% } else { %>
+                        <p>Genre unknown</p>
+                      <% } %>
+                      
+                      <form action="/toggle_favorite" method="POST" class="favorite-form">
+                        <input type="hidden" name="eventId" value="<%= event.id %>">
+                        <button type="submit" class="like-button">
+                          <% if (favoriteEvents.includes(event.id)) { %>
+                            <i class="fa-solid fa-heart liked"></i>
+                          <% } else { %>
+                            <i class="fa-solid fa-heart"></i>
+                          <% } %>
+                        </button>
+                      </form>
+                      <a href="/detail?event_id=<%= event.id %>">
+                    <h5><%= event.name %></h5>
+                    <% if (event.info) { %>
+                      <p><%= event.info %></p>
+                    <% } %>
+                    <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
+                      <p><%= event.dates.start.dateTime %></p>
+                    <% } else { %>
+                      <p>Date not available</p>
+                    <% } %>
+                  </a>
+                  </article>
+                </li>
+                <% }) %>
+                <% } else { %>
+                  <li>No events available.</li>
+                <% } %>
+            </ul>
+
+ 
+ 
 
         
           
@@ -159,8 +162,9 @@
 
         <img class='hiddenVisibility liked-popup' src='assets/liked-popup.png' alt='Event added to your favorites'>
 
-        <section class='quote hiddenAnimation'>
-          <iframe class='video' width='560' height='315' src='https://www.youtube.com/embed/w_DUDTnG76U' title='YouTube video player' allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>
+        <section class="quote hiddenAnimation">
+          <iframe class="video" width="560" height="315" src="https://www.youtube.com/embed/w_DUDTnG76U" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+
 
             <p class='slideAnimation'>&quot;It&#39;s not just an event, it&#39;s a memory in the making&quot;</p>
         </section>
@@ -172,35 +176,44 @@
                 <a href='/all-events'>See all</a>
             </div>
 
-            <ul class='card-container hiddenAnimation'>
-                <% for (const event of events) { %>
-                  <li>
-                    <article class='event-template'>
-                      <img src='<%= event.images[0].url %>' alt='Event photo' data-src='event-img'>
-                      <p>
-                        <%= event.classifications[0].genre.name %>
-                      </p>
-              
-                      <form action='/toggle_favorite' method='POST' class='favorite-form'>
-                        <input type='hidden' name='eventId' value='<%= event.id %>'>
-                        <button type='submit' class='like-button'>
-                          <% if (favoriteEvents.includes(event.id)) { %>
-                            <i class='fa-solid fa-heart liked'></i>
-                          <% } else { %>
-                            <i class='fa-solid fa-heart'></i>
-                          <% } %>
-                        </button>
-                      </form>
-              
-                      <a href='/detail?event_id=<%= event.id %>'>
-                        <h5><%= event.name %></h5>
-                        <p><%= event.info %></p>
-                        <p><%= event.dates.start.dateTime %></p>
-                      </a>
-                    </article>
-                  </li>
+
+            <ul class="card-container hiddenAnimation">
+              <% if (events && events.length) { %>
+                <% events.forEach(event => { %>
+            <li>
+              <article class="event-template">
+                <% if (event.images && event.images.length > 0) { %>
+                    <img src="<%= event.images[0].url %>" alt="Event photo" data-src="event-img" loading="lazy">
+                  <% } else { %>
+                    <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3ANo-Image-Placeholder.svg&psig=AOvVaw0_rzR4HXTxOteNTiM4-eJh&ust=1717972439504000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCLjYyZuIzYYDFQAAAAAdAAAAABAJ" alt="Placeholder image" data-src="event-img" loading="lazy">
+                  <% } %>
+                  <% if (event.classifications && event.classifications.length > 0 && event.classifications[0].genre) { %>
+                    <p><%= event.classifications[0].genre.name %></p>
+                  <% } else { %>
+                    <p>Genre unknown</p>
+                  <% } %>
+                  
+                  <form action="/toggle_favorite" method="POST" class="favorite-form">
+                    <input type="hidden" name="eventId" value="<%= event.id %>">
+                    <button type="submit" class="like-button">
+                      <% if (favoriteEvents.includes(event.id)) { %>
+                        <i class="fa-solid fa-heart liked"></i>
+                      <% } else { %>
+                        <i class="fa-solid fa-heart"></i>
+                      <% } %>
+                    </button>
+                  </form>
+                  <a href="/detail?event_id=<%= event.id %>">
+                <h5><%= event.name %></h5>
+                <% if (event.info) { %>
+                  <p><%= event.info %></p>
                 <% } %>
-            </ul>
+                <% if (event.dates && event.dates.start && event.dates.start.dateTime) { %>
+                  <p><%= event.dates.start.dateTime %></p>
+                <% } else { %>
+                  <p>Date not available</p>
+
+
             
             <ul class='card-buttons'>
 				<li>
